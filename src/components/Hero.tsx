@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { portfolioData } from "@/data/portfolio";
 
 export default function Hero() {
   const { personal, metrics, terminal } = portfolioData;
+  const shouldReduceMotion = useReducedMotion();
 
   // Typewriter effect state for hero role headline
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
@@ -52,11 +53,76 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-6 sm:py-space-xl overflow-hidden"
+      className="relative isolate w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-6 sm:py-space-xl overflow-hidden"
     >
-      {/* Ambient background glows */}
-      <div className="absolute -top-32 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute top-1/2 -right-24 w-80 h-80 bg-tertiary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Dedicated Hero Matte Background Layer */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 pointer-events-none overflow-hidden select-none"
+      >
+        {/* Soft elegant top radial matte vignette */}
+        <div
+          className="absolute inset-0 opacity-60 dark:opacity-50"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(123, 219, 128, 0.06), transparent 80%)",
+          }}
+        />
+
+        {/* Primary Ambient Matte Glow Blob (home-desktop.html:113) */}
+        <motion.div
+          animate={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  x: [0, 24, -16, 0],
+                  y: [0, -18, 14, 0],
+                }
+          }
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute -top-32 left-4 sm:left-1/4 w-72 sm:w-[28rem] h-72 sm:h-[28rem] bg-primary/10 rounded-full blur-[80px] sm:blur-[130px]"
+        />
+
+        {/* Tertiary Ambient Matte Glow Blob (home-desktop.html:116) */}
+        <motion.div
+          animate={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  x: [0, -20, 15, 0],
+                  y: [0, 22, -18, 0],
+                }
+          }
+          transition={{
+            duration: 24,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-1/3 sm:top-1/2 -right-12 sm:-right-24 w-64 sm:w-[24rem] h-64 sm:h-[24rem] bg-tertiary/10 rounded-full blur-[80px] sm:blur-[120px]"
+        />
+
+        {/* Subtle bottom secondary accent glow for depth */}
+        <motion.div
+          animate={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  x: [0, 16, -12, 0],
+                  y: [0, 14, -16, 0],
+                }
+          }
+          transition={{
+            duration: 28,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="hidden sm:block absolute -bottom-24 left-1/3 w-64 sm:w-80 h-64 sm:h-80 bg-secondary/6 rounded-full blur-[110px]"
+        />
+      </div>
 
       {/* Mobile Top Profile & Status Bar (Matches design/home-mobile.html) */}
       <div className="flex md:hidden items-center justify-between mb-5 pb-3 border-b border-outline-variant/60">
