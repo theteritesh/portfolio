@@ -20,29 +20,79 @@ export interface TerminalCommand {
   type?: "git" | "build" | "status" | "info";
 }
 
-export interface SkillItem {
+export interface AboutData {
+  filename: string;
+  fileSize: string;
+  sloc: string;
+  latestCommit: {
+    hash: string;
+    message: string;
+    timeAgo: string;
+  };
+  heading: string;
+  availability: string;
+  bioParagraph: string;
+  philosophy: {
+    title: string;
+    quote: string;
+  };
+  academic: {
+    title: string;
+    degree: string;
+    details: string;
+    honors: string;
+  };
+  cloudCertification: {
+    title: string;
+    badge: string;
+    verified: boolean;
+    details: string;
+  };
+  location: string;
+  currentlyLearning: {
+    command: string;
+    output: string;
+  };
+}
+
+export interface SkillChip {
   name: string;
-  level: number;
-  featured?: boolean;
+  iconKey: string;
+  color?: string;
 }
 
 export interface SkillCategory {
+  id: string;
   title: string;
+  folderName: string;
   badge: string;
+  fileCount: number;
   description: string;
-  skills: SkillItem[];
-  tags: string[];
+  competencies: { name: string; level: number }[];
+  chips: SkillChip[];
+  files: string[];
+}
+
+export interface ExperienceBullet {
+  title: string;
+  icon: string;
+  description: string;
+  color?: string;
 }
 
 export interface ExperienceItem {
+  id: string;
   role: string;
   company: string;
+  department?: string;
   location: string;
   period: string;
   isCurrent?: boolean;
-  branch: string;
   commitHash: string;
-  description: string[];
+  commitBadge: string;
+  statusBadge: string;
+  statusColor: "primary" | "secondary" | "tertiary";
+  bullets: ExperienceBullet[];
   tags: string[];
 }
 
@@ -86,6 +136,7 @@ export interface PortfolioData {
     badges: { label: string; icon: string }[];
     resumeUrl: string;
   };
+  about: AboutData;
   metrics: MetricItem[];
   terminal: {
     user: string;
@@ -142,6 +193,46 @@ export const portfolioData: PortfolioData = {
       { label: "100% On-Time Delivery", icon: "verified" },
     ],
     resumeUrl: "#resume",
+  },
+
+  about: {
+    filename: "README.md",
+    fileSize: "4.2 KB",
+    sloc: "42 lines (32 sloc)",
+    latestCommit: {
+      hash: "9bc42ea",
+      message: "docs: update architectural bio, MCA background, and 2025 focus areas",
+      timeAgo: "14 hours ago",
+    },
+    heading: "Hi there, I'm Alex Morgan",
+    availability: "Available Q2/Q3 2025",
+    bioParagraph:
+      "Full Stack Software Developer holding a Master of Computer Applications (MCA) degree with deep domain expertise in distributed enterprise architectures using Java 17/21, Spring Boot, and reactive modern frontends with React & TypeScript.",
+    philosophy: {
+      title: "Core Engineering Philosophy:",
+      quote:
+        '"Write testable code with deterministic side-effects. Treat infrastructure as code, design for horizontal scale, and prioritize zero-friction developer ergonomics."',
+    },
+    academic: {
+      title: "Academic Foundation",
+      degree: "Master of Computer Applications (MCA)",
+      details:
+        "Comprehensive specializations in Distributed Computing, Advanced Data Structures & Algorithms, Database Internals, and Computer Networks. Graduated with Honors.",
+      honors: "First Class with Distinction",
+    },
+    cloudCertification: {
+      title: "Cloud Specialization",
+      badge: "AWS Certified Cloud Practitioner",
+      verified: true,
+      details:
+        "Experienced deploying production clusters using Amazon ECS, RDS PostgreSQL, S3 lifecycle policies, and multi-stage container builds with GitHub Actions CI/CD pipelines.",
+    },
+    location: "San Francisco, CA (Remote Friendly)",
+    currentlyLearning: {
+      command: "echo $CURRENTLY_LEARNING",
+      output:
+        "> Go microservices concurrency, Kubernetes operators, Apache Kafka partition semantics.",
+    },
   },
 
   metrics: [
@@ -234,85 +325,182 @@ export const portfolioData: PortfolioData = {
 
   skills: [
     {
+      id: "backend",
       title: "Backend Ecosystem",
-      badge: "JDK21 / Spring",
+      folderName: "backend/",
+      badge: "v21.0-LTS",
+      fileCount: 5,
       description:
         "Deep mastery of Java virtual machine internals, reactive multithreading, Spring Boot starter compositions, Hibernate/JPA caching, and bidirectional STOMP WebSockets.",
-      skills: [
-        { name: "Java & Spring Boot", level: 95, featured: true },
-        { name: "REST APIs & WebSockets", level: 90, featured: true },
-        { name: "Hibernate / JPA", level: 88 },
-        { name: "Microservices Architecture", level: 92 },
+      competencies: [
+        { name: "Java & Spring Boot", level: 95 },
+        { name: "REST APIs & WebSockets", level: 90 },
       ],
-      tags: ["Java 21", "Spring Boot", "Hibernate", "Virtual Threads", "Kafka"],
+      chips: [
+        { name: "Java 21", iconKey: "SiOpenjdk", color: "#b07219" },
+        { name: "Spring Boot", iconKey: "SiSpringboot", color: "#6db33f" },
+        { name: "Hibernate", iconKey: "SiHibernate", color: "#59666c" },
+        { name: "Kafka", iconKey: "SiApachekafka", color: "#231f20" },
+      ],
+      files: [
+        "JavaSE_21.java",
+        "SpringBoot3_Rest.java",
+        "Hibernate_JPA.java",
+        "WebSocketGateway.java",
+        "KafkaEventConsumer.java",
+      ],
     },
     {
+      id: "frontend",
       title: "Frontend Systems",
+      folderName: "frontend/",
       badge: "ESNext",
+      fileCount: 4,
       description:
         "High-performance single page applications with React 19, strict TypeScript contracts, Tailwind utility workflows, client state management, and real-time socket ingestion.",
-      skills: [
-        { name: "React & TypeScript", level: 92, featured: true },
-        { name: "Modern Tailwind / CSS", level: 88, featured: true },
-        { name: "Next.js App Router", level: 90 },
-        { name: "State Stores (Zustand/Redux)", level: 85 },
+      competencies: [
+        { name: "React & TypeScript", level: 92 },
+        { name: "Modern Tailwind / CSS", level: 88 },
       ],
-      tags: ["React 19", "TypeScript", "Tailwind CSS", "Vite", "Zustand"],
+      chips: [
+        { name: "React 19", iconKey: "SiReact", color: "#61dafb" },
+        { name: "TypeScript", iconKey: "SiTypescript", color: "#3178c6" },
+        { name: "Next.js", iconKey: "SiNextdotjs", color: "#ffffff" },
+        { name: "Tailwind CSS", iconKey: "SiTailwindcss", color: "#38bdf8" },
+        { name: "Vite", iconKey: "SiVite", color: "#646cff" },
+        { name: "Redux / Zustand", iconKey: "SiRedux", color: "#764abc" },
+      ],
+      files: [
+        "React19_SPA.tsx",
+        "TypeScript_ES6.ts",
+        "TailwindTokens.css",
+        "ZustandStore.ts",
+      ],
     },
     {
+      id: "database",
       title: "Data Stores & ACID",
-      badge: "Refactored",
+      folderName: "databases/",
+      badge: "Relational",
+      fileCount: 3,
       description:
-        "Complex schema normalization, index performance tuning, connection-pooling with HikariCP, stored procedures, and distributed transaction isolation levels.",
-      skills: [
-        { name: "PostgreSQL & MySQL", level: 90, featured: true },
+        "Complex schema normalization, index performance tuning, connection pooling with HikariCP, stored procedures, and distributed transaction isolation levels.",
+      competencies: [
+        { name: "PostgreSQL & MySQL", level: 88 },
         { name: "Redis In-Memory Caching", level: 86 },
-        { name: "Database Schema Migrations", level: 88 },
       ],
-      tags: ["PostgreSQL", "MySQL", "HikariCP", "Redis", "Flyway"],
+      chips: [
+        { name: "PostgreSQL", iconKey: "SiPostgresql", color: "#336791" },
+        { name: "MySQL", iconKey: "SiMysql", color: "#00758f" },
+        { name: "Redis", iconKey: "SiRedis", color: "#dc382d" },
+      ],
+      files: [
+        "PostgreSQL_ACID.sql",
+        "MySQL_Cluster.sql",
+        "Redis_Cache.conf",
+      ],
     },
     {
+      id: "devops",
       title: "Cloud & DevOps",
+      folderName: "devops_ci_cd/",
       badge: "AWS Certified",
+      fileCount: 4,
       description:
         "Continuous deployment using GitHub Actions, container orchestration via Docker Compose & AWS ECS, infrastructure provisioning, and production logging.",
-      skills: [
-        { name: "Docker & AWS Deployment", level: 85, featured: true },
-        { name: "CI/CD GitHub Actions", level: 90, featured: true },
-        { name: "Linux Server Administration", level: 88 },
+      competencies: [
+        { name: "Docker & AWS Deployment", level: 85 },
+        { name: "CI/CD GitHub Actions", level: 90 },
       ],
-      tags: ["Docker", "AWS", "GitHub Actions", "Linux", "Nginx"],
+      chips: [
+        { name: "Docker", iconKey: "SiDocker", color: "#2496ed" },
+        { name: "AWS ECS", iconKey: "FaAws", color: "#ff9900" },
+        { name: "GitHub Actions", iconKey: "SiGithubactions", color: "#2088ff" },
+        { name: "Linux Server", iconKey: "SiLinux", color: "#fcc624" },
+        { name: "Kubernetes", iconKey: "SiKubernetes", color: "#326ce5" },
+        { name: "Nginx", iconKey: "SiNginx", color: "#009639" },
+      ],
+      files: [
+        "Dockerfile.multi",
+        "aws-infra-cdk.yml",
+        "github-actions.yml",
+        "nginx.conf",
+      ],
     },
   ],
 
   experience: [
     {
+      id: "exp-1",
       role: "Java Full Stack Developer",
-      company: "Nexus Enterprise Systems",
+      company: "NexaTech Solutions • Distributed Cloud Team",
+      department: "Distributed Cloud Team",
       location: "San Francisco, CA (Hybrid)",
-      period: "Jan 2023 - Present",
+      period: "2025 — Present",
       isCurrent: true,
-      branch: "commit e04af21",
-      commitHash: "e04af21",
-      description: [
-        "Architecting distributed microservices with Redis L2 caching, dropping median API response latency by 42% under 15,000 req/sec load.",
-        "Built modular React 19 administrative dashboard with dynamic permission trees, WebSocket event streams, and real-time telemetry graphs.",
-        "Integrated zero-downtime blue/green deployment workflows to AWS ECS via GitHub Actions, running complete JUnit and integration suites.",
+      commitHash: "e9a4f21",
+      commitBadge: "commit e9a4f21",
+      statusBadge: "Current HEAD",
+      statusColor: "primary",
+      bullets: [
+        {
+          title: "Latency Optimization",
+          icon: "bolt",
+          description:
+            "Architected Spring Boot 3 microservices with Redis L2 caching, dropping median API response latency by 42% under 15,000 req/sec load.",
+          color: "text-primary",
+        },
+        {
+          title: "Reactive SPA Frontends",
+          icon: "dashboard",
+          description:
+            "Built modular React 18 administrative dashboards with dynamic permission trees, WebSocket event streams, and real-time telemetry graphs.",
+          color: "text-tertiary",
+        },
+        {
+          title: "Automated Pipelines",
+          icon: "cloud_sync",
+          description:
+            "Integrated zero-downtime blue/green deployment workflows to AWS ECS via GitHub Actions, running complete JUnit and integration suites.",
+          color: "text-secondary",
+        },
       ],
-      tags: ["Java 21", "Spring Boot", "React 19", "AWS ECS", "Redis", "Kafka"],
+      tags: ["Java 21", "Spring Boot 3", "React 19", "AWS ECS", "Redis", "Kafka"],
     },
     {
-      role: "Software Engineer Intern",
-      company: "FinTech Analytics Lab",
+      id: "exp-2",
+      role: "Java Full Stack Developer Intern",
+      company: "CodeCraft Labs • Core Infrastructure",
+      department: "Core Infrastructure",
       location: "San Francisco, CA",
-      period: "May 2022 - Dec 2022",
+      period: "2025",
       isCurrent: false,
-      branch: "commit 71201dd",
-      commitHash: "71201dd",
-      description: [
-        "Optimized 16 complex PostgreSQL analytical queries and multi-table joins, yielding a 65% reduction in CPU lock waits on heavy transactional tables.",
-        "Developed 12 robust REST endpoints using Java Spring MVC with OpenAPI v3 specs, automated DTO validation, and centralized exception handling.",
-        "Authored unit and regression test suites using JUnit 5, Mockito, and AssertJ, expanding test coverage across core payments domain from 45% to 89%.",
+      commitHash: "7c3b109",
+      commitBadge: "commit 7c3b109",
+      statusBadge: "Merged to main",
+      statusColor: "secondary",
+      bullets: [
+        {
+          title: "SQL Indexing Overhaul",
+          icon: "database",
+          description:
+            "Optimized 18 complex PostgreSQL analytical queries and multi-table joins, yielding a 65% reduction in CPU lock waits on heavy transactional tables.",
+          color: "text-primary",
+        },
+        {
+          title: "RESTful Gateway",
+          icon: "api",
+          description:
+            "Developed 12 robust REST endpoints using Java Spring MVC with OpenAPI v3 specs, automated DTO validation, and centralized exception handling.",
+          color: "text-tertiary",
+        },
+        {
+          title: "Test Coverage",
+          icon: "bug_report",
+          description:
+            "Authored unit and regression test suites using JUnit 5, Mockito, and AssertJ, expanding test coverage across core payments domain from 45% to 88%.",
+          color: "text-secondary",
+        },
       ],
       tags: ["Java", "Spring MVC", "PostgreSQL", "JUnit 5", "Mockito", "Docker"],
     },
