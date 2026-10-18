@@ -6,9 +6,49 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { portfolioData } from "@/data/portfolio";
 
-export default function Hero() {
+export interface HeroStats {
+  repositories: number | string;
+  contributions: number | string;
+  followers: number | string;
+}
+
+export interface HeroProps {
+  stats?: HeroStats;
+}
+
+export default function Hero({ stats }: HeroProps = {}) {
   const { personal, metrics, terminal } = portfolioData;
   const shouldReduceMotion = useReducedMotion();
+
+  const displayMetrics = React.useMemo(() => {
+    if (!stats) return metrics;
+    return [
+      {
+        label: "Repositories",
+        value: String(stats.repositories),
+        subtext: "public repos",
+        icon: "inventory_2",
+        color: "text-tertiary",
+      },
+      {
+        label: "Contributions",
+        value:
+          typeof stats.contributions === "number"
+            ? stats.contributions.toLocaleString()
+            : String(stats.contributions),
+        subtext: "past year",
+        icon: "grain",
+        color: "text-primary",
+      },
+      {
+        label: "Network",
+        value: String(stats.followers),
+        subtext: "followers",
+        icon: "group",
+        color: "text-secondary",
+      },
+    ];
+  }, [stats, metrics]);
 
   // Typewriter effect state for hero role headline
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
@@ -53,9 +93,9 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative isolate w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-6 sm:py-space-xl overflow-hidden"
+      className="relative isolate w-full overflow-hidden"
     >
-      {/* Dedicated Hero Matte Background Layer */}
+      {/* Dedicated Hero Full-Bleed Background Layer */}
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 pointer-events-none overflow-hidden select-none"
@@ -65,64 +105,84 @@ export default function Hero() {
           className="absolute inset-0 opacity-60 dark:opacity-50"
           style={{
             background:
-              "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(123, 219, 128, 0.06), transparent 80%)",
+              "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(123, 219, 128, 0.08), transparent 75%)",
           }}
         />
 
-        {/* Primary Ambient Matte Glow Blob (home-desktop.html:113) */}
-        <motion.div
-          animate={
-            shouldReduceMotion
-              ? undefined
-              : {
-                  x: [0, 24, -16, 0],
-                  y: [0, -18, 14, 0],
-                }
-          }
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut",
+        {/* Ambient Matte Glow Blobs with radial fade ensuring no clipped box edges */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            maskImage:
+              "radial-gradient(ellipse 90% 80% at 50% 45%, black 40%, transparent 100%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 90% 80% at 50% 45%, black 40%, transparent 100%)",
           }}
-          className="absolute -top-32 left-4 sm:left-1/4 w-72 sm:w-[28rem] h-72 sm:h-[28rem] bg-primary/10 rounded-full blur-[80px] sm:blur-[130px]"
-        />
+        >
+          {/* Primary Ambient Matte Glow Blob */}
+          <motion.div
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    x: [0, 24, -16, 0],
+                    y: [0, -18, 14, 0],
+                  }
+            }
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute -top-24 left-4 sm:left-[15%] w-72 sm:w-[28rem] h-72 sm:h-[28rem] bg-primary/10 rounded-full blur-[100px]"
+          />
 
-        {/* Tertiary Ambient Matte Glow Blob (home-desktop.html:116) */}
-        <motion.div
-          animate={
-            shouldReduceMotion
-              ? undefined
-              : {
-                  x: [0, -20, 15, 0],
-                  y: [0, 22, -18, 0],
-                }
-          }
-          transition={{
-            duration: 24,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/3 sm:top-1/2 -right-12 sm:-right-24 w-64 sm:w-[24rem] h-64 sm:h-[24rem] bg-tertiary/10 rounded-full blur-[80px] sm:blur-[120px]"
-        />
+          {/* Tertiary Ambient Matte Glow Blob */}
+          <motion.div
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    x: [0, -20, 15, 0],
+                    y: [0, 22, -18, 0],
+                  }
+            }
+            transition={{
+              duration: 24,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-1/4 right-[5%] sm:right-[10%] w-64 sm:w-[26rem] h-64 sm:h-[26rem] bg-tertiary/10 rounded-full blur-[100px]"
+          />
 
-        {/* Subtle bottom secondary accent glow for depth */}
-        <motion.div
-          animate={
-            shouldReduceMotion
-              ? undefined
-              : {
-                  x: [0, 16, -12, 0],
-                  y: [0, 14, -16, 0],
-                }
-          }
-          transition={{
-            duration: 28,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="hidden sm:block absolute -bottom-24 left-1/3 w-64 sm:w-80 h-64 sm:h-80 bg-secondary/6 rounded-full blur-[110px]"
+          {/* Subtle bottom secondary accent glow */}
+          <motion.div
+            animate={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    x: [0, 16, -12, 0],
+                    y: [0, 14, -16, 0],
+                  }
+            }
+            transition={{
+              duration: 28,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="hidden sm:block absolute bottom-8 left-1/3 w-64 sm:w-80 h-64 sm:h-80 bg-secondary/6 rounded-full blur-[90px]"
+          />
+        </div>
+
+        {/* Seamless bottom fade from transparent to page background (surface) */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-36 sm:h-48 bg-gradient-to-b from-transparent via-surface/60 to-surface pointer-events-none"
+          aria-hidden="true"
         />
       </div>
+
+      {/* Hero Content Container */}
+      <div className="w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-6 sm:py-space-xl">
 
       {/* Mobile Top Profile & Status Bar (Matches design/home-mobile.html) */}
       <div className="flex md:hidden items-center justify-between mb-5 pb-3 border-b border-outline-variant/60">
@@ -236,27 +296,27 @@ export default function Hero() {
           </div>
 
           {/* GitHub Telemetry Metrics Widget (3 cards) */}
-          <div className="grid grid-cols-3 gap-space-sm pt-4 max-w-lg">
-            {metrics.map((metric) => (
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-space-sm pt-4 max-w-lg">
+            {displayMetrics.map((metric) => (
               <div
                 key={metric.label}
-                className="p-2.5 sm:p-space-sm rounded bg-surface-container-low border border-outline-variant shadow-sm flex flex-col transition-transform hover:-translate-y-0.5 duration-200"
+                className="p-2 sm:p-space-sm rounded bg-surface-container-low border border-outline-variant shadow-sm flex flex-col transition-transform hover:-translate-y-0.5 duration-200 overflow-hidden"
               >
-                <div className="flex items-center justify-between text-outline">
-                  <span className="font-label-sm text-[10px] sm:text-label-sm uppercase tracking-wider font-mono">
+                <div className="flex items-center justify-between text-outline gap-1">
+                  <span className="font-label-sm text-[9px] sm:text-label-sm uppercase tracking-tight sm:tracking-wider font-mono truncate">
                     {metric.label}
                   </span>
                   <span
-                    className={`material-symbols-outlined text-[15px] sm:text-[16px] ${metric.color || "text-tertiary"}`}
+                    className={`material-symbols-outlined text-[14px] sm:text-[16px] shrink-0 ${metric.color || "text-tertiary"}`}
                   >
                     {metric.icon}
                   </span>
                 </div>
-                <div className="flex items-baseline gap-1 mt-1 font-mono">
-                  <span className="font-headline-md text-[18px] sm:text-headline-md text-on-surface font-bold">
+                <div className="flex flex-col sm:flex-row sm:items-baseline gap-0 sm:gap-1 mt-1 font-mono">
+                  <span className="font-headline-md text-[15px] sm:text-headline-md text-on-surface font-bold leading-none">
                     {metric.value}
                   </span>
-                  <span className="font-label-sm text-[10px] sm:text-label-sm text-primary">
+                  <span className="font-label-sm text-[9px] sm:text-label-sm text-primary leading-tight truncate">
                     {metric.subtext}
                   </span>
                 </div>
@@ -270,22 +330,22 @@ export default function Hero() {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-          className="col-span-12 lg:col-span-6 flex flex-col gap-space-md z-10"
+          className="col-span-12 lg:col-span-6 flex flex-col gap-space-md z-10 w-full min-w-0"
         >
           {/* Floating Terminal Window Frame */}
-          <div className="rounded-lg bg-surface-container-lowest border border-outline-variant shadow-2xl overflow-hidden">
+          <div className="rounded-lg bg-surface-container-lowest border border-outline-variant shadow-2xl overflow-hidden w-full">
             {/* Terminal OS Chrome Bar */}
-            <div className="h-9 px-space-md bg-surface-container-high border-b border-outline-variant flex items-center justify-between select-none">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-error inline-block" />
-                <span className="w-3 h-3 rounded-full bg-secondary-fixed inline-block" />
-                <span className="w-3 h-3 rounded-full bg-primary inline-block" />
+            <div className="h-9 px-3 sm:px-space-md bg-surface-container-high border-b border-outline-variant flex items-center justify-between select-none gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-error inline-block" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-secondary-fixed inline-block" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-primary inline-block" />
               </div>
-              <div className="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant font-mono">
-                <span className="material-symbols-outlined text-[14px]">terminal</span>
-                <span className="truncate">bash - alex@workstation: ~/portfolio</span>
+              <div className="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant font-mono min-w-0 flex-1 justify-center px-1">
+                <span className="material-symbols-outlined text-[14px] shrink-0">terminal</span>
+                <span className="truncate text-[11px] sm:text-label-sm">bash - alex@workstation: ~/portfolio</span>
               </div>
-              <div className="flex items-center gap-2 text-outline">
+              <div className="flex items-center gap-2 text-outline shrink-0">
                 <button
                   type="button"
                   onClick={copyTerminalContent}
@@ -303,7 +363,7 @@ export default function Hero() {
             </div>
 
             {/* Terminal Canvas Content */}
-            <div className="p-3 sm:p-space-md font-code-block text-[12px] sm:text-[13px] text-on-surface leading-relaxed flex flex-col gap-2 font-mono bg-surface-container-lowest/95">
+            <div className="p-3 sm:p-space-md font-code-block text-[12px] sm:text-[13px] text-on-surface leading-relaxed flex flex-col gap-2 font-mono bg-surface-container-lowest/95 overflow-x-auto scrollbar-thin">
               {/* Prompt and Branch */}
               <div className="flex items-center gap-2 text-on-surface-variant flex-wrap">
                 <span className="text-primary font-bold">
@@ -314,21 +374,21 @@ export default function Hero() {
               </div>
 
               {/* Command 1: git checkout */}
-              <div className="flex items-center gap-2 text-primary pt-0.5">
-                <span className="text-outline">$</span>
+              <div className="flex items-center gap-2 text-primary pt-0.5 break-all sm:break-normal">
+                <span className="text-outline shrink-0">$</span>
                 <span className="text-on-surface">git checkout -b feature/launch-2025</span>
               </div>
-              <div className="text-tertiary-fixed-dim text-label-sm pl-4 flex items-center gap-1">
-                <span className="material-symbols-outlined text-[14px]">call_split</span>
+              <div className="text-tertiary-fixed-dim text-label-sm pl-3 sm:pl-4 flex items-center gap-1 break-all sm:break-normal">
+                <span className="material-symbols-outlined text-[14px] shrink-0">call_split</span>
                 <span>Switched to a new branch &apos;feature/launch-2025&apos;</span>
               </div>
 
               {/* Command 2: maven & npm */}
-              <div className="flex items-center gap-2 text-primary pt-1">
-                <span className="text-outline">$</span>
+              <div className="flex items-center gap-2 text-primary pt-1 break-all sm:break-normal">
+                <span className="text-outline shrink-0">$</span>
                 <span className="text-on-surface">mvn spring-boot:run --quiet &amp; npm run dev</span>
               </div>
-              <div className="text-on-surface-variant text-label-sm pl-4 flex flex-col gap-0.5 border-l-2 border-outline-variant/50 ml-1 py-0.5">
+              <div className="text-on-surface-variant text-label-sm pl-2 sm:pl-4 flex flex-col gap-0.5 border-l-2 border-outline-variant/50 ml-1 py-0.5 break-all sm:break-normal">
                 <span className="text-primary-fixed pl-2">
                   [INFO] Tomcat started on port 8080 (http) with context path &apos;&apos;
                 </span>
@@ -342,10 +402,10 @@ export default function Hero() {
 
               {/* Command 3: git status */}
               <div className="flex items-center gap-2 text-primary pt-1">
-                <span className="text-outline">$</span>
+                <span className="text-outline shrink-0">$</span>
                 <span className="text-on-surface">git status --short</span>
               </div>
-              <div className="text-label-sm pl-4 flex flex-col gap-0.5">
+              <div className="text-label-sm pl-2 sm:pl-4 flex flex-col gap-0.5 break-all sm:break-normal">
                 <span className="text-primary">
                   M src/main/java/com/ritesh/service/MicroservicesEngine.java
                 </span>
@@ -422,6 +482,7 @@ export default function Hero() {
             </div>
           </div>
         </motion.div>
+      </div>
       </div>
     </section>
   );

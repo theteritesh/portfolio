@@ -407,7 +407,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: "github-activity",
-      label: "GitHub Activity",
+      label: "GitHub",
       href: "#github-activity",
       icon: "grid_view",
     },

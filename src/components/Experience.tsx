@@ -20,7 +20,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl"
+      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl overflow-hidden"
     >
       {/* Section Header */}
       <div className="flex flex-col gap-2 mb-space-md sm:mb-space-lg">
@@ -41,24 +41,24 @@ export default function Experience() {
       </div>
 
       {/* Timeline Wrapper */}
-      <div ref={containerRef} className="relative flex flex-col gap-space-lg pl-8 sm:pl-12">
+      <div ref={containerRef} className="relative flex flex-col gap-space-lg pl-9 sm:pl-12">
         {/* Static Base Line */}
-        <div className="absolute left-3.5 sm:left-5 top-4 bottom-4 w-1 bg-surface-container-high rounded-full -z-10" />
+        <div className="absolute left-4 sm:left-5 top-4 bottom-4 w-1 bg-surface-container-high rounded-full -z-10" />
 
         {/* Animated Drawing Git Branch Line */}
         {!shouldReduceMotion ? (
           <motion.div
             style={{ scaleY, originY: 0 }}
-            className="absolute left-3.5 sm:left-5 top-4 bottom-4 w-1 bg-gradient-to-b from-primary via-tertiary to-secondary rounded-full shadow-[0_0_10px_rgba(123,219,128,0.5)] -z-10"
+            className="absolute left-4 sm:left-5 top-4 bottom-4 w-1 bg-gradient-to-b from-primary via-tertiary to-secondary rounded-full shadow-[0_0_10px_rgba(123,219,128,0.5)] -z-10"
           />
         ) : (
-          <div className="absolute left-3.5 sm:left-5 top-4 bottom-4 w-1 bg-primary rounded-full -z-10" />
+          <div className="absolute left-4 sm:left-5 top-4 bottom-4 w-1 bg-primary rounded-full -z-10" />
         )}
 
         {experience.map((item, index) => {
           const isPrimary = item.statusColor === "primary";
           return (
-            <div key={item.id} className="relative flex flex-col gap-space-sm">
+            <div key={item.id} className="relative flex flex-col gap-space-sm min-w-0">
               {/* Commit Node Indicator */}
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0, opacity: 0 }}
@@ -70,7 +70,7 @@ export default function Experience() {
                   damping: 18,
                   delay: shouldReduceMotion ? 0 : 0.1,
                 }}
-                className={`absolute -left-8 sm:-left-12 top-1.5 w-6 h-6 rounded-full ring-4 ring-surface flex items-center justify-center ${
+                className={`absolute -left-9 sm:-left-12 top-1.5 w-6 h-6 rounded-full ring-2 sm:ring-4 ring-surface flex items-center justify-center ${
                   isPrimary
                     ? "bg-primary-container text-on-primary-container shadow-[0_0_12px_rgba(35,134,54,0.4)]"
                     : "bg-surface-container-high text-tertiary"
@@ -109,8 +109,8 @@ export default function Experience() {
 
               {/* Card Body */}
               <motion.div
-                initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
-                whileInView={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.05 }}
                 transition={{
                   duration: 0.45,

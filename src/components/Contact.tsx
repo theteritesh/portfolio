@@ -178,7 +178,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl"
+      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl overflow-hidden"
     >
       {/* Section Header */}
       <motion.div
@@ -212,19 +212,19 @@ export default function Contact() {
         whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.05 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="rounded-lg bg-surface-container-low border border-outline-variant shadow-2xl overflow-hidden"
+        className="rounded-lg bg-surface-container-low border border-outline-variant shadow-2xl overflow-hidden w-full"
       >
         {/* Terminal OS Window Header */}
-        <div className="h-11 px-space-md bg-surface-container-high border-b border-outline-variant flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-error inline-block" />
-            <span className="w-3 h-3 rounded-full bg-secondary-fixed inline-block" />
-            <span className="w-3 h-3 rounded-full bg-primary inline-block" />
-            <span className="font-label-sm text-label-sm text-on-surface-variant ml-2 font-mono truncate">
+        <div className="h-11 px-3 sm:px-space-md bg-surface-container-high border-b border-outline-variant flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-error inline-block shrink-0" />
+            <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-secondary-fixed inline-block shrink-0" />
+            <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-primary inline-block shrink-0" />
+            <span className="font-label-sm text-label-sm text-on-surface-variant ml-1.5 sm:ml-2 font-mono truncate text-[11px] sm:text-label-sm">
               git push --set-upstream ritesh contact-inbox
             </span>
           </div>
-          <div className="flex items-center gap-2 text-outline font-label-sm text-label-sm font-mono">
+          <div className="flex items-center gap-2 text-outline font-label-sm text-label-sm font-mono shrink-0">
             <span className="material-symbols-outlined text-[16px] text-primary">
               lock
             </span>

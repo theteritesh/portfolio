@@ -53,16 +53,16 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl"
+      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl overflow-hidden"
     >
       {/* Section Header & Interactive Filter Bar */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg w-full min-w-0">
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
           whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.4 }}
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-2 min-w-0"
         >
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider font-mono flex items-center gap-1.5">
@@ -85,7 +85,7 @@ export default function Projects() {
         </motion.div>
 
         {/* Filter Tabs with Framer Motion Sliding Indicator */}
-        <div className="flex items-center gap-1 p-1 rounded-lg bg-surface-container border border-outline-variant font-label-sm text-label-sm font-mono overflow-x-auto max-w-full">
+        <div className="flex items-center gap-1 p-1 rounded-lg bg-surface-container border border-outline-variant font-label-sm text-label-sm font-mono overflow-x-auto w-full md:w-auto min-w-0 max-w-full scrollbar-thin">
           {filterTabs.map((tab) => {
             const isSelected = activeFilter === tab;
             const count =

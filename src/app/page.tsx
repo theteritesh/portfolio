@@ -8,6 +8,7 @@ import Projects from "@/components/Projects";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { getGitHubData } from "@/lib/github";
 
 // Dynamically import heavy below-the-fold components for optimal initial paint
 const GitHubActivity = dynamic(() => import("@/components/GitHubActivity"), {
@@ -34,17 +35,24 @@ const Testimonials = dynamic(() => import("@/components/Testimonials"), {
   ),
 });
 
-export default function Home() {
+export default async function Home() {
+  const githubData = await getGitHubData();
+
   return (
-    <div className="flex flex-col min-h-screen bg-surface text-on-surface">
+    <div className="flex flex-col min-h-screen bg-surface text-on-surface overflow-x-hidden">
       <Navbar />
-      <main id="main-content" className="w-full pt-16 flex flex-col flex-1">
-        <Hero />
+      <main id="main-content" className="w-full pt-16 flex flex-col flex-1 overflow-x-hidden">
+        <Hero stats={githubData.stats} />
         <About />
         <Skills />
         <Experience />
         <Projects />
-        <GitHubActivity />
+        <GitHubActivity
+          data={githubData.activity}
+          lastUpdated={githubData.lastUpdated}
+          userUrl={githubData.userUrl}
+          isLive={githubData.isLive}
+        />
         <Education />
         <Testimonials />
         <Contact />

@@ -44,7 +44,24 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
+
+# GitHub GraphQL API (Server-side only — NEVER commit or prefix with NEXT_PUBLIC_)
+GITHUB_TOKEN=ghp_your_token_here
+GITHUB_USERNAME=theteritesh
 ```
+
+#### How to Create your GitHub Token (Classic, No Scopes)
+
+1. Open **[GitHub Settings → Developer Settings → Personal access tokens → Tokens (classic)](https://github.com/settings/tokens)**.
+2. Click **Generate new token** → **Generate new token (classic)**.
+3. Set **Note** to `Portfolio API`.
+4. Set **Expiration** (e.g. 90 days or No expiration).
+5. **Select scopes**: Leave **ALL checkboxes UNCHECKED (no scopes required)**. Public profiles, public repositories, and public contribution calendars require zero scopes.
+6. Click **Generate token** and copy the string (`ghp_...`).
+7. Paste it as `GITHUB_TOKEN` in your `.env.local`.
+
+> [!NOTE]
+> **Safety & Graceful Fallback**: `GITHUB_TOKEN` is imported strictly through `server-only` in `src/lib/github.ts` and is never logged or transmitted to the client. If `GITHUB_TOKEN` is missing, invalid, or reaches rate limits, the portfolio automatically falls back to the demo data in `src/data/portfolio.ts` without crashing.
 
 ### 3. Replace the Resume PDF Placeholder
 
@@ -79,12 +96,14 @@ npm run start
 
 ## ⚙️ Environment Variables Reference
 
-| Variable | Description | Default / Example |
-|---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | Canonical root URL used in `metadataBase`, `robots.txt`, `sitemap.xml`, and JSON-LD schema | `http://localhost:3000` (Local) / `https://ritesh-thete.dev` (Prod) |
-| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | EmailJS Service ID | `service_xxxxxxx` |
-| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS Template ID (fields: `from_name`, `from_email`, `subject`, `message`) | `template_xxxxxxx` |
-| `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | EmailJS Public API Key | `xxxxxxxxxxxxxxxx` |
+| Variable | Description | Scope | Default / Example |
+|---|---|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Canonical root URL used in `metadataBase`, `robots.txt`, `sitemap.xml`, and JSON-LD schema | Client & Server | `http://localhost:3000` (Local) / `https://ritesh-thete.dev` (Prod) |
+| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | EmailJS Service ID | Client | `service_xxxxxxx` |
+| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS Template ID (fields: `from_name`, `from_email`, `subject`, `message`) | Client | `template_xxxxxxx` |
+| `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | EmailJS Public API Key | Client | `xxxxxxxxxxxxxxxx` |
+| `GITHUB_TOKEN` | GitHub Personal Access Token (classic, **no scopes**) | Server-only | `ghp_xxxxxxxxxxxxxxxxxxxx` |
+| `GITHUB_USERNAME` | GitHub username to fetch profile, metrics, calendar, and pinned repos | Server-only | `theteritesh` |
 
 ---
 

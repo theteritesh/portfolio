@@ -2,10 +2,23 @@
 
 import React, { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { portfolioData, HeatmapDay } from "@/data/portfolio";
+import { portfolioData, GitHubActivityData, HeatmapDay } from "@/data/portfolio";
 
-export default function GitHubActivity() {
-  const { github } = portfolioData;
+export interface GitHubActivityProps {
+  data?: GitHubActivityData;
+  lastUpdated?: string;
+  userUrl?: string;
+  isLive?: boolean;
+}
+
+export default function GitHubActivity({
+  data,
+  lastUpdated,
+  userUrl,
+  isLive,
+}: GitHubActivityProps = {}) {
+  const github = data || portfolioData.github;
+  const profileUrl = userUrl || `https://github.com/${github.username}`;
   const shouldReduceMotion = useReducedMotion();
   const [hoveredDay, setHoveredDay] = useState<{
     day: HeatmapDay;
@@ -61,7 +74,7 @@ export default function GitHubActivity() {
   return (
     <section
       id="github-activity"
-      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl"
+      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl overflow-hidden"
     >
       {/* Target anchor for matching navbar "#github" as well */}
       <div id="github" className="absolute -top-24" />
@@ -76,7 +89,7 @@ export default function GitHubActivity() {
         {/* Section Top Bar */}
         <div className="flex items-center justify-between flex-wrap gap-space-sm border-b border-outline-variant/40 pb-space-sm">
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="material-symbols-outlined text-primary text-[22px]">
                 calendar_month
               </span>
@@ -84,6 +97,16 @@ export default function GitHubActivity() {
                 {github.totalContributions.toLocaleString()} contributions in{" "}
                 {github.yearRange}
               </h2>
+              {isLive ? (
+                <span className="px-2 py-0.5 rounded bg-primary/10 border border-primary/30 text-primary text-[10px] font-mono font-medium flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  Live API
+                </span>
+              ) : (
+                <span className="px-2 py-0.5 rounded bg-surface-container border border-outline-variant text-outline text-[10px] font-mono">
+                  Cached Provenance
+                </span>
+              )}
             </div>
             <p className="font-body-sm text-[13px] text-on-surface-variant">
               Continuous daily engineering cadence across public open-source and
@@ -92,6 +115,24 @@ export default function GitHubActivity() {
           </div>
 
           <div className="flex items-center gap-2 text-label-sm font-label-sm font-mono flex-wrap">
+            {lastUpdated && (
+              <span className="px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-outline flex items-center gap-1.5 text-[11px]">
+                <span className="material-symbols-outlined text-[13px] text-primary">
+                  history
+                </span>
+                <span>Last updated: {lastUpdated}</span>
+              </span>
+            )}
+            <a
+              href={profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${github.username} on GitHub`}
+              className="px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-tertiary hover:text-primary hover:border-primary transition-colors flex items-center gap-1.5 shadow-sm text-[11px]"
+            >
+              <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+              <span>View on GitHub</span>
+            </a>
             <span className="px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-primary font-semibold flex items-center gap-1.5 shadow-sm">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Current Streak: {github.currentStreak} days
@@ -115,7 +156,7 @@ export default function GitHubActivity() {
               ))}
             </div>
 
-            {/* Matrix with Day Labels (Mon, Wed, Fri) + 52 Column Grid */}
+            {/* Matrix with Day Labels (Sun-Sat) + 52 Column Grid */}
             <div className="flex gap-2 relative">
               {/* Day Labels on left */}
               <div className="flex flex-col justify-between text-[9px] text-outline font-mono py-0.5 select-none w-5">
@@ -174,9 +215,9 @@ export default function GitHubActivity() {
                           className={`w-full aspect-square rounded-[2px] transition-colors cursor-pointer ${getLevelColor(
                             day.level
                           )}`}
-                          title={`${day.count} contributions on ${formatDate(
-                            day.date
-                          )}`}
+                          title={`${day.count} ${
+                            day.count === 1 ? "contribution" : "contributions"
+                          } on ${formatDate(day.date)}`}
                         />
                       );
                     })}
@@ -188,7 +229,7 @@ export default function GitHubActivity() {
             {/* Heatmap Legend */}
             <div className="flex items-center justify-between text-outline text-label-sm font-label-sm font-mono pt-2 border-t border-outline-variant/30 flex-wrap gap-2">
               <a
-                href={`https://github.com/${github.username}`}
+                href={profileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary transition-colors flex items-center gap-1"
@@ -214,7 +255,7 @@ export default function GitHubActivity() {
 
         {/* Top Languages Distribution Bar */}
         <div className="flex flex-col gap-2 pt-2 border-t border-outline-variant/30">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <span className="font-label-sm text-label-sm text-on-surface font-semibold font-mono flex items-center gap-1.5">
               <span className="material-symbols-outlined text-tertiary text-[16px]">
                 data_object
@@ -245,7 +286,7 @@ export default function GitHubActivity() {
                 }}
                 className="h-full relative group"
                 style={{ backgroundColor: lang.color }}
-                title={`${lang.name} ${lang.percentage}%`}
+                title={`${lang.name} ${lang.percentage.toFixed(1)}%`}
               />
             ))}
           </div>
@@ -272,9 +313,9 @@ export default function GitHubActivity() {
           </div>
         </div>
 
-        {/* Pinned Repositories Row (3 Cards) */}
+        {/* Pinned Repositories Row (Flexible for 0, 1, 2, or 3+ cards) */}
         <div className="flex flex-col gap-3 pt-3 border-t border-outline-variant/30">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <span className="font-label-sm text-label-sm text-on-surface font-semibold font-mono flex items-center gap-1.5">
               <span className="material-symbols-outlined text-secondary text-[16px]">
                 push_pin
@@ -282,7 +323,7 @@ export default function GitHubActivity() {
               Pinned Open-Source Repositories
             </span>
             <a
-              href={`https://github.com/${github.username}?tab=repositories`}
+              href={`${profileUrl}?tab=repositories`}
               target="_blank"
               rel="noopener noreferrer"
               className="font-label-sm text-[12px] text-tertiary hover:underline font-mono flex items-center gap-1"
@@ -294,74 +335,88 @@ export default function GitHubActivity() {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md">
-            {github.pinnedRepos.map((repo, idx) => (
-              <motion.div
-                key={repo.name}
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{
-                  duration: 0.35,
-                  delay: shouldReduceMotion ? 0 : idx * 0.1,
-                  ease: "easeOut",
-                }}
-                whileHover={
-                  shouldReduceMotion
-                    ? undefined
-                    : { y: -4, transition: { duration: 0.2 } }
-                }
-                className="p-4 rounded-lg bg-surface-container border border-outline-variant shadow-sm flex flex-col justify-between gap-3 hover:border-primary hover:shadow-md transition-all group"
-              >
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <a
-                      href={repo.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-headline-sm text-[14px] text-tertiary font-mono font-semibold group-hover:underline truncate flex items-center gap-1.5"
-                    >
-                      <span className="material-symbols-outlined text-[16px] text-outline group-hover:text-tertiary transition-colors">
-                        book
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
+            {github.pinnedRepos.length > 0 ? (
+              github.pinnedRepos.map((repo, idx) => (
+                <motion.div
+                  key={repo.name}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+                  whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{
+                    duration: 0.35,
+                    delay: shouldReduceMotion ? 0 : idx * 0.1,
+                    ease: "easeOut",
+                  }}
+                  whileHover={
+                    shouldReduceMotion
+                      ? undefined
+                      : { y: -4, transition: { duration: 0.2 } }
+                  }
+                  className="p-4 rounded-lg bg-surface-container border border-outline-variant shadow-sm flex flex-col justify-between gap-3 hover:border-primary hover:shadow-md transition-all group"
+                >
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <a
+                        href={repo.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-headline-sm text-[14px] text-tertiary font-mono font-semibold group-hover:underline truncate flex items-center gap-1.5"
+                      >
+                        <span className="material-symbols-outlined text-[16px] text-outline group-hover:text-tertiary transition-colors">
+                          book
+                        </span>
+                        <span className="truncate">{repo.name}</span>
+                      </a>
+                      <span className="px-1.5 py-0.5 rounded-full border border-outline-variant text-outline text-[10px] font-mono shrink-0">
+                        Public
                       </span>
-                      <span className="truncate">{repo.name}</span>
-                    </a>
-                    <span className="px-1.5 py-0.5 rounded-full border border-outline-variant text-outline text-[10px] font-mono shrink-0">
-                      Public
-                    </span>
+                    </div>
+
+                    <p className="font-body-sm text-[12px] text-on-surface-variant leading-relaxed line-clamp-3">
+                      {repo.description}
+                    </p>
                   </div>
 
-                  <p className="font-body-sm text-[12px] text-on-surface-variant leading-relaxed line-clamp-3">
-                    {repo.description}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between pt-2 border-t border-outline-variant/30 text-[11px] font-mono text-outline">
-                  <span className="flex items-center gap-1.5">
-                    <span
-                      className="w-2 h-2 rounded-full shrink-0"
-                      style={{ backgroundColor: repo.languageColor }}
-                    />
-                    <span className="text-on-surface">{repo.language}</span>
-                  </span>
-
-                  <div className="flex items-center gap-3">
-                    <span className="flex items-center gap-0.5 hover:text-tertiary transition-colors">
-                      <span className="material-symbols-outlined text-[13px] text-tertiary">
-                        star
-                      </span>
-                      {repo.stars}
+                  <div className="flex items-center justify-between pt-2 border-t border-outline-variant/30 text-[11px] font-mono text-outline">
+                    <span className="flex items-center gap-1.5">
+                      <span
+                        className="w-2 h-2 rounded-full shrink-0"
+                        style={{ backgroundColor: repo.languageColor }}
+                      />
+                      <span className="text-on-surface">{repo.language}</span>
                     </span>
-                    <span className="flex items-center gap-0.5 hover:text-on-surface transition-colors">
-                      <span className="material-symbols-outlined text-[13px]">
-                        fork_right
+
+                    <div className="flex items-center gap-3">
+                      <span className="flex items-center gap-0.5 hover:text-tertiary transition-colors">
+                        <span className="material-symbols-outlined text-[13px] text-tertiary">
+                          star
+                        </span>
+                        {repo.stars}
                       </span>
-                      {repo.forks}
-                    </span>
+                      <span className="flex items-center gap-0.5 hover:text-on-surface transition-colors">
+                        <span className="material-symbols-outlined text-[13px]">
+                          fork_right
+                        </span>
+                        {repo.forks}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))
+            ) : (
+              <div className="col-span-full p-4 rounded-lg bg-surface-container border border-outline-variant text-center font-mono text-[12px] text-on-surface-variant">
+                No pinned repositories displayed.{" "}
+                <a
+                  href={`${profileUrl}?tab=repositories`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  View all public repositories on GitHub →
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
@@ -381,13 +436,10 @@ export default function GitHubActivity() {
         >
           <span className="font-semibold text-primary">
             {hoveredDay.day.count === 0
-              ? "No contributions"
+              ? `No contributions on ${formatDate(hoveredDay.day.date)}`
               : `${hoveredDay.day.count} ${
                   hoveredDay.day.count === 1 ? "contribution" : "contributions"
-                }`}
-          </span>
-          <span className="text-on-surface-variant text-[10px]">
-            {formatDate(hoveredDay.day.date)}
+                } on ${formatDate(hoveredDay.day.date)}`}
           </span>
         </div>
       )}

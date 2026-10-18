@@ -38,7 +38,7 @@ ${about.bioParagraph}
   return (
     <section
       id="about"
-      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl"
+      className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl overflow-hidden"
     >
       <motion.div
         initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
@@ -117,7 +117,7 @@ ${about.bioParagraph}
 
         {/* Commit breadcrumb info bar */}
         <div className="bg-surface-container px-space-sm sm:px-space-md py-2 flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant flex-wrap gap-2 border-b border-outline-variant/60">
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
             <div className="relative w-5 h-5 rounded-full overflow-hidden shrink-0 ring-1 ring-outline-variant">
               <Image
                 src={personal.avatarUrl}
@@ -127,14 +127,14 @@ ${about.bioParagraph}
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-on-surface font-semibold font-mono text-[13px]">
+            <span className="text-on-surface font-semibold font-mono text-[13px] shrink-0">
               alexmorgan
             </span>
             <span className="text-outline truncate text-[12px] sm:text-[13px]">
               {about.latestCommit.message}
             </span>
           </div>
-          <div className="flex items-center gap-2 font-label-sm text-label-sm text-outline font-mono">
+          <div className="flex items-center gap-2 font-label-sm text-label-sm text-outline font-mono shrink-0">
             <span className="hidden md:inline">Latest commit</span>
             <span className="px-1.5 py-0.5 rounded bg-surface-container-high border border-outline-variant text-tertiary">
               {about.latestCommit.hash}
@@ -147,13 +147,13 @@ ${about.bioParagraph}
         <div className="p-4 sm:p-space-lg lg:p-space-xl bg-surface-container-lowest/95 flex flex-col gap-space-md">
           {/* Markdown H1/H2 Title Bar */}
           <div className="flex items-center justify-between flex-wrap gap-2 pb-1 border-b border-outline-variant/40">
-            <h2 className="font-headline-lg text-[22px] sm:text-[28px] lg:text-headline-lg text-on-surface flex items-center gap-2 font-mono font-bold">
+            <h2 className="font-headline-lg text-[18px] sm:text-[24px] lg:text-headline-lg text-on-surface flex items-center gap-2 font-mono font-bold break-words">
               <span>{about.heading}</span>
-              <span className="text-primary text-[24px] sm:text-[28px] animate-bounce">
+              <span className="text-primary text-[22px] sm:text-[28px] animate-bounce shrink-0">
                 ↓
               </span>
             </h2>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container border border-outline-variant text-tertiary font-label-sm text-label-sm font-mono">
                 <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse" />
                 {about.availability}

@@ -42,8 +42,11 @@ export default function Navbar() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "/" && document.activeElement?.tagName !== "INPUT") {
         e.preventDefault();
-        const searchInput = document.getElementById("nav-search-input");
-        searchInput?.focus();
+        setIsDrawerOpen(true);
+        setTimeout(() => {
+          const searchInput = document.getElementById("drawer-search-input");
+          searchInput?.focus();
+        }, 100);
       } else if (e.key === "Escape") {
         setIsDrawerOpen(false);
         setIsBranchMenuOpen(false);
@@ -79,47 +82,52 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-low/95 backdrop-blur-md border-b border-outline-variant transition-colors">
-        <div className="h-16 max-w-[1440px] mx-auto px-gutter flex items-center justify-between gap-space-sm sm:gap-space-md">
+        <div className="h-16 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 sm:gap-4 w-full">
           {/* Left Brand & Git Branch Chip */}
-          <div className="flex items-center gap-space-sm sm:gap-space-md shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <Link
               href="#home"
-              className="flex items-center gap-2 group transition-opacity hover:opacity-90"
+              className="flex items-center gap-2 group transition-opacity hover:opacity-90 shrink-0"
             >
-              <div className="w-8 h-8 rounded bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary group-hover:border-primary transition-colors">
+              <div className="w-8 h-8 rounded bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary group-hover:border-primary transition-colors shrink-0">
                 <span className="font-mono font-bold text-sm tracking-tighter">
                   &gt;_
                 </span>
               </div>
-              <div className="flex flex-col">
-                <span className="font-headline-sm text-[17px] text-on-surface font-semibold tracking-tight hidden sm:inline-block font-mono">
-                  {portfolioData.personal.domain.split(".")[0]}<span className="text-primary">.{portfolioData.personal.domain.split(".")[1] || "dev"}</span>
+              <div className="flex flex-col shrink-0">
+                <span className="font-headline-sm text-[16px] text-on-surface font-semibold tracking-tight hidden sm:inline-block font-mono whitespace-nowrap">
+                  {portfolioData.personal.domain.split(".")[0]}
+                  <span className="text-primary">
+                    .{portfolioData.personal.domain.split(".")[1] || "dev"}
+                  </span>
                 </span>
-                <span className="text-[12px] text-tertiary font-mono sm:hidden flex items-center gap-0.5">
+                <span className="text-[12px] text-tertiary font-mono sm:hidden flex items-center gap-0.5 whitespace-nowrap">
                   <span>{portfolioData.personal.domain.split(".")[0]}</span>
-                  <span className="text-primary">.{portfolioData.personal.domain.split(".")[1] || "dev"}</span>
+                  <span className="text-primary">
+                    .{portfolioData.personal.domain.split(".")[1] || "dev"}
+                  </span>
                 </span>
               </div>
             </Link>
 
-            {/* Branch Switcher Pill */}
-            <div className="relative">
+            {/* Branch Switcher Pill (Visible on 2xl+ where room permits) */}
+            <div className="relative hidden 2xl:block shrink-0">
               <button
                 type="button"
                 onClick={() => setIsBranchMenuOpen(!isBranchMenuOpen)}
-                className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded bg-surface-container border border-outline-variant font-label-sm text-label-sm text-tertiary select-none cursor-pointer hover:border-outline hover:text-primary transition-all font-mono"
-                title="Switch branch"
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container border border-outline-variant font-label-sm text-[12px] text-tertiary select-none cursor-pointer hover:border-outline hover:text-primary transition-all font-mono max-w-[135px] 2xl:max-w-[150px]"
+                title={`Active Git Branch: ${currentBranch} (Click to switch)`}
               >
-                <span className="material-symbols-outlined text-[15px]">
+                <span className="material-symbols-outlined text-[15px] shrink-0">
                   fork_right
                 </span>
-                <span>{currentBranch}</span>
-                <span className="text-on-surface-variant text-[10px]">▾</span>
+                <span className="truncate max-w-[75px] 2xl:max-w-[90px]">{currentBranch}</span>
+                <span className="text-on-surface-variant text-[10px] shrink-0">▾</span>
               </button>
 
               {/* Branch Dropdown */}
               {isBranchMenuOpen && (
-                <div className="absolute top-full left-0 mt-1.5 w-56 rounded-md bg-surface-container-low border border-outline-variant shadow-2xl py-1.5 z-50 font-mono text-label-sm animate-in fade-in-50 zoom-in-95">
+                <div className="absolute top-full left-0 mt-1.5 w-60 rounded-md bg-surface-container-low border border-outline-variant shadow-2xl py-1.5 z-50 font-mono text-label-sm animate-in fade-in-50 zoom-in-95">
                   <div className="px-3 py-1 text-[10px] text-outline uppercase tracking-wider border-b border-outline-variant/50">
                     Switch Active Git Branch
                   </div>
@@ -139,7 +147,7 @@ export default function Navbar() {
                     >
                       <span className="truncate">{b}</span>
                       {currentBranch === b && (
-                        <span className="text-primary text-[12px]">✓</span>
+                        <span className="text-primary text-[12px] shrink-0 ml-2">✓</span>
                       )}
                     </button>
                   ))}
@@ -148,8 +156,8 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Center Navigation Links (Desktop: visible on lg+) */}
-          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 font-mono text-[12px] xl:text-label-md">
+          {/* Center Navigation Links (Visible on xl and above: 1280px+) */}
+          <nav className="hidden xl:flex items-center justify-center flex-1 min-w-0 mx-2 2xl:mx-4 gap-0.5 2xl:gap-1.5 font-mono text-[12px] 2xl:text-[13px]">
             {portfolioData.navigation.map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -157,7 +165,7 @@ export default function Navbar() {
                   key={item.id}
                   href={item.href}
                   onClick={() => setActiveSection(item.id)}
-                  className={`px-2 xl:px-2.5 py-1.5 rounded transition-all duration-150 ${
+                  className={`px-1.5 2xl:px-2 py-1 rounded whitespace-nowrap transition-all duration-150 ${
                     isActive
                       ? "bg-surface-container-highest text-primary border border-outline-variant shadow-sm font-semibold"
                       : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
@@ -170,32 +178,16 @@ export default function Navbar() {
           </nav>
 
           {/* Right Action Bar */}
-          <div className="flex items-center gap-1.5 sm:gap-space-sm shrink-0">
-            {/* Search Bar Input (Desktop) */}
-            <div className="hidden xl:flex items-center gap-2 px-space-sm py-1 bg-surface-container-lowest border border-outline-variant rounded text-on-surface-variant text-label-sm font-label-sm focus-within:border-tertiary focus-within:text-on-surface transition-colors">
-              <span className="material-symbols-outlined text-[16px]">search</span>
-              <input
-                id="nav-search-input"
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Type to search..."
-                className="bg-transparent border-none outline-none text-on-surface placeholder:text-outline w-28 2xl:w-36 font-code-inline text-code-inline font-mono"
-              />
-              <kbd className="px-1.5 py-0.5 rounded bg-surface-container border border-outline-variant text-[10px] text-on-surface-variant font-label-sm font-mono">
-                /
-              </kbd>
-            </div>
-
-            {/* Theme Toggle Button (Desktop & Tablet) */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            {/* Theme Toggle Button */}
             <button
               type="button"
               onClick={toggleTheme}
               aria-label={isCurrentDark ? "Switch to light mode" : "Switch to dark mode"}
-              className="w-9 h-9 rounded bg-surface-container border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors overflow-hidden"
+              className="w-8 h-8 rounded bg-surface-container border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors overflow-hidden shrink-0"
             >
               <span
-                className={`material-symbols-outlined text-[18px] transition-transform duration-300 ${
+                className={`material-symbols-outlined text-[17px] transition-transform duration-300 ${
                   isCurrentDark ? "rotate-0 text-tertiary" : "rotate-90 text-amber-500"
                 }`}
               >
@@ -203,19 +195,21 @@ export default function Navbar() {
               </span>
             </button>
 
-            {/* Download Resume Button (Desktop) */}
+            {/* Download Resume Button (Adaptive: icon-only below 2xl, text+icon at 2xl+) */}
             <a
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-primary-container hover:bg-[#2ea043] border border-white/10 text-on-primary-container font-label-md text-label-md tracking-tight active:scale-[0.98] transition-all font-mono shadow-sm"
+              aria-label="Download Resume"
+              title="Download Resume"
+              className="shrink-0 inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded bg-primary-container hover:bg-[#2ea043] border border-white/10 text-on-primary-container text-[12px] font-semibold tracking-tight active:scale-[0.98] transition-all font-mono shadow-sm"
             >
               <span className="material-symbols-outlined text-[16px]">download</span>
-              <span>Download Resume</span>
+              <span className="hidden 2xl:inline whitespace-nowrap">Resume</span>
             </a>
 
-            {/* Profile Avatar with Status Pulse */}
-            <div className="relative flex items-center justify-center pl-0.5">
+            {/* Profile Avatar with Status Pulse (Desktop) */}
+            <div className="relative hidden sm:flex items-center justify-center shrink-0">
               <div className="relative w-8 h-8 rounded-full overflow-hidden border border-outline-variant ring-1 ring-outline-variant/40">
                 <Image
                   src={portfolioData.personal.avatarUrl}
@@ -231,12 +225,12 @@ export default function Navbar() {
               />
             </div>
 
-            {/* Mobile/Tablet Drawer Hamburger Button (Visible below lg) */}
+            {/* Mobile/Tablet Drawer Hamburger Button (Visible below xl: < 1280px) */}
             <button
               type="button"
               onClick={() => setIsDrawerOpen(true)}
               aria-label="Open navigation menu"
-              className="lg:hidden p-1.5 rounded bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
+              className="xl:hidden p-1.5 rounded bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors shrink-0"
             >
               <span className="material-symbols-outlined text-[20px]">menu</span>
             </button>
@@ -244,12 +238,12 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Sliding Drawer Navigation */}
+      {/* Mobile Sliding Drawer Navigation (Triggered below xl) */}
       <div
-        className={`fixed inset-0 z-[100] transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-[100] transition-opacity duration-300 xl:hidden overflow-hidden ${
           isDrawerOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+            ? "opacity-100 pointer-events-auto visible"
+            : "opacity-0 pointer-events-none invisible"
         }`}
       >
         {/* Fullscreen Backdrop overlay */}
@@ -266,7 +260,7 @@ export default function Navbar() {
         >
           <div className="flex flex-col h-full overflow-y-auto px-gutter-mobile py-space-md">
             {/* Drawer Header */}
-            <div className="flex items-center justify-between pb-space-md border-b border-outline-variant">
+            <div className="flex items-center justify-between pb-space-sm border-b border-outline-variant">
               <div className="flex items-center gap-space-xs font-mono">
                 <span className="material-symbols-outlined text-primary text-[20px]">
                   terminal
@@ -285,8 +279,21 @@ export default function Navbar() {
               </button>
             </div>
 
+            {/* Drawer Search Box */}
+            <div className="flex items-center gap-2 px-3 py-2 bg-surface-container border border-outline-variant rounded text-on-surface-variant text-[13px] font-mono focus-within:border-tertiary focus-within:text-on-surface my-3 shrink-0">
+              <span className="material-symbols-outlined text-[17px]">search</span>
+              <input
+                id="drawer-search-input"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search portfolio..."
+                className="bg-transparent border-none outline-none text-on-surface placeholder:text-outline w-full text-[13px] font-mono"
+              />
+            </div>
+
             {/* Mobile Nav Links */}
-            <div className="flex flex-col gap-1 py-space-sm font-label-md text-label-md font-mono">
+            <div className="flex flex-col gap-1 py-1 font-label-md text-label-md font-mono flex-1 overflow-y-auto">
               {portfolioData.navigation.map((item) => {
                 const isActive = activeSection === item.id;
                 return (
@@ -297,7 +304,7 @@ export default function Navbar() {
                       setActiveSection(item.id);
                       setIsDrawerOpen(false);
                     }}
-                    className={`flex items-center gap-space-sm px-3 py-2.5 rounded transition-colors ${
+                    className={`flex items-center gap-space-sm px-3 py-2.5 rounded whitespace-nowrap transition-colors ${
                       isActive
                         ? "bg-surface-container-highest text-primary border border-outline-variant font-semibold"
                         : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container"
@@ -313,7 +320,7 @@ export default function Navbar() {
             </div>
 
             {/* Drawer Footer Actions */}
-            <div className="pt-space-md mt-auto flex flex-col gap-space-sm border-t border-outline-variant">
+            <div className="pt-space-md mt-auto flex flex-col gap-space-sm border-t border-outline-variant shrink-0">
               {/* Theme Toggle in Drawer */}
               <div className="flex items-center justify-between p-2 rounded bg-surface-container border border-outline-variant font-mono text-[12px]">
                 <span className="text-on-surface">Color Theme</span>
