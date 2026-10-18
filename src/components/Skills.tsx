@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { portfolioData, SkillCategory } from "@/data/portfolio";
+import { portfolioData } from "@/data/portfolio";
 import {
   SiOpenjdk,
   SiSpringboot,

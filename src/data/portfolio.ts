@@ -156,6 +156,65 @@ export interface GitHubActivityData {
   }[];
 }
 
+export interface EducationItem {
+  id: string;
+  degree: string;
+  institution: string;
+  years: string;
+  badge?: string;
+  verified?: boolean;
+  type: "academic" | "certification";
+  description: string;
+  highlights: string[];
+  verificationLabel?: string;
+  verificationLink?: string;
+  icon: string;
+}
+
+export interface TestimonialItem {
+  id: string;
+  author: string;
+  username: string;
+  role: string;
+  company: string;
+  avatar: string;
+  statusBadge: string;
+  quote: string;
+  codeSnippet: {
+    filename: string;
+    line: string;
+  };
+  prNumber: string;
+  commitHash: string;
+}
+
+export interface ContactData {
+  email: string;
+  phone: string;
+  location: string;
+  timezone: string;
+  github: string;
+  githubUser: string;
+  linkedin: string;
+  linkedinUser: string;
+  twitter: string;
+  twitterUser: string;
+  instagram: string;
+  instagramUser: string;
+  mapImage: string;
+}
+
+export interface FooterData {
+  copyrightYear: number;
+  commitCount: string;
+  branch: string;
+  commitHash: string;
+  systemStatus: string;
+  version: string;
+  builtWith: string;
+  quickLinks: { label: string; href: string }[];
+}
+
 export interface PortfolioData {
   personal: {
     name: string;
@@ -194,17 +253,10 @@ export interface PortfolioData {
   experience: ExperienceItem[];
   projects: ProjectItem[];
   github: GitHubActivityData;
-  contact: {
-    email: string;
-    github: string;
-    githubUser: string;
-    linkedin: string;
-    linkedinUser: string;
-    twitter: string;
-    twitterUser: string;
-    location: string;
-    timezone: string;
-  };
+  education: EducationItem[];
+  testimonials: TestimonialItem[];
+  contact: ContactData;
+  footer: FooterData;
 }
 
 export const portfolioData: PortfolioData = {
@@ -359,7 +411,18 @@ export const portfolioData: PortfolioData = {
       href: "#github-activity",
       icon: "grid_view",
     },
-    { id: "blog", label: "Blog", href: "#blog", icon: "description" },
+    {
+      id: "education",
+      label: "Education",
+      href: "#education",
+      icon: "school",
+    },
+    {
+      id: "testimonials",
+      label: "Reviews",
+      href: "#testimonials",
+      icon: "rate_review",
+    },
     {
       id: "contact",
       label: "Contact",
@@ -793,15 +856,149 @@ export const portfolioData: PortfolioData = {
     })(),
   },
 
+  education: [
+    {
+      id: "edu-mca",
+      degree: "Master of Computer Applications (MCA)",
+      institution: "Pune University • Faculty of Science & Technology",
+      years: "2022 — 2024",
+      badge: "Academic Credential",
+      type: "academic",
+      description:
+        "Rigorous 2-year graduate program curriculum covering distributed operating systems, compiler design principles, complex relational algorithms, enterprise J2EE architectures, and data structures.",
+      highlights: [
+        "Graduated First Class with Honors",
+        "Cumulative GPA: 3.9 / 4.0",
+        "Advanced Computing & Systems Specialization",
+      ],
+      verificationLabel: "Degree Hash: #MCA-9821-AM",
+      icon: "school",
+    },
+    {
+      id: "edu-bba",
+      degree: "BBA (Computer Application)",
+      institution: "Savitribai Phule Pune University",
+      years: "2019 — 2022",
+      badge: "Undergraduate Degree",
+      type: "academic",
+      description:
+        "Comprehensive 3-year bachelor program establishing deep foundations in modern software development life cycles, business information systems, object-oriented programming (Java & C++), database normalization, and web technologies.",
+      highlights: [
+        "Distinction in Core Java & Database Systems",
+        "Led University Student Developer Forum",
+        "Business Process Modeling & Relational ACID Design",
+      ],
+      verificationLabel: "Degree Hash: #BBA-7104-SP",
+      icon: "workspace_premium",
+    },
+    {
+      id: "cert-aws",
+      degree: "AWS Certified Cloud Practitioner",
+      institution: "Amazon Web Services (AWS)",
+      years: "2025 — 2028",
+      badge: "Industry Certification",
+      verified: true,
+      type: "certification",
+      description:
+        "Demonstrated mastery in cloud fluency, core AWS architectural principles, security compliance models, billing structures, IAM policy orchestration, and compute VPC isolation.",
+      highlights: [
+        "AWS Validation ID: CLOUD-8109312X",
+        "Active & Verified Status via Credly",
+        "Multi-stage Docker & Amazon ECS deployment",
+      ],
+      verificationLabel: "Verify on AWS Credly",
+      verificationLink: "https://www.credly.com/users/alexmorgan-dev",
+      icon: "verified",
+    },
+  ],
+
+  testimonials: [
+    {
+      id: "test-1",
+      author: "Elena Rostova",
+      username: "erostova",
+      role: "Lead Systems Architect",
+      company: "Nexus Systems",
+      avatar: "/images/avatars/elena-rostova.svg",
+      statusBadge: "Changes Approved",
+      quote:
+        "Alex is one of those rare engineers who writes Java code with the discipline of an architect and the velocity of a hacker. His refactoring of our thread scheduling cut latency in half on day one.",
+      codeSnippet: {
+        filename: "src/main/services/OrderDispatcher.java",
+        line: "+ // LGTM! Super clean separation of concerns and flawless unit tests.",
+      },
+      prNumber: "PR #42",
+      commitHash: "4a7c81",
+    },
+    {
+      id: "test-2",
+      author: "David Tanaka",
+      username: "dtanaka",
+      role: "Engineering Director",
+      company: "FinTech Analytics Lab",
+      avatar: "/images/avatars/david-tanaka.svg",
+      statusBadge: "Changes Approved",
+      quote:
+        "During his time with us, Alex displayed an unbelievable command of SQL execution planning and Spring security. He left our backend significantly faster, better documented, and 100% stable.",
+      codeSnippet: {
+        filename: "src/main/db/migration/V4__index_tuning.sql",
+        line: "+ // Brilliant index selectivity analysis! Zero locking issues found.",
+      },
+      prNumber: "PR #18",
+      commitHash: "b291fe",
+    },
+    {
+      id: "test-3",
+      author: "Sarah Jenkins",
+      username: "sjenkins",
+      role: "VP of Engineering",
+      company: "CloudFlow Core",
+      avatar: "/images/avatars/sarah-jenkins.svg",
+      statusBadge: "Changes Approved",
+      quote:
+        "Alex took our monolithic batch pipelines and migrated them to reactive Virtual Threads with zero downtime. Exceptional code hygiene, comprehensive test coverage, and great developer empathy.",
+      codeSnippet: {
+        filename: "src/main/batch/StreamChunkProcessor.java",
+        line: "+ // Approved! Flawless backpressure handling and zero memory leak.",
+      },
+      prNumber: "PR #99",
+      commitHash: "e71c90",
+    },
+  ],
+
   contact: {
     email: "alex.morgan.dev@gmail.com",
+    phone: "+1 (555) 392-8819",
+    location: "San Francisco, CA (Remote Ready)",
+    timezone: "PST (UTC-8)",
     github: "https://github.com/alexmorgan-dev",
     githubUser: "alexmorgan-dev",
     linkedin: "https://linkedin.com/in/alexmorgan-dev",
     linkedinUser: "alexmorgan-dev",
     twitter: "https://twitter.com/alexmorgan_dev",
     twitterUser: "@alexmorgan_dev",
-    location: "San Francisco, CA",
-    timezone: "PST (UTC-8)",
+    instagram: "https://instagram.com/alexmorgan_dev",
+    instagramUser: "@alexmorgan_dev",
+    mapImage: "/images/map-san-francisco.svg",
+  },
+
+  footer: {
+    copyrightYear: 2025,
+    commitCount: "1,428 commits",
+    branch: "main",
+    commitHash: "f94a2b1",
+    systemStatus: "All systems operational",
+    version: "v2.4.0-prod",
+    builtWith: "Built with ❤️ and commits",
+    quickLinks: [
+      { label: "About", href: "#about" },
+      { label: "Skills", href: "#skills" },
+      { label: "Experience", href: "#experience" },
+      { label: "Projects", href: "#projects" },
+      { label: "GitHub", href: "#github-activity" },
+      { label: "Education", href: "#education" },
+      { label: "Testimonials", href: "#testimonials" },
+      { label: "Contact", href: "#contact" },
+    ],
   },
 };

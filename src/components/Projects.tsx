@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { portfolioData, ProjectItem } from "@/data/portfolio";
+import { portfolioData } from "@/data/portfolio";
 
 type FilterTab = "All" | "Java" | "React" | "Spring Boot" | "Full Stack";
 

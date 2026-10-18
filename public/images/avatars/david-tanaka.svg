@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="avatar-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#192126" />
+      <stop offset="100%" stop-color="#232b31" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="url(#avatar-grad-2)" stroke="#a2c9ff" stroke-width="2" />
+  <circle cx="50" cy="40" r="18" fill="#7bdb80" fill-opacity="0.25" stroke="#7bdb80" stroke-width="1.5" />
+  <path d="M 24 82 C 26 62, 74 62, 76 82 Z" fill="#a2c9ff" fill-opacity="0.3" stroke="#a2c9ff" stroke-width="1.5" />
+  <text x="50" y="46" fill="#a2c9ff" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" text-anchor="middle">DT</text>
+</svg>
