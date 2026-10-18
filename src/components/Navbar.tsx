@@ -3,7 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import { portfolioData } from "@/data/portfolio";
+
+const emptySubscribe = () => () => {};
 
 export default function Navbar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -11,7 +14,14 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isBranchMenuOpen, setIsBranchMenuOpen] = useState(false);
   const [currentBranch, setCurrentBranch] = useState("main");
-  const [isDark, setIsDark] = useState(true);
+  const { resolvedTheme, setTheme } = useTheme();
+  const mounted = React.useSyncExternalStore(emptySubscribe, () => true, () => false);
+
+  const isCurrentDark = mounted ? resolvedTheme === "dark" : true;
+
+  const toggleTheme = () => {
+    setTheme(isCurrentDark ? "light" : "dark");
+  };
 
   const branches = ["main", "feature/launch-2025", "feat/virtual-threads", "release/v2.4.0"];
 
@@ -66,13 +76,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    if (typeof document !== "undefined") {
-      document.documentElement.classList.toggle("dark");
-    }
-  };
-
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-low/95 backdrop-blur-md border-b border-outline-variant transition-colors">
@@ -90,11 +93,11 @@ export default function Navbar() {
               </div>
               <div className="flex flex-col">
                 <span className="font-headline-sm text-[17px] text-on-surface font-semibold tracking-tight hidden sm:inline-block font-mono">
-                  alexmorgan<span className="text-primary">.dev</span>
+                  {portfolioData.personal.domain.split(".")[0]}<span className="text-primary">.{portfolioData.personal.domain.split(".")[1] || "dev"}</span>
                 </span>
                 <span className="text-[12px] text-tertiary font-mono sm:hidden flex items-center gap-0.5">
-                  <span>alexmorgan</span>
-                  <span className="text-primary">.dev</span>
+                  <span>{portfolioData.personal.domain.split(".")[0]}</span>
+                  <span className="text-primary">.{portfolioData.personal.domain.split(".")[1] || "dev"}</span>
                 </span>
               </div>
             </Link>
@@ -184,24 +187,30 @@ export default function Navbar() {
               </kbd>
             </div>
 
-            {/* Theme Toggle Button */}
+            {/* Theme Toggle Button (Desktop & Tablet) */}
             <button
               type="button"
               onClick={toggleTheme}
-              aria-label="Toggle color mode"
-              className="p-1.5 rounded bg-surface-container border border-outline-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
+              aria-label={isCurrentDark ? "Switch to light mode" : "Switch to dark mode"}
+              className="w-9 h-9 rounded bg-surface-container border border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors overflow-hidden"
             >
-              <span className="material-symbols-outlined text-[18px]">
-                {isDark ? "dark_mode" : "light_mode"}
+              <span
+                className={`material-symbols-outlined text-[18px] transition-transform duration-300 ${
+                  isCurrentDark ? "rotate-0 text-tertiary" : "rotate-90 text-amber-500"
+                }`}
+              >
+                {isCurrentDark ? "dark_mode" : "light_mode"}
               </span>
             </button>
 
             {/* Download Resume Button (Desktop) */}
             <a
-              href="#resume"
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-primary-container hover:bg-[#2ea043] border border-white/10 text-on-primary-container font-label-md text-label-md tracking-tight active:scale-[0.98] transition-all font-mono shadow-sm"
             >
-              <span className="material-symbols-outlined text-[16px]">commit</span>
+              <span className="material-symbols-outlined text-[16px]">download</span>
               <span>Download Resume</span>
             </a>
 
@@ -305,13 +314,37 @@ export default function Navbar() {
 
             {/* Drawer Footer Actions */}
             <div className="pt-space-md mt-auto flex flex-col gap-space-sm border-t border-outline-variant">
+              {/* Theme Toggle in Drawer */}
+              <div className="flex items-center justify-between p-2 rounded bg-surface-container border border-outline-variant font-mono text-[12px]">
+                <span className="text-on-surface">Color Theme</span>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  aria-label={isCurrentDark ? "Switch to light mode" : "Switch to dark mode"}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-high border border-outline-variant text-on-surface"
+                >
+                  <span
+                    className={`material-symbols-outlined text-[16px] transition-transform duration-300 ${
+                      isCurrentDark ? "rotate-0 text-tertiary" : "rotate-90 text-amber-500"
+                    }`}
+                  >
+                    {isCurrentDark ? "dark_mode" : "light_mode"}
+                  </span>
+                  <span className="text-[11px] font-semibold">
+                    {isCurrentDark ? "Dark" : "Light"}
+                  </span>
+                </button>
+              </div>
+
               <a
-                href="#resume"
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsDrawerOpen(false)}
                 className="w-full h-11 px-space-md rounded bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-all font-mono shadow-md hover:bg-[#2ea043]"
               >
                 <span className="material-symbols-outlined text-[18px]">download</span>
-                <span>git clone resume.pdf</span>
+                <span>Download Resume (/resume.pdf)</span>
               </a>
 
               <div className="p-space-sm rounded bg-surface-container border border-outline-variant flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm font-mono">

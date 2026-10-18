@@ -164,10 +164,10 @@ export default function Contact() {
         err instanceof Error ? err.message : "Failed to dispatch email transmission.";
       setTerminalOutput({
         type: "error",
-        message: "error: failed to push some refs to remote 'contact:alex'",
+        message: "error: failed to push some refs to remote 'contact:ritesh'",
         logs: [
           `Reason: ${errorMsg}`,
-          "Please try again or email directly to alex.morgan.dev@gmail.com",
+          `Please try again or email directly to ${contact.email}`,
         ],
       });
     } finally {
@@ -180,6 +180,33 @@ export default function Contact() {
       id="contact"
       className="relative w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-space-lg sm:py-space-xl"
     >
+      {/* Section Header */}
+      <motion.div
+        initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+        whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="flex flex-col gap-2 mb-space-lg"
+      >
+        <div className="flex items-center gap-2">
+          <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider font-mono flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-[16px]">
+              alternate_email
+            </span>
+            REMOTE_DISPATCH • RPC_INVOCATION
+          </span>
+          <span className="px-2 py-0.5 rounded bg-surface-container border border-outline-variant text-tertiary font-mono text-[11px]">
+            Direct Transmission
+          </span>
+        </div>
+        <h2 className="font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-on-surface font-bold font-mono">
+          Contact &amp; Proposal Gateway
+        </h2>
+        <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl font-mono text-[13px]">
+          Initiate direct communication for full-stack engineering opportunities, distributed cloud architectures, or consulting.
+        </p>
+      </motion.div>
+
       <motion.div
         initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
         whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -194,7 +221,7 @@ export default function Contact() {
             <span className="w-3 h-3 rounded-full bg-secondary-fixed inline-block" />
             <span className="w-3 h-3 rounded-full bg-primary inline-block" />
             <span className="font-label-sm text-label-sm text-on-surface-variant ml-2 font-mono truncate">
-              git push --set-upstream alexmorgan contact-inbox
+              git push --set-upstream ritesh contact-inbox
             </span>
           </div>
           <div className="flex items-center gap-2 text-outline font-label-sm text-label-sm font-mono">

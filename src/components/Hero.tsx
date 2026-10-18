@@ -333,10 +333,10 @@ export default function Hero() {
                   [INFO] Tomcat started on port 8080 (http) with context path &apos;&apos;
                 </span>
                 <span className="text-tertiary pl-2">
-                  [VITE] ready in 241 ms → Local: http://localhost:5173/
+                  [NEXT] ready in 241 ms → Local: http://localhost:3000/
                 </span>
                 <span className="text-outline pl-2">
-                  [AUTH] AWS IAM Role: arn:aws:iam::01928491:role/AlexPortfolioApp
+                  [AUTH] AWS IAM Role: arn:aws:iam::01928491:role/RiteshPortfolioApp
                 </span>
               </div>
 
@@ -347,7 +347,7 @@ export default function Hero() {
               </div>
               <div className="text-label-sm pl-4 flex flex-col gap-0.5">
                 <span className="text-primary">
-                  M src/main/java/com/alex/service/MicroservicesEngine.java
+                  M src/main/java/com/ritesh/service/MicroservicesEngine.java
                 </span>
                 <span className="text-primary">
                   M frontend/src/components/GitInteractiveGraph.tsx
@@ -362,7 +362,7 @@ export default function Hero() {
 
               {/* Active Prompt Line with pulsing cursor */}
               <div className="flex items-center gap-2 pt-2 text-primary font-bold">
-                <span>alex@devbox:~$</span>
+                <span>ritesh@devbox:~$</span>
                 <span className="inline-block w-2.5 h-4 sm:h-5 bg-primary animate-pulse" />
               </div>
             </div>
@@ -370,13 +370,14 @@ export default function Hero() {
 
           {/* Profile Metadata & Verification Card */}
           <div className="flex items-center justify-between p-3 sm:p-space-md rounded-lg bg-surface-container border border-outline-variant shadow-md">
-            <div className="flex items-center gap- space-sm sm:gap-space-md">
+            <div className="flex items-center gap-space-sm sm:gap-space-md">
               <div className="relative shrink-0">
                 <Image
                   src={personal.avatarUrl}
                   alt={personal.name}
                   width={64}
                   height={64}
+                  priority
                   className="w-13 h-13 sm:w-16 sm:h-16 rounded-full object-cover ring-2 ring-primary"
                 />
                 <span className="absolute bottom-0 right-0 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-primary ring-2 ring-surface-container flex items-center justify-center">

@@ -261,24 +261,24 @@ export interface PortfolioData {
 
 export const portfolioData: PortfolioData = {
   personal: {
-    name: "Alex Morgan",
-    handle: "@alexmorgan",
-    domain: "alexmorgan.dev",
-    title: "Full Stack Software Developer",
+    name: "Ritesh Thete",
+    handle: "@theteritesh",
+    domain: "ritesh-thete.dev",
+    title: "Java Full Stack Developer",
     subtitle: "I build scalable web apps with Java, Spring Boot and React",
     roles: [
+      "Java Full Stack Developer based in Pune",
       "I build scalable web apps with Java, Spring Boot and React",
       "Architecting fault-tolerant distributed microservices",
-      "Engineering high-throughput event-driven systems",
-      "Crafting reactive, type-safe full-stack experiences",
+      "Crafting reactive Next.js & React frontends",
     ],
-    bio: "Passionate software craftsperson focused on distributed architectures, high-throughput microservices, and reactive frontend ecosystems. Architecting resilient web infrastructure with clean Git provenance.",
+    bio: "Java Full Stack Developer based in Pune, specializing in Spring Boot, distributed microservices, React, and Next.js reactive web architectures with clean Git provenance.",
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDcV-E1eITp2yUj4_p89kYLb4G8A7vYacaccppfpyg44Mkq7mCTLYf5hukoSNFpEY_vNi56X2WVzbNqyoyI26iCiCIiJ6T1mvKgGiiqJQOkxb9DtFUIBNkXCsQH5FRhLd6RcsGEbLkeIv-ObMqLkFf7HwTIY-hTOEDb7jI82t2onZRQ7YGnbIwtf35qi466XuHvpc27vWIcb8WRfdymNeChoROvWp3_zRlO9KLMnQ-YqABjN6Djphp-",
-    location: "San Francisco, CA (Remote Ready)",
-    timezone: "PST (UTC-8)",
+    location: "Pune, Maharashtra, India (Remote Ready)",
+    timezone: "IST (UTC+5:30)",
     education: "Master of Computer Applications (MCA)",
-    degreeSpecialization: "MCA Graduate • Full Stack",
+    degreeSpecialization: "MCA Graduate • Pune University",
     status: {
       label: "Open to work",
       online: true,
@@ -289,7 +289,7 @@ export const portfolioData: PortfolioData = {
       { label: "AWS Certified", icon: "workspace_premium" },
       { label: "100% On-Time Delivery", icon: "verified" },
     ],
-    resumeUrl: "#resume",
+    resumeUrl: "/resume.pdf",
   },
 
   about: {
@@ -301,10 +301,10 @@ export const portfolioData: PortfolioData = {
       message: "docs: update architectural bio, MCA background, and 2025 focus areas",
       timeAgo: "14 hours ago",
     },
-    heading: "Hi there, I'm Alex Morgan",
+    heading: "Hi there, I'm Ritesh Thete",
     availability: "Available Q2/Q3 2025",
     bioParagraph:
-      "Full Stack Software Developer holding a Master of Computer Applications (MCA) degree with deep domain expertise in distributed enterprise architectures using Java 17/21, Spring Boot, and reactive modern frontends with React & TypeScript.",
+      "Java Full Stack Developer based in Pune holding a Master of Computer Applications (MCA) degree with deep domain expertise in distributed enterprise architectures using Java 17/21, Spring Boot, and reactive modern frontends with React, Next.js & TypeScript.",
     philosophy: {
       title: "Core Engineering Philosophy:",
       quote:
@@ -324,7 +324,7 @@ export const portfolioData: PortfolioData = {
       details:
         "Experienced deploying production clusters using Amazon ECS, RDS PostgreSQL, S3 lifecycle policies, and multi-stage container builds with GitHub Actions CI/CD pipelines.",
     },
-    location: "San Francisco, CA (Remote Friendly)",
+    location: "Pune, Maharashtra, India (Remote Friendly)",
     currentlyLearning: {
       command: "echo $CURRENTLY_LEARNING",
       output:
@@ -357,7 +357,7 @@ export const portfolioData: PortfolioData = {
   ],
 
   terminal: {
-    user: "alex",
+    user: "ritesh",
     hostname: "devbox",
     workdir: "~/projects/portfolio",
     branch: "main",
@@ -371,15 +371,15 @@ export const portfolioData: PortfolioData = {
         command: "mvn spring-boot:run --quiet & npm run dev",
         output: [
           "[INFO] Tomcat started on port 8080 (http) with context path ''",
-          "[VITE] ready in 241 ms → Local: http://localhost:5173/",
-          "[AUTH] AWS IAM Role: arn:aws:iam::01928491:role/AlexPortfolioApp",
+          "[NEXT] ready in 241 ms → Local: http://localhost:3000/",
+          "[AUTH] AWS IAM Role: arn:aws:iam::01928491:role/RiteshPortfolioApp",
         ],
         type: "build",
       },
       {
         command: "git status --short",
         output: [
-          "M  src/main/java/com/alex/service/MicroservicesEngine.java",
+          "M  src/main/java/com/ritesh/service/MicroservicesEngine.java",
           "M  frontend/src/components/GitInteractiveGraph.tsx",
           "A  docs/ARCHITECTURE_DECISION_RECORDS.md",
           "?? tests/e2e/cypress/integration/portfolio.spec.ts",
@@ -543,7 +543,7 @@ export const portfolioData: PortfolioData = {
       role: "Java Full Stack Developer",
       company: "NexaTech Solutions • Distributed Cloud Team",
       department: "Distributed Cloud Team",
-      location: "San Francisco, CA (Hybrid)",
+      location: "Pune, India (Hybrid)",
       period: "2025 — Present",
       isCurrent: true,
       commitHash: "e9a4f21",
@@ -580,7 +580,7 @@ export const portfolioData: PortfolioData = {
       role: "Java Full Stack Developer Intern",
       company: "CodeCraft Labs • Core Infrastructure",
       department: "Core Infrastructure",
-      location: "San Francisco, CA",
+      location: "Pune, India",
       period: "2025",
       isCurrent: false,
       commitHash: "7c3b109",
@@ -967,18 +967,18 @@ export const portfolioData: PortfolioData = {
   ],
 
   contact: {
-    email: "alex.morgan.dev@gmail.com",
-    phone: "+1 (555) 392-8819",
-    location: "San Francisco, CA (Remote Ready)",
-    timezone: "PST (UTC-8)",
-    github: "https://github.com/alexmorgan-dev",
-    githubUser: "alexmorgan-dev",
-    linkedin: "https://linkedin.com/in/alexmorgan-dev",
-    linkedinUser: "alexmorgan-dev",
-    twitter: "https://twitter.com/alexmorgan_dev",
-    twitterUser: "@alexmorgan_dev",
-    instagram: "https://instagram.com/alexmorgan_dev",
-    instagramUser: "@alexmorgan_dev",
+    email: "theteritesh@gmail.com",
+    phone: "+91 98765 43210",
+    location: "Pune, Maharashtra, India (Remote Ready)",
+    timezone: "IST (UTC+5:30)",
+    github: "https://github.com/theteritesh",
+    githubUser: "theteritesh",
+    linkedin: "https://linkedin.com/in/ritesh-thete",
+    linkedinUser: "ritesh-thete",
+    twitter: "https://twitter.com/theteritesh",
+    twitterUser: "@theteritesh",
+    instagram: "https://instagram.com/theteritesh",
+    instagramUser: "@theteritesh",
     mapImage: "/images/map-san-francisco.svg",
   },
 

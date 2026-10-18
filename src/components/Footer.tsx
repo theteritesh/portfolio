@@ -142,7 +142,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="flex items-center gap-2 text-outline">
-            <span>© {currentYear} Alex Morgan. All rights reserved.</span>
+            <span>© {currentYear} {portfolioData.personal.name}. All rights reserved.</span>
           </div>
         </div>
       </div>

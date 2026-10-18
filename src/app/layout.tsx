@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { portfolioData } from "@/data/portfolio";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,10 +17,78 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const materialSymbols = localFont({
+  src: "./fonts/material-symbols-outlined.ttf",
+  variable: "--font-material-symbols",
+  display: "swap",
+  weight: "100 700",
+  style: "normal",
+});
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "Alex Morgan | Full Stack Software Developer",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Ritesh Thete | Java Full Stack Developer, Pune",
+    template: "%s | Ritesh Thete",
+  },
   description:
-    "Alex Morgan — Full Stack Software Developer specializing in Java, Spring Boot, React, and scalable distributed architectures.",
+    "Ritesh Thete is a Java Full Stack Developer in Pune specializing in Spring Boot, distributed microservices, React, and Next.js reactive web architectures.",
+  keywords: [
+    "Ritesh Thete",
+    "Java Full Stack Developer",
+    "Pune Developer",
+    "Spring Boot",
+    "React",
+    "Next.js",
+    "Java Developer Pune",
+    "Microservices",
+    "PostgreSQL",
+    "AWS Certified",
+    "Software Engineer",
+  ],
+  authors: [{ name: "Ritesh Thete", url: siteUrl }],
+  creator: "Ritesh Thete",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    title: "Ritesh Thete | Java Full Stack Developer, Pune",
+    description:
+      "Ritesh Thete is a Java Full Stack Developer in Pune specializing in Spring Boot, distributed microservices, React, and Next.js reactive web architectures.",
+    siteName: "Ritesh Thete Portfolio",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Ritesh Thete | Java Full Stack Developer, Pune",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ritesh Thete | Java Full Stack Developer, Pune",
+    description:
+      "Ritesh Thete is a Java Full Stack Developer in Pune specializing in Spring Boot, distributed microservices, React, and Next.js reactive web architectures.",
+    images: ["/opengraph-image"],
+    creator: "@theteritesh",
+  },
 };
 
 export default function RootLayout({
@@ -25,25 +96,65 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: portfolioData.personal.name,
+    jobTitle: portfolioData.personal.title,
+    url: siteUrl,
+    image: portfolioData.personal.avatarUrl,
+    sameAs: [
+      portfolioData.contact.github,
+      portfolioData.contact.linkedin,
+      portfolioData.contact.twitter,
+    ].filter(Boolean),
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Pune",
+      addressRegion: "Maharashtra",
+      addressCountry: "IN",
+    },
+    alumniOf: {
+      "@type": "EducationalOrganization",
+      name: "Savitribai Phule Pune University",
+    },
+    knowsAbout: [
+      "Java",
+      "Spring Boot",
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Microservices",
+      "PostgreSQL",
+      "Docker",
+      "AWS",
+      "RESTful APIs",
+      "WebSockets",
+      "Git",
+    ],
+  };
+
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable} dark antialiased`}
+      suppressHydrationWarning
+      className={`${inter.variable} ${jetbrainsMono.variable} ${materialSymbols.variable} antialiased`}
     >
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
+      <body className="min-h-screen bg-surface text-on-surface flex flex-col font-sans selection:bg-primary-container selection:text-on-primary-container transition-colors duration-300">
+        <ThemeProvider>
+          {/* Accessible Skip to Content Landmark Link */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary-container focus:text-on-primary-container focus:rounded-md focus:font-mono focus:shadow-xl focus:border focus:border-white/20"
+          >
+            Skip to content
+          </a>
+          {children}
+        </ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-screen bg-surface text-on-surface flex flex-col font-sans selection:bg-primary-container selection:text-on-primary-container">
-        {children}
       </body>
     </html>
   );
