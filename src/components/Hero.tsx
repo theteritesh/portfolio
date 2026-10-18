@@ -4,7 +4,12 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { portfolioData } from "@/data/portfolio";
+import {
+  portfolioData,
+  getExperienceYears,
+  getHeroExperienceBadge,
+  getHeroBio,
+} from "@/data/portfolio";
 
 export interface HeroStats {
   repositories: number | string;
@@ -14,15 +19,44 @@ export interface HeroStats {
 
 export interface HeroProps {
   stats?: HeroStats;
+  experienceYears?: number;
 }
 
-export default function Hero({ stats }: HeroProps = {}) {
+export default function Hero({ stats, experienceYears = 1 }: HeroProps = {}) {
   const { personal, metrics, terminal } = portfolioData;
   const shouldReduceMotion = useReducedMotion();
+  const [computedYears, setComputedYears] = useState(experienceYears);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setComputedYears(getExperienceYears(personal.startDate));
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [personal.startDate]);
+
+  // Stats row: 3 cards (Experience, Repositories, Contributions)
   const displayMetrics = React.useMemo(() => {
-    if (!stats) return metrics;
+    const experienceCard = {
+      label: "EXPERIENCE",
+      value: `${computedYears}+ yrs`,
+      subtext: "full stack, Java and React",
+      icon: "work_history",
+      color: "text-primary",
+    };
+
+    if (!stats) {
+      return [
+        experienceCard,
+        ...metrics.filter(
+          (m) =>
+            m.label.toUpperCase() !== "EXPERIENCE" &&
+            m.label.toUpperCase() !== "NETWORK"
+        ),
+      ];
+    }
+
     return [
+      experienceCard,
       {
         label: "Repositories",
         value: String(stats.repositories),
@@ -40,51 +74,55 @@ export default function Hero({ stats }: HeroProps = {}) {
         icon: "grain",
         color: "text-primary",
       },
-      {
-        label: "Network",
-        value: String(stats.followers),
-        subtext: "followers",
-        icon: "group",
-        color: "text-secondary",
-      },
     ];
-  }, [stats, metrics]);
+  }, [stats, metrics, computedYears]);
 
-  // Typewriter effect state for hero role headline
+  // Typewriter effect: 3-phase state machine with guaranteed cleanup
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [phase, setPhase] = useState<"typing" | "pausing" | "deleting">("typing");
   const [copiedTerminal, setCopiedTerminal] = useState(false);
 
   useEffect(() => {
     const roles = personal.roles;
-    const fullText = roles[currentRoleIndex];
+    if (!roles || roles.length === 0) return;
 
-    const typingSpeed = isDeleting ? 30 : 65;
-    const pauseBeforeDelete = 2400;
+    const fullText = roles[currentRoleIndex] || "";
 
-    const timer = setTimeout(() => {
-      if (!isDeleting) {
-        if (currentText.length < fullText.length) {
+    if (phase === "typing") {
+      if (currentText.length < fullText.length) {
+        const timer = setTimeout(() => {
           setCurrentText(fullText.slice(0, currentText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), pauseBeforeDelete);
-        }
+        }, 55);
+        return () => clearTimeout(timer);
       } else {
-        if (currentText.length > 0) {
-          setCurrentText(fullText.slice(0, currentText.length - 1));
-        } else {
-          setIsDeleting(false);
-          setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
-        }
+        // Entire phrase is typed. Hold before deleting so reader comfortably completes it
+        const timer = setTimeout(() => {
+          setPhase("deleting");
+        }, 2200);
+        return () => clearTimeout(timer);
       }
-    }, typingSpeed);
+    }
 
-    return () => clearTimeout(timer);
-  }, [currentText, isDeleting, currentRoleIndex, personal.roles]);
+    if (phase === "deleting") {
+      if (currentText.length > 0) {
+        const timer = setTimeout(() => {
+          setCurrentText((prev) => prev.slice(0, -1));
+        }, 25);
+        return () => clearTimeout(timer);
+      } else {
+        // Entire phrase deleted. Pause briefly, advance index and start next phrase
+        const timer = setTimeout(() => {
+          setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+          setPhase("typing");
+        }, 250);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [currentText, phase, currentRoleIndex, personal.roles]);
 
   const copyTerminalContent = () => {
-    const textToCopy = `git checkout -b feature/launch-2025\nmvn spring-boot:run --quiet & npm run dev\ngit status --short`;
+    const textToCopy = terminal.commands.map((c) => c.command).join("\n");
     navigator.clipboard?.writeText(textToCopy);
     setCopiedTerminal(true);
     setTimeout(() => setCopiedTerminal(false), 2000);
@@ -184,7 +222,7 @@ export default function Hero({ stats }: HeroProps = {}) {
       {/* Hero Content Container */}
       <div className="w-full max-w-[1280px] mx-auto px-gutter-mobile sm:px-gutter py-6 sm:py-space-xl">
 
-      {/* Mobile Top Profile & Status Bar (Matches design/home-mobile.html) */}
+      {/* Mobile Top Profile & Status Bar */}
       <div className="flex md:hidden items-center justify-between mb-5 pb-3 border-b border-outline-variant/60">
         <div className="flex items-center gap-space-sm">
           <div className="relative w-12 h-12 rounded-full bg-surface-container-high p-0.5 shrink-0 shadow-md border border-outline-variant">
@@ -214,7 +252,7 @@ export default function Hero({ stats }: HeroProps = {}) {
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface border border-outline-variant">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           <span className="font-label-sm text-[11px] font-medium text-primary font-mono">
-            Open to work
+            {personal.opportunityStatus}
           </span>
         </div>
       </div>
@@ -227,7 +265,7 @@ export default function Hero({ stats }: HeroProps = {}) {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="col-span-12 lg:col-span-6 flex flex-col gap-space-md z-10"
         >
-          {/* Branch Chip & Education Status */}
+          {/* Branch Chip & Professional Experience Badge */}
           <div className="flex items-center gap-space-sm flex-wrap">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant text-primary font-label-sm text-label-sm shadow-sm font-mono">
               <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
@@ -236,8 +274,8 @@ export default function Hero({ stats }: HeroProps = {}) {
                 {personal.status.branch} • HEAD @ {personal.status.version}
               </span>
             </div>
-            <span className="px-2 py-0.5 rounded text-tertiary bg-surface-container border border-outline-variant font-label-sm text-label-sm font-mono">
-              {personal.degreeSpecialization}
+            <span className="px-2.5 py-0.5 rounded text-tertiary bg-surface-container border border-outline-variant font-label-sm text-label-sm font-mono font-medium">
+              {getHeroExperienceBadge(computedYears)}
             </span>
           </div>
 
@@ -249,21 +287,21 @@ export default function Hero({ stats }: HeroProps = {}) {
             </h1>
 
             {/* Dynamic Typewriter Role */}
-            <div className="min-h-[58px] sm:min-h-[56px] flex items-center">
-              <p className="font-headline-md text-[17px] sm:text-[22px] sm:leading-[28px] text-tertiary tracking-tight font-mono">
+            <div className="min-h-[58px] sm:min-h-[64px] flex items-center">
+              <p className="font-headline-md text-[17px] sm:text-[22px] sm:leading-[30px] text-tertiary tracking-tight font-mono break-words">
                 <span>{currentText}</span>
                 <span className="inline-block w-2.5 h-5 bg-primary ml-1 align-middle animate-pulse" />
               </p>
             </div>
 
             <p className="font-body-lg text-[14px] sm:text-[16px] text-on-surface-variant max-w-xl leading-relaxed">
-              {personal.bio}
+              {getHeroBio(computedYears)}
             </p>
           </div>
 
           {/* Action CTAs: Styled like Git PR / Commit Controls */}
           <div className="pt-2">
-            <div className="grid grid-cols-2 sm:flex sm:items-center gap-space-sm flex-wrap">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-space-sm">
               <Link
                 href="#projects"
                 className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2.5 rounded bg-primary-container hover:bg-[#2ea043] border border-white/10 text-on-primary-container font-label-md text-[13px] sm:text-label-md font-semibold shadow-md active:scale-95 transition-all font-mono"
@@ -284,30 +322,29 @@ export default function Hero({ stats }: HeroProps = {}) {
               </Link>
 
               <a
-                href={portfolioData.contact.github}
-                target="_blank"
-                rel="noreferrer"
-                className="col-span-2 sm:col-span-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded bg-surface-container border border-outline-variant text-on-surface-variant hover:text-tertiary hover:border-outline font-label-sm text-label-sm transition-all font-mono"
+                href={personal.resumeUrl}
+                download="Ritesh_Thete_Resume.pdf"
+                className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2.5 rounded bg-surface-container-high hover:bg-surface-bright border border-outline-variant text-on-surface font-label-md text-[13px] sm:text-label-md font-medium shadow-sm active:scale-95 transition-all font-mono"
               >
-                <span className="material-symbols-outlined text-[16px]">open_in_new</span>
-                <span>{portfolioData.contact.githubUser}</span>
+                <span className="material-symbols-outlined text-[17px]">download</span>
+                <span>Download Resume</span>
               </a>
             </div>
           </div>
 
-          {/* GitHub Telemetry Metrics Widget (3 cards) */}
-          <div className="grid grid-cols-3 gap-1.5 sm:gap-space-sm pt-4 max-w-lg">
+          {/* Telemetry & Experience Metrics Widget (3 cards) */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-space-sm pt-4 max-w-lg">
             {displayMetrics.map((metric) => (
               <div
                 key={metric.label}
                 className="p-2 sm:p-space-sm rounded bg-surface-container-low border border-outline-variant shadow-sm flex flex-col transition-transform hover:-translate-y-0.5 duration-200 overflow-hidden"
               >
                 <div className="flex items-center justify-between text-outline gap-1">
-                  <span className="font-label-sm text-[9px] sm:text-label-sm uppercase tracking-tight sm:tracking-wider font-mono truncate">
+                  <span className="font-label-sm text-[10px] sm:text-[11px] uppercase tracking-tight sm:tracking-wider font-mono truncate">
                     {metric.label}
                   </span>
                   <span
-                    className={`material-symbols-outlined text-[14px] sm:text-[16px] shrink-0 ${metric.color || "text-tertiary"}`}
+                    className={`material-symbols-outlined text-[15px] sm:text-[16px] shrink-0 ${metric.color || "text-tertiary"}`}
                   >
                     {metric.icon}
                   </span>
@@ -316,7 +353,10 @@ export default function Hero({ stats }: HeroProps = {}) {
                   <span className="font-headline-md text-[15px] sm:text-headline-md text-on-surface font-bold leading-none">
                     {metric.value}
                   </span>
-                  <span className="font-label-sm text-[9px] sm:text-label-sm text-primary leading-tight truncate">
+                  <span
+                    title={metric.subtext}
+                    className="font-label-sm text-[9px] sm:text-[10px] text-primary leading-tight truncate"
+                  >
                     {metric.subtext}
                   </span>
                 </div>
@@ -343,7 +383,9 @@ export default function Hero({ stats }: HeroProps = {}) {
               </div>
               <div className="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant font-mono min-w-0 flex-1 justify-center px-1">
                 <span className="material-symbols-outlined text-[14px] shrink-0">terminal</span>
-                <span className="truncate text-[11px] sm:text-label-sm">bash - alex@workstation: ~/portfolio</span>
+                <span className="truncate text-[11px] sm:text-label-sm">
+                  bash - {terminal.user}@{terminal.hostname}: {terminal.workdir}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-outline shrink-0">
                 <button
@@ -363,7 +405,7 @@ export default function Hero({ stats }: HeroProps = {}) {
             </div>
 
             {/* Terminal Canvas Content */}
-            <div className="p-3 sm:p-space-md font-code-block text-[12px] sm:text-[13px] text-on-surface leading-relaxed flex flex-col gap-2 font-mono bg-surface-container-lowest/95 overflow-x-auto scrollbar-thin">
+            <div className="p-3 sm:p-space-md font-code-block text-[12px] sm:text-[13px] text-on-surface leading-relaxed flex flex-col gap-2.5 font-mono bg-surface-container-lowest/95 overflow-x-auto scrollbar-thin">
               {/* Prompt and Branch */}
               <div className="flex items-center gap-2 text-on-surface-variant flex-wrap">
                 <span className="text-primary font-bold">
@@ -373,56 +415,48 @@ export default function Hero({ stats }: HeroProps = {}) {
                 <span className="text-on-surface-variant">({terminal.branch})</span>
               </div>
 
-              {/* Command 1: git checkout */}
+              {/* Command 1: git log --oneline -3 */}
               <div className="flex items-center gap-2 text-primary pt-0.5 break-all sm:break-normal">
                 <span className="text-outline shrink-0">$</span>
-                <span className="text-on-surface">git checkout -b feature/launch-2025</span>
+                <span className="text-on-surface">{terminal.commands[0]?.command}</span>
               </div>
-              <div className="text-tertiary-fixed-dim text-label-sm pl-3 sm:pl-4 flex items-center gap-1 break-all sm:break-normal">
-                <span className="material-symbols-outlined text-[14px] shrink-0">call_split</span>
-                <span>Switched to a new branch &apos;feature/launch-2025&apos;</span>
-              </div>
-
-              {/* Command 2: maven & npm */}
-              <div className="flex items-center gap-2 text-primary pt-1 break-all sm:break-normal">
-                <span className="text-outline shrink-0">$</span>
-                <span className="text-on-surface">mvn spring-boot:run --quiet &amp; npm run dev</span>
-              </div>
-              <div className="text-on-surface-variant text-label-sm pl-2 sm:pl-4 flex flex-col gap-0.5 border-l-2 border-outline-variant/50 ml-1 py-0.5 break-all sm:break-normal">
-                <span className="text-primary-fixed pl-2">
-                  [INFO] Tomcat started on port 8080 (http) with context path &apos;&apos;
-                </span>
-                <span className="text-tertiary pl-2">
-                  [NEXT] ready in 241 ms → Local: http://localhost:3000/
-                </span>
-                <span className="text-outline pl-2">
-                  [AUTH] AWS IAM Role: arn:aws:iam::01928491:role/RiteshPortfolioApp
-                </span>
+              <div className="text-label-sm pl-3 sm:pl-4 flex flex-col gap-1 border-l-2 border-outline-variant/50 ml-1 py-0.5">
+                {terminal.commands[0]?.output?.map((line, idx) => {
+                  const parts = line.split(" ");
+                  const hash = parts[0];
+                  const msg = parts.slice(1).join(" ");
+                  return (
+                    <div key={idx} className="flex items-center gap-2 text-tertiary font-mono">
+                      <span className="text-primary-fixed font-bold">{hash}</span>
+                      <span className="text-on-surface">{msg}</span>
+                    </div>
+                  );
+                })}
               </div>
 
-              {/* Command 3: git status */}
+              {/* Command 2: git status --short */}
               <div className="flex items-center gap-2 text-primary pt-1">
                 <span className="text-outline shrink-0">$</span>
-                <span className="text-on-surface">git status --short</span>
+                <span className="text-on-surface">{terminal.commands[1]?.command}</span>
               </div>
               <div className="text-label-sm pl-2 sm:pl-4 flex flex-col gap-0.5 break-all sm:break-normal">
-                <span className="text-primary">
-                  M src/main/java/com/ritesh/service/MicroservicesEngine.java
-                </span>
-                <span className="text-primary">
-                  M frontend/src/components/GitInteractiveGraph.tsx
-                </span>
-                <span className="text-tertiary">
-                  A docs/ARCHITECTURE_DECISION_RECORDS.md
-                </span>
-                <span className="text-on-surface-variant">
-                  ?? tests/e2e/cypress/integration/portfolio.spec.ts
-                </span>
+                {terminal.commands[1]?.output?.map((line, idx) => (
+                  <span
+                    key={idx}
+                    className={
+                      idx === 2 ? "text-tertiary" : "text-primary"
+                    }
+                  >
+                    {line}
+                  </span>
+                ))}
               </div>
 
               {/* Active Prompt Line with pulsing cursor */}
               <div className="flex items-center gap-2 pt-2 text-primary font-bold">
-                <span>ritesh@devbox:~$</span>
+                <span>
+                  {terminal.user}@{terminal.hostname}:{terminal.workdir}$
+                </span>
                 <span className="inline-block w-2.5 h-4 sm:h-5 bg-primary animate-pulse" />
               </div>
             </div>
@@ -430,7 +464,7 @@ export default function Hero({ stats }: HeroProps = {}) {
 
           {/* Profile Metadata & Verification Card */}
           <div className="flex items-center justify-between p-3 sm:p-space-md rounded-lg bg-surface-container border border-outline-variant shadow-md">
-            <div className="flex items-center gap-space-sm sm:gap-space-md">
+            <div className="flex items-center gap-space-sm sm:gap-space-md min-w-0">
               <div className="relative shrink-0">
                 <Image
                   src={personal.avatarUrl}
@@ -445,39 +479,43 @@ export default function Hero({ stats }: HeroProps = {}) {
                 </span>
               </div>
 
-              <div className="flex flex-col pl-2 sm:pl-0">
+              <div className="flex flex-col pl-2 sm:pl-0 min-w-0">
                 <div className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="font-headline-sm text-[15px] sm:text-headline-sm text-on-surface font-semibold font-mono">
+                  <span className="font-headline-sm text-[15px] sm:text-headline-sm text-on-surface font-semibold font-mono truncate">
                     {personal.name}
                   </span>
                   <span
-                    className="material-symbols-outlined text-primary text-[17px] sm:text-[18px]"
+                    className="material-symbols-outlined text-primary text-[17px] sm:text-[18px] shrink-0"
                     title="Verified Engineer"
                   >
                     verified
                   </span>
                 </div>
-                <span className="font-label-sm text-[12px] sm:text-label-sm text-tertiary font-mono">
+                <span className="font-label-sm text-[12px] sm:text-label-sm text-tertiary font-mono truncate">
                   {personal.title}
                 </span>
-                <span className="font-body-sm text-[11px] sm:text-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
-                  <span className="material-symbols-outlined text-[13px] sm:text-[14px] text-outline">
+                <span className="font-label-sm text-[11px] sm:text-[12px] text-on-surface-variant font-mono truncate">
+                  {personal.companyRoleLine}
+                </span>
+                <span className="font-body-sm text-[11px] sm:text-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5 truncate">
+                  <span className="material-symbols-outlined text-[13px] sm:text-[14px] text-outline shrink-0">
                     location_on
                   </span>
-                  <span>{personal.location}</span>
+                  <span className="truncate">{personal.location}</span>
                 </span>
               </div>
             </div>
 
-            <div className="hidden sm:flex flex-col items-end gap-1">
+            <div className="hidden sm:flex flex-col items-end gap-1.5 shrink-0 pl-2">
               <span className="px-2.5 py-1 rounded bg-surface-container-high border border-outline-variant text-primary font-label-sm text-label-sm flex items-center gap-1 font-mono">
                 <span className="material-symbols-outlined text-[14px]">
                   workspace_premium
                 </span>
                 AWS Certified
               </span>
-              <span className="font-label-sm text-label-sm text-outline font-mono">
-                100% On-Time Delivery
+              <span className="font-label-sm text-label-sm text-on-surface-variant font-mono flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                {personal.opportunityStatus}
               </span>
             </div>
           </div>

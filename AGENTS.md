@@ -1,3 +1,7 @@
+# Agent Instructions
+
+Read `docs/PROJECT_CONTEXT.md` and `docs/CONTENT.md` before making any change.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know

@@ -109,8 +109,8 @@ export default function GitHubActivity({
               )}
             </div>
             <p className="font-body-sm text-[13px] text-on-surface-variant">
-              Continuous daily engineering cadence across public open-source and
-              distributed enterprise repositories.
+              Daily engineering cadence across public open-source repositories
+              (see notice below regarding private enterprise contributions).
             </p>
           </div>
 
@@ -143,6 +143,18 @@ export default function GitHubActivity({
               </span>
               Longest: {github.longestStreak} days
             </span>
+          </div>
+        </div>
+
+        {/* Public Repository Scope Notice for Viewers */}
+        <div className="flex items-start gap-2.5 px-3 sm:px-4 py-2.5 rounded-md bg-surface-container/70 border border-outline-variant/60 font-mono text-[12px] text-on-surface-variant leading-relaxed">
+          <span className="material-symbols-outlined text-tertiary text-[17px] shrink-0 mt-0.5">
+            info
+          </span>
+          <div>
+            <span className="text-on-surface font-semibold">Notice for Viewers:</span>{" "}
+            The telemetry, metrics, and contribution calendar displayed here reflect activity across{" "}
+            <span className="text-primary font-medium">public repositories</span>. They are not an exact or complete reflection of my total engineering contributions, as a significant portion of my daily enterprise development occurs within private client organizations, enterprise repositories, and non-public codebases.
           </div>
         </div>
 
@@ -228,17 +240,23 @@ export default function GitHubActivity({
 
             {/* Heatmap Legend */}
             <div className="flex items-center justify-between text-outline text-label-sm font-label-sm font-mono pt-2 border-t border-outline-variant/30 flex-wrap gap-2">
-              <a
-                href={profileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-colors flex items-center gap-1"
-              >
-                <span>Learn how we count contributions</span>
-                <span className="material-symbols-outlined text-[13px]">
-                  arrow_forward
+              <div className="flex items-center gap-2 flex-wrap">
+                <a
+                  href={profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors flex items-center gap-1"
+                >
+                  <span>Learn how we count contributions</span>
+                  <span className="material-symbols-outlined text-[13px]">
+                    arrow_forward
+                  </span>
+                </a>
+                <span className="text-outline-variant hidden sm:inline">•</span>
+                <span className="text-[11px] text-outline">
+                  Public repo activity only
                 </span>
-              </a>
+              </div>
 
               <div className="flex items-center gap-1.5">
                 <span className="text-[11px]">Less</span>

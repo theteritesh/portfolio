@@ -222,6 +222,12 @@ export interface PortfolioData {
     domain: string;
     title: string;
     subtitle: string;
+    startDate: string;
+    currentCompany: string;
+    currentCompanyLocation: string;
+    companyRoleLine: string;
+    opportunityStatus: string;
+    heroIntroTemplate: string;
     roles: string[];
     bio: string;
     avatarUrl: string;
@@ -259,6 +265,34 @@ export interface PortfolioData {
   footer: FooterData;
 }
 
+/**
+ * Calculates full elapsed professional years from a start date string (e.g. "2025-08-01").
+ * Shows "1+" until 2 full years have elapsed, then "2+", and so forth.
+ */
+export function getExperienceYears(
+  startDateStr: string = "2025-08-01",
+  currentDate?: Date
+): number {
+  const start = new Date(startDateStr);
+  const now = currentDate || new Date();
+  const diffYears = (now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 365.25);
+  return Math.max(1, Math.floor(diffYears));
+}
+
+/**
+ * Returns the formatted hero badge text based on experience years.
+ */
+export function getHeroExperienceBadge(years: number = 1): string {
+  return `Java Full Stack Developer • ${years}+ yr experience`;
+}
+
+/**
+ * Returns the hero introduction paragraph highlighting production full stack experience.
+ */
+export function getHeroBio(years: number = 1): string {
+  return `${years}+ year of hands-on experience building production web applications with Java, Spring Boot, React and MySQL, from REST APIs and real-time WebSocket features to Docker deployments on Cloud.`;
+}
+
 export const portfolioData: PortfolioData = {
   personal: {
     name: "Ritesh Thete",
@@ -266,13 +300,20 @@ export const portfolioData: PortfolioData = {
     domain: "ritesh-thete.dev",
     title: "Java Full Stack Developer",
     subtitle: "I build scalable web apps with Java, Spring Boot and React",
+    startDate: "2025-08-01",
+    currentCompany: "Mahendra Technosoft",
+    currentCompanyLocation: "Pune",
+    companyRoleLine: "Mahendra Technosoft • Pune",
+    opportunityStatus: "Open to opportunities",
     roles: [
-      "Java Full Stack Developer based in Pune",
-      "I build scalable web apps with Java, Spring Boot and React",
-      "Architecting fault-tolerant distributed microservices",
-      "Crafting reactive Next.js & React frontends",
+      "Java Full Stack Developer at Mahendra Technosoft",
+      "Building REST APIs with Spring Boot",
+      "Crafting React and Next.js interfaces",
+      "Deploying with Docker on Cloud",
     ],
-    bio: "Java Full Stack Developer based in Pune, specializing in Spring Boot, distributed microservices, React, and Next.js reactive web architectures with clean Git provenance.",
+    bio: "1+ year of hands-on experience building production web applications with Java, Spring Boot, React and MySQL, from REST APIs and real-time WebSocket features to Docker deployments on Cloud.",
+    heroIntroTemplate:
+      "{years}+ year of hands-on experience building production web applications with Java, Spring Boot, React and MySQL, from REST APIs and real-time WebSocket features to Docker deployments on Cloud.",
     avatarUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDcV-E1eITp2yUj4_p89kYLb4G8A7vYacaccppfpyg44Mkq7mCTLYf5hukoSNFpEY_vNi56X2WVzbNqyoyI26iCiCIiJ6T1mvKgGiiqJQOkxb9DtFUIBNkXCsQH5FRhLd6RcsGEbLkeIv-ObMqLkFf7HwTIY-hTOEDb7jI82t2onZRQ7YGnbIwtf35qi466XuHvpc27vWIcb8WRfdymNeChoROvWp3_zRlO9KLMnQ-YqABjN6Djphp-",
     location: "Pune, Maharashtra, India (Remote Ready)",
@@ -280,14 +321,14 @@ export const portfolioData: PortfolioData = {
     education: "Master of Computer Applications (MCA)",
     degreeSpecialization: "MCA Graduate • Pune University",
     status: {
-      label: "Open to work",
+      label: "Open to opportunities",
       online: true,
       branch: "origin/main",
       version: "v2.4.0",
     },
     badges: [
       { label: "AWS Certified", icon: "workspace_premium" },
-      { label: "100% On-Time Delivery", icon: "verified" },
+      { label: "Open to opportunities", icon: "verified" },
     ],
     resumeUrl: "/resume.pdf",
   },
@@ -334,25 +375,25 @@ export const portfolioData: PortfolioData = {
 
   metrics: [
     {
+      label: "EXPERIENCE",
+      value: "1+ yrs",
+      subtext: "full stack, Java and React",
+      icon: "work_history",
+      color: "text-primary",
+    },
+    {
       label: "Repositories",
       value: "45",
-      subtext: "+8 this yr",
+      subtext: "public repos",
       icon: "inventory_2",
       color: "text-tertiary",
     },
     {
       label: "Contributions",
       value: "1,248",
-      subtext: "pts",
+      subtext: "past year",
       icon: "grain",
       color: "text-primary",
-    },
-    {
-      label: "Network",
-      value: "120",
-      subtext: "followers",
-      icon: "group",
-      color: "text-secondary",
     },
   ],
 
@@ -363,26 +404,20 @@ export const portfolioData: PortfolioData = {
     branch: "main",
     commands: [
       {
-        command: "git checkout -b feature/launch-2025",
-        output: ["Switched to a new branch 'feature/launch-2025'"],
-        type: "git",
-      },
-      {
-        command: "mvn spring-boot:run --quiet & npm run dev",
+        command: "git log --oneline -3",
         output: [
-          "[INFO] Tomcat started on port 8080 (http) with context path ''",
-          "[NEXT] ready in 241 ms → Local: http://localhost:3000/",
-          "[AUTH] AWS IAM Role: arn:aws:iam::01928491:role/RiteshPortfolioApp",
+          "a4f82d1 feat: add WebSocket broadcast",
+          "8c2e9b0 feat: generic excel import",
+          "3f1a0e7 fix: payment receipt download",
         ],
-        type: "build",
+        type: "git",
       },
       {
         command: "git status --short",
         output: [
-          "M  src/main/java/com/ritesh/service/MicroservicesEngine.java",
-          "M  frontend/src/components/GitInteractiveGraph.tsx",
-          "A  docs/ARCHITECTURE_DECISION_RECORDS.md",
-          "?? tests/e2e/cypress/integration/portfolio.spec.ts",
+          "M  src/main/java/com/ritesh/service/WebSocketBroadcastService.java",
+          "M  src/main/java/com/ritesh/util/ExcelImportHelper.java",
+          "M  frontend/src/components/ReceiptDownloader.tsx",
         ],
         type: "status",
       },
@@ -541,10 +576,10 @@ export const portfolioData: PortfolioData = {
     {
       id: "exp-1",
       role: "Java Full Stack Developer",
-      company: "NexaTech Solutions • Distributed Cloud Team",
-      department: "Distributed Cloud Team",
+      company: "Mahendra Technosoft",
+      department: "Full Stack Engineering",
       location: "Pune, India (Hybrid)",
-      period: "2025 — Present",
+      period: "Aug 2025 — Present",
       isCurrent: true,
       commitHash: "e9a4f21",
       commitBadge: "commit e9a4f21",
