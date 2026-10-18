@@ -27,7 +27,7 @@ A modern, high-performance developer portfolio styled like an interactive Git re
 ### 1. Clone & Install Dependencies
 
 ```bash
-git clone https://github.com/theteritesh/portfolio.git
+git clone https://github.com/your-username/portfolio.git
 cd portfolio
 npm install
 ```
@@ -47,7 +47,7 @@ NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
 
 # GitHub GraphQL API (Server-side only — NEVER commit or prefix with NEXT_PUBLIC_)
 GITHUB_TOKEN=ghp_your_token_here
-GITHUB_USERNAME=theteritesh
+GITHUB_USERNAME=your_github_username
 ```
 
 #### How to Create your GitHub Token (Classic, No Scopes)
@@ -103,7 +103,7 @@ npm run start
 | `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS Template ID (fields: `from_name`, `from_email`, `subject`, `message`) | Client | `template_xxxxxxx` |
 | `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | EmailJS Public API Key | Client | `xxxxxxxxxxxxxxxx` |
 | `GITHUB_TOKEN` | GitHub Personal Access Token (classic, **no scopes**) | Server-only | `ghp_xxxxxxxxxxxxxxxxxxxx` |
-| `GITHUB_USERNAME` | GitHub username to fetch profile, metrics, calendar, and pinned repos | Server-only | `theteritesh` |
+| `GITHUB_USERNAME` | GitHub username to fetch profile, metrics, calendar, and pinned repos | Server-only | `your_github_username` |
 
 ---
 
@@ -116,7 +116,7 @@ The portfolio is optimized for zero-configuration deployment on [Vercel](https:/
    git push origin main
    ```
 2. **Import Repository** in Vercel:
-   - Go to [vercel.com/new](https://vercel.com/new) and select your `theteritesh/portfolio` repository.
+   - Go to [vercel.com/new](https://vercel.com/new) and select your `your-username/portfolio` repository.
    - Framework preset will automatically detect **Next.js**.
 3. **Add Environment Variables** in the Vercel project settings:
    - `NEXT_PUBLIC_SITE_URL`: Your Vercel production domain (e.g. `https://your-portfolio.vercel.app` or custom domain)
@@ -172,4 +172,4 @@ portfolio/
 
 ## 📄 License
 
-MIT License • Built with ❤️ and commits by [Ritesh Thete](https://github.com/theteritesh).
+MIT License • Built with ❤️ and commits by [Ritesh Thete](https://github.com/your-username).
