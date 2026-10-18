@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="600" height="340">
+  <defs>
+    <linearGradient id="bg-grad-chat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c141a" />
+      <stop offset="100%" stop-color="#151d22" />
+    </linearGradient>
+  </defs>
+
+  <!-- Canvas -->
+  <rect width="600" height="340" fill="url(#bg-grad-chat)" rx="8" />
+
+  <!-- Window Header -->
+  <rect width="600" height="36" fill="#192126" rx="8" />
+  <rect y="28" width="600" height="8" fill="#192126" />
+  <line x1="0" y1="36" x2="600" y2="36" stroke="#3f4a3d" stroke-width="1" />
+  <circle cx="20" cy="18" r="4.5" fill="#ff5f56" />
+  <circle cx="36" cy="18" r="4.5" fill="#ffbd2e" />
+  <circle cx="52" cy="18" r="4.5" fill="#27c93f" />
+
+  <text x="75" y="22" fill="#becaba" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500">
+    ws://socket.devops.io:8080/topic/cluster-telemetry
+  </text>
+  <rect x="490" y="10" width="94" height="16" rx="3" fill="#238636" />
+  <text x="498" y="22" fill="#ffffff" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600">STOMP CONNECTED</text>
+
+  <!-- Left Sidebar: Channels & Users -->
+  <rect x="24" y="52" width="160" height="264" rx="6" fill="#151d22" stroke="#3f4a3d" stroke-width="1" />
+  <text x="36" y="74" fill="#899485" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">CHANNELS (4)</text>
+
+  <!-- Channel 1 -->
+  <rect x="30" y="86" width="148" height="26" rx="4" fill="#192126" stroke="#7bdb80" stroke-width="0.8" />
+  <text x="40" y="103" fill="#7bdb80" font-family="JetBrains Mono, monospace" font-size="11"># dev-ops-lounge</text>
+  <circle cx="166" cy="99" r="3" fill="#7bdb80" />
+
+  <!-- Channel 2 -->
+  <rect x="30" y="116" width="148" height="26" rx="4" fill="transparent" />
+  <text x="40" y="133" fill="#becaba" font-family="JetBrains Mono, monospace" font-size="11"># production-alerts</text>
+
+  <!-- Channel 3 -->
+  <rect x="30" y="146" width="148" height="26" rx="4" fill="transparent" />
+  <text x="40" y="163" fill="#becaba" font-family="JetBrains Mono, monospace" font-size="11"># virtual-threads</text>
+
+  <!-- Channel 4 -->
+  <rect x="30" y="176" width="148" height="26" rx="4" fill="transparent" />
+  <text x="40" y="193" fill="#becaba" font-family="JetBrains Mono, monospace" font-size="11"># spring-boot-chat</text>
+
+  <!-- Online Members -->
+  <line x1="30" y1="212" x2="178" y2="212" stroke="#3f4a3d" stroke-width="1" />
+  <text x="36" y="230" fill="#899485" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">PEERS ONLINE</text>
+
+  <circle cx="44" cy="248" r="4" fill="#7bdb80" />
+  <text x="56" y="252" fill="#dbe3ec" font-family="Inter, sans-serif" font-size="11">alex.morgan (You)</text>
+
+  <circle cx="44" cy="272" r="4" fill="#7bdb80" />
+  <text x="56" y="276" fill="#becaba" font-family="Inter, sans-serif" font-size="11">sarah.jenkins</text>
+
+  <circle cx="44" cy="296" r="4" fill="#a2c9ff" />
+  <text x="56" y="300" fill="#becaba" font-family="Inter, sans-serif" font-size="11">david.tanaka</text>
+
+  <!-- Main Chat Conversation Panel -->
+  <rect x="196" y="52" width="380" height="264" rx="6" fill="#151d22" stroke="#3f4a3d" stroke-width="1" />
+
+  <!-- Chat Top Bar -->
+  <rect x="196" y="52" width="380" height="32" rx="6" fill="#192126" />
+  <line x1="196" y1="84" x2="576" y2="84" stroke="#3f4a3d" stroke-width="1" />
+  <text x="212" y="72" fill="#dbe3ec" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600"># dev-ops-lounge</text>
+  <text x="480" y="72" fill="#7bdb80" font-family="JetBrains Mono, monospace" font-size="10">RTT: 14ms</text>
+
+  <!-- Message 1 (Incoming) -->
+  <circle cx="218" cy="112" r="12" fill="#232b31" stroke="#a2c9ff" stroke-width="1" />
+  <text x="214" y="116" fill="#a2c9ff" font-family="JetBrains Mono, monospace" font-size="10">DT</text>
+  <text x="238" y="106" fill="#a2c9ff" font-family="Inter, sans-serif" font-size="10" font-weight="600">david.tanaka</text>
+  <text x="320" y="106" fill="#899485" font-family="JetBrains Mono, monospace" font-size="9">14:22:04</text>
+  <rect x="238" y="112" width="280" height="34" rx="4" fill="#192126" stroke="#3f4a3d" stroke-width="0.8" />
+  <text x="248" y="132" fill="#dbe3ec" font-family="Inter, sans-serif" font-size="11">
+    Did the new STOMP subscription cluster rebalance properly?
+  </text>
+
+  <!-- Message 2 (Outgoing - You) -->
+  <rect x="260" y="156" width="300" height="48" rx="4" fill="#238636" fill-opacity="0.25" stroke="#7bdb80" stroke-width="1" />
+  <text x="272" y="174" fill="#7bdb80" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">alex.morgan (You) • 14:22:15</text>
+  <text x="272" y="192" fill="#dbe3ec" font-family="Inter, sans-serif" font-size="11">
+    Yes! Redis pub/sub handled failover across 3 brokers in 42ms.
+  </text>
+
+  <!-- Message 3 (System Alert) -->
+  <rect x="238" y="214" width="310" height="24" rx="12" fill="#192126" stroke="#3f4a3d" stroke-width="1" />
+  <circle cx="250" cy="226" r="3" fill="#27c93f" />
+  <text x="260" y="230" fill="#becaba" font-family="JetBrains Mono, monospace" font-size="9">
+    sarah.jenkins joined #dev-ops-lounge via WebSocket handshake
+  </text>
+
+  <!-- Input Field Bar -->
+  <rect x="208" y="270" width="356" height="36" rx="4" fill="#0c141a" stroke="#3f4a3d" stroke-width="1" />
+  <text x="220" y="292" fill="#899485" font-family="Inter, sans-serif" font-size="11">Send message to #dev-ops-lounge...</text>
+  <rect x="526" y="276" width="30" height="24" rx="3" fill="#238636" />
+  <text x="536" y="292" fill="#ffffff" font-family="JetBrains Mono, monospace" font-size="11">➤</text>
+</svg>

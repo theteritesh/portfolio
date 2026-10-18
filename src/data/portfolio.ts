@@ -99,7 +99,9 @@ export interface ExperienceItem {
 export interface ProjectItem {
   id: string;
   title: string;
+  slug: string;
   description: string;
+  image: string;
   prNumber: string;
   status: "Merged" | "Open" | "Draft";
   stars: number;
@@ -107,9 +109,51 @@ export interface ProjectItem {
   language: string;
   languageColor: string;
   tags: string[];
+  category: "Java" | "React" | "Spring Boot" | "Full Stack";
   githubUrl: string;
   liveUrl?: string;
   snippet?: string;
+  codeSnippet?: {
+    addition?: string;
+    deletion?: string;
+    comment?: string;
+  };
+}
+
+export interface HeatmapDay {
+  date: string;
+  count: number;
+  level: 0 | 1 | 2 | 3 | 4;
+}
+
+export interface LanguageStat {
+  name: string;
+  percentage: number;
+  color: string;
+}
+
+export interface PinnedRepo {
+  name: string;
+  description: string;
+  language: string;
+  languageColor: string;
+  stars: number;
+  forks: number;
+  url: string;
+  isPrivate?: boolean;
+}
+
+export interface GitHubActivityData {
+  username: string;
+  totalContributions: number;
+  yearRange: string;
+  currentStreak: number;
+  longestStreak: number;
+  languages: LanguageStat[];
+  pinnedRepos: PinnedRepo[];
+  weeks: {
+    days: HeatmapDay[];
+  }[];
 }
 
 export interface PortfolioData {
@@ -149,6 +193,7 @@ export interface PortfolioData {
   skills: SkillCategory[];
   experience: ExperienceItem[];
   projects: ProjectItem[];
+  github: GitHubActivityData;
   contact: {
     email: string;
     github: string;
@@ -508,98 +553,245 @@ export const portfolioData: PortfolioData = {
 
   projects: [
     {
-      id: "cloud-flow-orchestrator",
-      title: "cloud-flow-orchestrator",
+      id: "school-management",
+      title: "School Management System",
+      slug: "school-management-system",
       description:
-        "Distributed task orchestration engine built on Java 21 Virtual Threads and Spring Boot. Handles millions of delayed event queues with zero thread pool saturation.",
+        "Comprehensive student information system featuring RBAC, course registration workflows, fee processing, and automated report card generation.",
+      image: "/images/projects/school-management.svg",
+      prNumber: "#12",
+      status: "Merged",
+      stars: 54,
+      forks: 22,
+      language: "Java",
+      languageColor: "#b07219",
+      tags: ["Spring Boot", "React", "MySQL", "JWT Auth"],
+      category: "Java",
+      githubUrl: "https://github.com/alexmorgan-dev/school-management-system",
+      liveUrl: "https://school-demo.alexmorgan.dev",
+      snippet: "+ registerStudentEnrollment(studentId, courseId)",
+      codeSnippet: {
+        addition: "+ registerStudentEnrollment(studentId, courseId)",
+        comment: "// Enforces prerequisite constraints & audit log",
+      },
+    },
+    {
+      id: "crm-dashboard",
+      title: "CRM Dashboard & Analytics",
+      slug: "crm-dashboard-analytics",
+      description:
+        "Enterprise analytics hub for sales funnels, pipeline conversions, dynamic customer segmentation, and JWT-authenticated deal management.",
+      image: "/images/projects/crm-dashboard.svg",
+      prNumber: "#34",
+      status: "Open",
+      stars: 33,
+      forks: 18,
+      language: "TypeScript",
+      languageColor: "#3178c6",
+      tags: ["React", "Spring Boot", "Chart.js", "PostgreSQL"],
+      category: "React",
+      githubUrl: "https://github.com/alexmorgan-dev/crm-analytics-dashboard",
+      liveUrl: "https://crm.alexmorgan.dev",
+      snippet: "+ const funnelMetrics = usePipelineMetrics(timeframe)",
+      codeSnippet: {
+        addition: "+ const funnelMetrics = usePipelineMetrics(timeframe)",
+        comment: "// Aggregates deal velocity & stage conversions",
+      },
+    },
+    {
+      id: "realtime-chat",
+      title: "Real-time Chat with WebSocket",
+      slug: "realtime-chat-websocket",
+      description:
+        "Low-latency message streaming room app featuring real-time presence heartbeats, message delivery acknowledgements, end-to-end pub/sub broadcasting.",
+      image: "/images/projects/realtime-chat.svg",
+      prNumber: "#77",
+      status: "Merged",
+      stars: 34,
+      forks: 21,
+      language: "Java",
+      languageColor: "#b07219",
+      tags: ["STOMP/WebSocket", "Redis", "Spring Boot", "React"],
+      category: "Spring Boot",
+      githubUrl: "https://github.com/alexmorgan-dev/realtime-chat-websocket",
+      liveUrl: "https://chat.alexmorgan.dev",
+      snippet: "+ simpMessagingTemplate.convertAndSend('/topic/room', msg)",
+      codeSnippet: {
+        addition: "+ simpMessagingTemplate.convertAndSend('/topic/room', msg)",
+        comment: "// Low-latency STOMP broker routing",
+      },
+    },
+    {
+      id: "inventory-management",
+      title: "Inventory Management & Warehousing",
+      slug: "inventory-management-warehousing",
+      description:
+        "Multi-facility warehouse inventory tracking with automated reorder levels, batch SKU scanning, supplier order generation, and real-time ledger audits.",
+      image: "/images/projects/inventory-management.svg",
       prNumber: "#42",
       status: "Merged",
-      stars: 142,
-      forks: 44,
+      stars: 61,
+      forks: 34,
       language: "Java",
       languageColor: "#b07219",
-      tags: ["Java 21", "Spring Boot", "Virtual Threads", "Kafka"],
-      githubUrl: "https://github.com/alexmorgan-dev/cloud-flow-orchestrator",
-      liveUrl: "https://cloud-flow.alexmorgan.dev",
-      snippet: "+ ExecutorService taskPool = Executors.newVirtualThreadPerTaskExecutor();",
+      tags: ["Java", "Spring Boot", "Docker", "PostgreSQL"],
+      category: "Java",
+      githubUrl: "https://github.com/alexmorgan-dev/inventory-management-system",
+      liveUrl: "https://inventory.alexmorgan.dev",
+      snippet: "+ adjustStockLevel(sku, warehouseId, quantityDelta)",
+      codeSnippet: {
+        addition: "+ adjustStockLevel(sku, warehouseId, quantityDelta)",
+        comment: "// Optimistic locking prevents race conditions",
+      },
     },
     {
-      id: "pulsar-realtime-analytics",
-      title: "pulsar-realtime-analytics",
+      id: "ecommerce-app",
+      title: "E-commerce Cloud Store",
+      slug: "ecommerce-cloud-store",
       description:
-        "High-throughput financial dashboard in React and WebSocket with OpenAPI v3 specs, bidirectional order book depth matrices.",
-      prNumber: "#18",
+        "Full-stack storefront with Stripe checkout integration, product catalog filtering, real-time inventory checks, and transactional customer invoice delivery.",
+      image: "/images/projects/ecommerce-app.svg",
+      prNumber: "#99",
       status: "Open",
-      stars: 89,
-      forks: 21,
+      stars: 49,
+      forks: 28,
       language: "TypeScript",
       languageColor: "#3178c6",
-      tags: ["React 19", "TypeScript", "WebSockets", "Tailwind"],
-      githubUrl: "https://github.com/alexmorgan-dev/pulsar-realtime-analytics",
-      liveUrl: "https://pulsar.alexmorgan.dev",
-      snippet: "+ const orderBookStream$ = useOrderBookSocket(symbol);",
+      tags: ["React", "Spring Boot", "Stripe", "Tailwind CSS"],
+      category: "Full Stack",
+      githubUrl: "https://github.com/alexmorgan-dev/ecommerce-cloud-store",
+      liveUrl: "https://store.alexmorgan.dev",
+      snippet: "+ stripe.checkout.sessions.create({ line_items, mode: 'payment' })",
+      codeSnippet: {
+        addition: "+ stripe.checkout.sessions.create({ line_items, mode: 'payment' })",
+        comment: "// Webhook idempotency validation enabled",
+      },
     },
     {
-      id: "nexus-vault-security",
-      title: "nexus-vault-security",
+      id: "excel-importer",
+      title: "Excel Import Tool & ETL Parser",
+      slug: "excel-import-tool-etl",
       description:
-        "OAuth2 / OIDC authorization server with role-based fine-grained access control, JWT cryptographic signing, and automated token revocation via Redis.",
-      prNumber: "#34",
+        "Streaming Excel/CSV chunk processing pipeline handling 500,000+ row files with memory-bounded Apache POI SXSSF streaming and database bulk upserts.",
+      image: "/images/projects/excel-importer.svg",
+      prNumber: "#56",
       status: "Merged",
-      stars: 212,
-      forks: 56,
+      stars: 27,
+      forks: 9,
       language: "Java",
       languageColor: "#b07219",
-      tags: ["Spring Security", "Redis", "JWT Auth", "AWS IAM"],
-      githubUrl: "https://github.com/alexmorgan-dev/nexus-vault-security",
-      snippet: "+ @PreAuthorize(\"hasAuthority('SCOPE_project:write')\")",
-    },
-    {
-      id: "sql-optimizer-inspector",
-      title: "sql-optimizer-inspector",
-      description:
-        "Automated database explain-plan visualizer parsing PostgreSQL and MySQL AST query trees to recommend composite index layouts and detect sequential scans.",
-      prNumber: "#11",
-      status: "Merged",
-      stars: 388,
-      forks: 37,
-      language: "PostgreSQL",
-      languageColor: "#336791",
-      tags: ["PostgreSQL", "Java", "Tailwind"],
-      githubUrl: "https://github.com/alexmorgan-dev/sql-optimizer-inspector",
-      snippet: "+ analyzeExecutionPlanTree(queryExecutionPlan);",
-    },
-    {
-      id: "docker-cluster-deployer",
-      title: "docker-cluster-deployer",
-      description:
-        "Lightweight container provisioning utility with swarm health checks, automated TLS provisioning with Let's Encrypt, and zero-downtime rollback hooks.",
-      prNumber: "#05",
-      status: "Merged",
-      stars: 104,
-      forks: 32,
-      language: "Shell",
-      languageColor: "#89e051",
-      tags: ["Docker", "AWS ECS", "Bash", "GitHub Actions"],
-      githubUrl: "https://github.com/alexmorgan-dev/docker-cluster-deployer",
-      snippet: "+ docker compose up -d --scale worker=8",
-    },
-    {
-      id: "react-kanban-gitflow",
-      title: "react-kanban-gitflow",
-      description:
-        "Full-featured agile kanban board with drag-and-drop state syncing to Git branches, PR timeline visualizers, and offline optimistic updates.",
-      prNumber: "#27",
-      status: "Open",
-      stars: 304,
-      forks: 19,
-      language: "TypeScript",
-      languageColor: "#3178c6",
-      tags: ["React 19", "GraphQL", "Zustand", "Tailwind"],
-      githubUrl: "https://github.com/alexmorgan-dev/react-kanban-gitflow",
-      snippet: "+ optimisticUpdateCard(boardId, cardId);",
+      tags: ["Apache POI", "Spring Batch", "MySQL", "Virtual Threads"],
+      category: "Spring Boot",
+      githubUrl: "https://github.com/alexmorgan-dev/excel-import-etl-parser",
+      liveUrl: "https://etl.alexmorgan.dev",
+      snippet: "+ SXSSFWorkbook workbook = new SXSSFWorkbook(100);",
+      codeSnippet: {
+        addition: "+ SXSSFWorkbook workbook = new SXSSFWorkbook(100);",
+        comment: "// Flushes row buffer to disk to prevent OOM",
+      },
     },
   ],
+
+  github: {
+    username: "alexmorgan-dev",
+    totalContributions: 1248,
+    yearRange: "2024 - 2025",
+    currentStreak: 42,
+    longestStreak: 89,
+    languages: [
+      { name: "Java", percentage: 48.0, color: "#b07219" },
+      { name: "TypeScript", percentage: 28.0, color: "#3178c6" },
+      { name: "PostgreSQL", percentage: 14.0, color: "#336791" },
+      { name: "Docker/Shell", percentage: 10.0, color: "#2496ed" },
+    ],
+    pinnedRepos: [
+      {
+        name: "spring-boot-starter-distributed-cache",
+        description:
+          "Lightweight Spring Boot 3 auto-configuration module providing two-layer L1 caffeine / L2 Redis caching with invalidation pub/sub.",
+        language: "Java",
+        languageColor: "#b07219",
+        stars: 184,
+        forks: 42,
+        url: "https://github.com/alexmorgan-dev/spring-boot-starter-distributed-cache",
+      },
+      {
+        name: "react-virtual-tree-explorer",
+        description:
+          "High-performance virtualized file tree component capable of rendering 100,000+ nested directories at 60fps.",
+        language: "TypeScript",
+        languageColor: "#3178c6",
+        stars: 247,
+        forks: 38,
+        url: "https://github.com/alexmorgan-dev/react-virtual-tree-explorer",
+      },
+      {
+        name: "kafka-event-stream-gateway",
+        description:
+          "Resilient Kafka consumer group with dynamic dead-letter queuing, backpressure management, and circuit-breaker telemetry.",
+        language: "Java",
+        languageColor: "#b07219",
+        stars: 156,
+        forks: 29,
+        url: "https://github.com/alexmorgan-dev/kafka-event-stream-gateway",
+      },
+    ],
+    weeks: (() => {
+      const weeks: { days: HeatmapDay[] }[] = [];
+      const baseDate = new Date("2024-01-01T00:00:00Z");
+      let dayOffset = 0;
+      for (let w = 0; w < 52; w++) {
+        const days: HeatmapDay[] = [];
+        for (let d = 0; d < 7; d++) {
+          const currentDate = new Date(baseDate.getTime() + dayOffset * 86400000);
+          const dateStr = currentDate.toISOString().split("T")[0];
+          const isWeekend = d === 0 || d === 6;
+          let level: 0 | 1 | 2 | 3 | 4 = 0;
+          let count = 0;
+          const isSprint = (w >= 7 && w <= 14) || (w >= 19 && w <= 32) || (w >= 39 && w <= 51);
+          const hash = (w * 7 + d * 13 + 17) % 100;
+
+          if (w >= 46) {
+            // Last 6 weeks: Active 42-day streak! Every day has contributions
+            if (hash < 25) { level = 4; count = 11 + (hash % 6); }
+            else if (hash < 60) { level = 3; count = 7 + (hash % 3); }
+            else if (hash < 85) { level = 2; count = 4 + (hash % 3); }
+            else { level = 1; count = 2 + (hash % 2); }
+          } else if (isSprint) {
+            if (isWeekend) {
+              if (hash < 40) { level = 2; count = 4; }
+              else if (hash < 80) { level = 1; count = 2; }
+              else { level = 0; count = 0; }
+            } else {
+              if (hash < 30) { level = 4; count = 12; }
+              else if (hash < 65) { level = 3; count = 8; }
+              else if (hash < 90) { level = 2; count = 5; }
+              else { level = 1; count = 2; }
+            }
+          } else {
+            if (isWeekend) {
+              if (hash < 25) { level = 1; count = 2; }
+              else { level = 0; count = 0; }
+            } else {
+              if (hash < 20) { level = 3; count = 7; }
+              else if (hash < 55) { level = 2; count = 4; }
+              else if (hash < 80) { level = 1; count = 2; }
+              else { level = 0; count = 0; }
+            }
+          }
+
+          days.push({
+            date: dateStr,
+            count,
+            level,
+          });
+          dayOffset++;
+        }
+        weeks.push({ days });
+      }
+      return weeks;
+    })(),
+  },
 
   contact: {
     email: "alex.morgan.dev@gmail.com",

@@ -3,6 +3,8 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
+import Projects from "@/components/Projects";
+import GitHubActivity from "@/components/GitHubActivity";
 
 export default function Home() {
   return (
@@ -13,6 +15,8 @@ export default function Home() {
         <About />
         <Skills />
         <Experience />
+        <Projects />
+        <GitHubActivity />
       </main>
     </div>
   );

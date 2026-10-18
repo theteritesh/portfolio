@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="600" height="340">
+  <defs>
+    <linearGradient id="bg-grad-etl" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c141a" />
+      <stop offset="100%" stop-color="#151d22" />
+    </linearGradient>
+  </defs>
+
+  <!-- Canvas -->
+  <rect width="600" height="340" fill="url(#bg-grad-etl)" rx="8" />
+
+  <!-- Window Header -->
+  <rect width="600" height="36" fill="#192126" rx="8" />
+  <rect y="28" width="600" height="8" fill="#192126" />
+  <line x1="0" y1="36" x2="600" y2="36" stroke="#3f4a3d" stroke-width="1" />
+  <circle cx="20" cy="18" r="4.5" fill="#ff5f56" />
+  <circle cx="36" cy="18" r="4.5" fill="#ffbd2e" />
+  <circle cx="52" cy="18" r="4.5" fill="#27c93f" />
+
+  <text x="75" y="22" fill="#becaba" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500">
+    batch.etl.worker:9092/jobs/sxssf-stream-parser
+  </text>
+  <rect x="510" y="10" width="74" height="16" rx="3" fill="#238636" />
+  <text x="518" y="22" fill="#ffffff" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600">MERGED #56</text>
+
+  <!-- Top ETL Status Box -->
+  <rect x="24" y="52" width="552" height="90" rx="6" fill="#151d22" stroke="#3f4a3d" stroke-width="1" />
+  <text x="40" y="74" fill="#dbe3ec" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">
+    SXSSF Memory-Bounded Streaming Batch Execution
+  </text>
+  <text x="40" y="90" fill="#899485" font-family="Inter, sans-serif" font-size="10">
+    Source File: 2025_Q3_Enterprise_Ledger_Export.xlsx (420.4 MB, 500,000 Rows)
+  </text>
+
+  <!-- Progress Bar -->
+  <rect x="40" y="104" width="520" height="12" rx="6" fill="#0c141a" stroke="#3f4a3d" stroke-width="0.8" />
+  <rect x="40" y="104" width="442" height="12" rx="6" fill="#7bdb80" />
+  <text x="40" y="130" fill="#7bdb80" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">
+    85% COMPLETED (425,000 / 500,000 rows parsed)
+  </text>
+  <text x="440" y="130" fill="#a2c9ff" font-family="JetBrains Mono, monospace" font-size="11">
+    Rate: 14,200 rows/sec
+  </text>
+
+  <!-- Log / Chunk Visualizer Container -->
+  <rect x="24" y="154" width="552" height="164" rx="6" fill="#0c141a" stroke="#3f4a3d" stroke-width="1" />
+
+  <!-- Terminal Log Lines -->
+  <text x="36" y="176" fill="#7bdb80" font-family="JetBrains Mono, monospace" font-size="10">
+    [14:31:02.102] [Thread-Virtual-124] SXSSFSheet window size = 100 rows (Disk flushing active)
+  </text>
+  <text x="36" y="196" fill="#a2c9ff" font-family="JetBrains Mono, monospace" font-size="10">
+    [14:31:02.480] [ChunkProcessor] Batch chunk #425 (1,000 items) validated against DTO schema
+  </text>
+  <text x="36" y="216" fill="#dbe3ec" font-family="JetBrains Mono, monospace" font-size="10">
+    [14:31:02.890] [HikariPool-1] Bulk INSERT into `ledger_records` committed in 18ms
+  </text>
+  <text x="36" y="236" fill="#899485" font-family="JetBrains Mono, monospace" font-size="10">
+    [14:31:03.110] [MemoryWatchdog] JVM Heap: 248MB / 1024MB (Zero OutOfMemoryError headroom)
+  </text>
+  <text x="36" y="256" fill="#7bdb80" font-family="JetBrains Mono, monospace" font-size="10">
+    [14:31:03.420] [BatchStepExecution] Status: COMPLETED_CHUNK | SkipCount: 0 | ErrorRate: 0.00%
+  </text>
+  <text x="36" y="276" fill="#d3bbff" font-family="JetBrains Mono, monospace" font-size="10">
+    [14:31:03.700] [WebSocketNotification] Emitting progress payload to client frontend socket
+  </text>
+
+  <!-- Prompt Cursor -->
+  <text x="36" y="302" fill="#7bdb80" font-family="JetBrains Mono, monospace" font-size="11">
+    alex@etl-worker:~$ <tspan fill="#dbe3ec">tail -f /var/log/spring-batch/execution.log</tspan>
+  </text>
+  <rect x="375" y="292" width="6" height="12" fill="#7bdb80" />
+</svg>
