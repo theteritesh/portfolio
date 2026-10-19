@@ -3,11 +3,11 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { portfolioData } from "@/data/portfolio";
-import { SiGithub, SiX, SiInstagram } from "react-icons/si";
+import { SiGithub, SiX, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 
 export default function Footer() {
-  const { footer, contact } = portfolioData;
+  const { footer, contact, personal } = portfolioData;
   const shouldReduceMotion = useReducedMotion();
   const currentYear = footer.copyrightYear;
 
@@ -19,7 +19,8 @@ export default function Footer() {
         <div className="flex flex-col gap-2 max-w-sm">
           <div className="flex items-center gap-2">
             <span className="font-headline-sm text-headline-sm text-primary font-mono font-bold">
-              alexmorgan<span className="text-tertiary">.dev</span>
+              {personal.domain.split(".")[0]}
+              <span className="text-tertiary">.{personal.domain.split(".")[1] || "dev"}</span>
             </span>
             <span className="px-2 py-0.5 rounded bg-surface-container border border-outline-variant text-[11px] font-mono text-primary">
               {footer.version}
@@ -107,6 +108,20 @@ export default function Footer() {
             >
               <SiInstagram className="w-4 h-4" />
             </motion.a>
+
+            {contact.whatsapp && (
+              <motion.a
+                href={contact.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp Contact"
+                whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.1 }}
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+                className="w-10 h-10 rounded-md bg-surface-container border border-outline-variant flex items-center justify-center text-on-surface hover:text-[#25d366] hover:border-[#25d366] transition-colors shadow-sm"
+              >
+                <SiWhatsapp className="w-4 h-4 text-[#25d366]" />
+              </motion.a>
+            )}
           </div>
         </div>
       </div>

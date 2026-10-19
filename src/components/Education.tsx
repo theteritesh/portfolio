@@ -145,7 +145,7 @@ export default function Education() {
                     rel="noopener noreferrer"
                     className="text-primary hover:underline flex items-center gap-1 font-semibold shrink-0 ml-2"
                   >
-                    <span>Credly</span>
+                    <span>Verify</span>
                     <span className="material-symbols-outlined text-[13px]">
                       open_in_new
                     </span>

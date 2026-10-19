@@ -46,7 +46,7 @@ export default async function Home() {
         <About />
         <Skills />
         <Experience />
-        <Projects />
+        <Projects repoStats={githubData.repoStats} />
         <GitHubActivity
           data={githubData.activity}
           lastUpdated={githubData.lastUpdated}

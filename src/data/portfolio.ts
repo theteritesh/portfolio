@@ -84,6 +84,7 @@ export interface ExperienceItem {
   id: string;
   role: string;
   company: string;
+  companyUrl?: string;
   department?: string;
   location: string;
   period: string;
@@ -96,28 +97,32 @@ export interface ExperienceItem {
   tags: string[];
 }
 
+export interface ProjectMetric {
+  label: string;
+  value: string;
+}
+
 export interface ProjectItem {
   id: string;
   title: string;
   slug: string;
   description: string;
   image: string;
-  prNumber: string;
-  status: "Merged" | "Open" | "Draft";
-  stars: number;
-  forks: number;
+  isPlaceholderImage?: boolean;
+  status: "Company project" | "Personal project";
+  stars?: number;
+  forks?: number;
   language: string;
   languageColor: string;
   tags: string[];
-  category: "Java" | "React" | "Spring Boot" | "Full Stack";
-  githubUrl: string;
+  category: "Full Stack" | "SaaS" | "E-commerce" | "Java";
+  categories: ("Full Stack" | "SaaS" | "E-commerce" | "Java")[];
+  githubUrl?: string;
+  isPrivateRepo?: boolean;
   liveUrl?: string;
-  snippet?: string;
-  codeSnippet?: {
-    addition?: string;
-    deletion?: string;
-    comment?: string;
-  };
+  domain?: string;
+  keyModules: string;
+  metrics?: ProjectMetric[];
 }
 
 export interface HeatmapDay {
@@ -191,6 +196,8 @@ export interface TestimonialItem {
 export interface ContactData {
   email: string;
   phone: string;
+  whatsapp?: string;
+  whatsappUser?: string;
   location: string;
   timezone: string;
   github: string;
@@ -283,7 +290,7 @@ export function getExperienceYears(
  * Returns the formatted hero badge text based on experience years.
  */
 export function getHeroExperienceBadge(years: number = 1): string {
-  return `Java Full Stack Developer • ${years}+ yr experience`;
+  return `Software Developer • ${years}+ yr experience`;
 }
 
 /**
@@ -314,12 +321,11 @@ export const portfolioData: PortfolioData = {
     bio: "1+ year of hands-on experience building production web applications with Java, Spring Boot, React and MySQL, from REST APIs and real-time WebSocket features to Docker deployments on Cloud.",
     heroIntroTemplate:
       "{years}+ year of hands-on experience building production web applications with Java, Spring Boot, React and MySQL, from REST APIs and real-time WebSocket features to Docker deployments on Cloud.",
-    avatarUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDcV-E1eITp2yUj4_p89kYLb4G8A7vYacaccppfpyg44Mkq7mCTLYf5hukoSNFpEY_vNi56X2WVzbNqyoyI26iCiCIiJ6T1mvKgGiiqJQOkxb9DtFUIBNkXCsQH5FRhLd6RcsGEbLkeIv-ObMqLkFf7HwTIY-hTOEDb7jI82t2onZRQ7YGnbIwtf35qi466XuHvpc27vWIcb8WRfdymNeChoROvWp3_zRlO9KLMnQ-YqABjN6Djphp-",
+    avatarUrl: "/ritesh.jpeg",
     location: "Pune, Maharashtra, India (Remote Ready)",
     timezone: "IST (UTC+5:30)",
     education: "Master of Computer Applications (MCA)",
-    degreeSpecialization: "MCA Graduate • Pune University",
+    degreeSpecialization: "MCA Graduate • Savitribai Phule Pune University",
     status: {
       label: "Open to opportunities",
       online: true,
@@ -343,33 +349,33 @@ export const portfolioData: PortfolioData = {
       timeAgo: "14 hours ago",
     },
     heading: "Hi there, I'm Ritesh Thete",
-    availability: "Available Q2/Q3 2025",
+    availability: "Open to Opportunities",
     bioParagraph:
-      "Java Full Stack Developer based in Pune holding a Master of Computer Applications (MCA) degree with deep domain expertise in distributed enterprise architectures using Java 17/21, Spring Boot, and reactive modern frontends with React, Next.js & TypeScript.",
+      "Software Developer based in Pune holding a Master of Computer Applications (MCA) degree with deep domain expertise in distributed enterprise architectures using Java 17/21, Spring Boot, and reactive modern frontends with React, Next.js & TypeScript.",
     philosophy: {
       title: "Core Engineering Philosophy:",
       quote:
-        '"Write testable code with deterministic side-effects. Treat infrastructure as code, design for horizontal scale, and prioritize zero-friction developer ergonomics."',
+        '"Strong fundamentals first, new tools second. Frameworks change, good engineering doesn’t."',
     },
     academic: {
       title: "Academic Foundation",
       degree: "Master of Computer Applications (MCA)",
       details:
-        "Comprehensive specializations in Distributed Computing, Advanced Data Structures & Algorithms, Database Internals, and Computer Networks. Graduated with Honors.",
-      honors: "First Class with Distinction",
+        "SIMCA, Pune • Savitribai Phule Pune University.",
+      honors: "CGPA 7.53 / 10 • First Class",
     },
     cloudCertification: {
       title: "Cloud Specialization",
       badge: "AWS Certified Cloud Practitioner",
       verified: true,
       details:
-        "Experienced deploying production clusters using Amazon ECS, RDS PostgreSQL, S3 lifecycle policies, and multi-stage container builds with GitHub Actions CI/CD pipelines.",
+        "Amazon Web Services (AWS) • Validation ID: 5e991f2ebae9449b986e36756fd3a436 (Valid July 2025 — July 2028). Verified via official AWS CertMetrics portal.",
     },
     location: "Pune, Maharashtra, India (Remote Friendly)",
     currentlyLearning: {
       command: "echo $CURRENTLY_LEARNING",
       output:
-        "> Go microservices concurrency, Kubernetes operators, Apache Kafka partition semantics.",
+        "> Go microservices concurrency, Apache Kafka partition semantics, and LLM application integration with Spring AI & Agentic workflows.",
     },
   },
 
@@ -404,20 +410,24 @@ export const portfolioData: PortfolioData = {
     branch: "main",
     commands: [
       {
-        command: "git log --oneline -3",
+        command: "git log --oneline -5",
         output: [
-          "a4f82d1 feat: add WebSocket broadcast",
-          "8c2e9b0 feat: generic excel import",
-          "3f1a0e7 fix: payment receipt download",
+          "a4f82d1 feat: scalable notification service from scratch with queue broker",
+          "8c2e9b0 feat: generic excel import template library reusable across entities",
+          "d6b14e2 feat: employee tracking system with background agent daemon",
+          "3f1a0e7 perf: website caching & dynamic lazy-loading performance overhaul",
+          "7e90c14 feat: automated cost-saving database backups to google drive",
         ],
         type: "git",
       },
       {
         command: "git status --short",
         output: [
-          "M  src/main/java/com/ritesh/service/WebSocketBroadcastService.java",
-          "M  src/main/java/com/ritesh/util/ExcelImportHelper.java",
-          "M  frontend/src/components/ReceiptDownloader.tsx",
+          "M  services/notification/NotificationDispatcherService.java",
+          "M  packages/excel-importer/GenericExcelTemplateParser.java",
+          "M  services/employee-tracker/agent/TrackerAgentDaemon.java",
+          "M  frontend/src/features/LazyLoadedModules.tsx",
+          "M  scripts/backup/GoogleDriveBackupSync.sh",
         ],
         type: "status",
       },
@@ -548,26 +558,27 @@ export const portfolioData: PortfolioData = {
       title: "Cloud & DevOps",
       folderName: "devops_ci_cd/",
       badge: "AWS Certified",
-      fileCount: 4,
+      fileCount: 5,
       description:
-        "Continuous deployment using GitHub Actions, container orchestration via Docker Compose & AWS ECS, infrastructure provisioning, and production logging.",
+        "Automated CI/CD deployment pipelines using Jenkins and GitHub Actions, multi-stage Docker containerization, AWS ECS hosting, and Nginx reverse proxy routing.",
       competencies: [
         { name: "Docker & AWS Deployment", level: 85 },
-        { name: "CI/CD GitHub Actions", level: 90 },
+        { name: "Jenkins & GitHub Actions CI/CD", level: 90 },
       ],
       chips: [
         { name: "Docker", iconKey: "SiDocker", color: "#2496ed" },
+        { name: "Jenkins", iconKey: "SiJenkins", color: "#d33833" },
+        { name: "Nginx", iconKey: "SiNginx", color: "#009639" },
         { name: "AWS ECS", iconKey: "FaAws", color: "#ff9900" },
         { name: "GitHub Actions", iconKey: "SiGithubactions", color: "#2088ff" },
         { name: "Linux Server", iconKey: "SiLinux", color: "#fcc624" },
-        { name: "Kubernetes", iconKey: "SiKubernetes", color: "#326ce5" },
-        { name: "Nginx", iconKey: "SiNginx", color: "#009639" },
       ],
       files: [
         "Dockerfile.multi",
+        "Jenkinsfile",
+        "nginx.conf",
         "aws-infra-cdk.yml",
         "github-actions.yml",
-        "nginx.conf",
       ],
     },
   ],
@@ -576,8 +587,9 @@ export const portfolioData: PortfolioData = {
     {
       id: "exp-1",
       role: "Java Full Stack Developer",
-      company: "Mahendra Technosoft",
-      department: "Full Stack Engineering",
+      company: "Mahendra Technosoft Pvt. Ltd.",
+      companyUrl: "https://www.mahendratechnosoft.com/",
+      department: "Full Stack SaaS Engineering",
       location: "Pune, India (Hybrid)",
       period: "Aug 2025 — Present",
       isCurrent: true,
@@ -587,36 +599,46 @@ export const portfolioData: PortfolioData = {
       statusColor: "primary",
       bullets: [
         {
-          title: "Latency Optimization",
-          icon: "bolt",
+          title: "Multi-Tenant SaaS Architecture",
+          icon: "lan",
           description:
-            "Architected Spring Boot 3 microservices with Redis L2 caching, dropping median API response latency by 42% under 15,000 req/sec load.",
+            "Architected and delivered custom multi-tenant SaaS platforms (CRM, ERP, and OTA booking platforms) from scratch across Finance, Hospitality, Education, and Manufacturing sectors.",
           color: "text-primary",
         },
         {
-          title: "Reactive SPA Frontends",
-          icon: "dashboard",
+          title: "High-Throughput APIs & Security",
+          icon: "lock_reset",
           description:
-            "Built modular React 18 administrative dashboards with dynamic permission trees, WebSocket event streams, and real-time telemetry graphs.",
+            "Implemented modular Spring Boot 3 RESTful microservices with JWT authentication, dynamic Role-Based Access Control (RBAC), and strict tenant data isolation.",
           color: "text-tertiary",
         },
         {
-          title: "Automated Pipelines",
-          icon: "cloud_sync",
+          title: "Scalability, Caching & DevOps",
+          icon: "bolt",
           description:
-            "Integrated zero-downtime blue/green deployment workflows to AWS ECS via GitHub Actions, running complete JUnit and integration suites.",
+            "Engineered system scalability via Redis L2 caching and component lazy loading, automated Docker containerization, Jenkins CI/CD pipelines, and Nginx reverse proxy.",
           color: "text-secondary",
         },
       ],
-      tags: ["Java 21", "Spring Boot 3", "React 19", "AWS ECS", "Redis", "Kafka"],
+      tags: [
+        "Java 21",
+        "Spring Boot 3",
+        "React 19",
+        "MySQL",
+        "Tailwind CSS",
+        "Docker",
+        "Jenkins",
+        "Nginx",
+        "REST APIs",
+      ],
     },
     {
       id: "exp-2",
-      role: "Java Full Stack Developer Intern",
-      company: "CodeCraft Labs • Core Infrastructure",
-      department: "Core Infrastructure",
-      location: "Pune, India",
-      period: "2025",
+      role: "Java Full Stack Intern",
+      company: "BrightLink Info Technologies",
+      department: "Core Product Engineering",
+      location: "Pune, India (Hybrid)",
+      period: "Mar 2025 – Jun 2025",
       isCurrent: false,
       commitHash: "7c3b109",
       commitBadge: "commit 7c3b109",
@@ -624,174 +646,166 @@ export const portfolioData: PortfolioData = {
       statusColor: "secondary",
       bullets: [
         {
-          title: "SQL Indexing Overhaul",
-          icon: "database",
+          title: "CRM Core Module Development",
+          icon: "hub",
           description:
-            "Optimized 18 complex PostgreSQL analytical queries and multi-table joins, yielding a 65% reduction in CPU lock waits on heavy transactional tables.",
+            "Developed end-to-end full-stack modules for the SalesOptimn CRM using Java, Spring Boot, Thymeleaf, MySQL, Bootstrap, and JavaScript, contributing to core backend services and UI responsiveness.",
           color: "text-primary",
         },
         {
-          title: "RESTful Gateway",
-          icon: "api",
+          title: "Google Calendar & Task Sync",
+          icon: "event",
           description:
-            "Developed 12 robust REST endpoints using Java Spring MVC with OpenAPI v3 specs, automated DTO validation, and centralized exception handling.",
+            "Integrated Google Calendar API via RESTful calls, enabling automated client meeting scheduling, task management, and bidirectional calendar event synchronization.",
           color: "text-tertiary",
         },
         {
-          title: "Test Coverage",
-          icon: "bug_report",
+          title: "Meta WhatsApp Marketing",
+          icon: "mark_chat_unread",
           description:
-            "Authored unit and regression test suites using JUnit 5, Mockito, and AssertJ, expanding test coverage across core payments domain from 45% to 88%.",
+            "Architected WhatsApp Business API integration into the CRM, implementing automated message templates for broadcast campaigns, real-time client interaction, and delivery tracking.",
           color: "text-secondary",
         },
       ],
-      tags: ["Java", "Spring MVC", "PostgreSQL", "JUnit 5", "Mockito", "Docker"],
+      tags: [
+        "Java",
+        "Spring Boot",
+        "Thymeleaf",
+        "MySQL",
+        "Bootstrap",
+        "JavaScript",
+        "Meta API",
+        "Google Calendar API",
+        "REST APIs",
+      ],
     },
   ],
 
   projects: [
     {
-      id: "school-management",
-      title: "School Management System",
-      slug: "school-management-system",
+      id: "spicy-mango",
+      title: "Spicy Mango",
+      slug: "spicy-mango",
       description:
-        "Comprehensive student information system featuring RBAC, course registration workflows, fee processing, and automated report card generation.",
-      image: "/images/projects/school-management.svg",
-      prNumber: "#12",
-      status: "Merged",
-      stars: 54,
-      forks: 22,
-      language: "Java",
-      languageColor: "#b07219",
-      tags: ["Spring Boot", "React", "MySQL", "JWT Auth"],
-      category: "Java",
-      githubUrl: "https://github.com/alexmorgan-dev/school-management-system",
-      liveUrl: "https://school-demo.alexmorgan.dev",
-      snippet: "+ registerStudentEnrollment(studentId, courseId)",
-      codeSnippet: {
-        addition: "+ registerStudentEnrollment(studentId, courseId)",
-        comment: "// Enforces prerequisite constraints & audit log",
-      },
-    },
-    {
-      id: "crm-dashboard",
-      title: "CRM Dashboard & Analytics",
-      slug: "crm-dashboard-analytics",
-      description:
-        "Enterprise analytics hub for sales funnels, pipeline conversions, dynamic customer segmentation, and JWT-authenticated deal management.",
-      image: "/images/projects/crm-dashboard.svg",
-      prNumber: "#34",
-      status: "Open",
-      stars: 33,
-      forks: 18,
-      language: "TypeScript",
-      languageColor: "#3178c6",
-      tags: ["React", "Spring Boot", "Chart.js", "PostgreSQL"],
-      category: "React",
-      githubUrl: "https://github.com/alexmorgan-dev/crm-analytics-dashboard",
-      liveUrl: "https://crm.alexmorgan.dev",
-      snippet: "+ const funnelMetrics = usePipelineMetrics(timeframe)",
-      codeSnippet: {
-        addition: "+ const funnelMetrics = usePipelineMetrics(timeframe)",
-        comment: "// Aggregates deal velocity & stage conversions",
-      },
-    },
-    {
-      id: "realtime-chat",
-      title: "Real-time Chat with WebSocket",
-      slug: "realtime-chat-websocket",
-      description:
-        "Low-latency message streaming room app featuring real-time presence heartbeats, message delivery acknowledgements, end-to-end pub/sub broadcasting.",
-      image: "/images/projects/realtime-chat.svg",
-      prNumber: "#77",
-      status: "Merged",
-      stars: 34,
-      forks: 21,
-      language: "Java",
-      languageColor: "#b07219",
-      tags: ["STOMP/WebSocket", "Redis", "Spring Boot", "React"],
-      category: "Spring Boot",
-      githubUrl: "https://github.com/alexmorgan-dev/realtime-chat-websocket",
-      liveUrl: "https://chat.alexmorgan.dev",
-      snippet: "+ simpMessagingTemplate.convertAndSend('/topic/room', msg)",
-      codeSnippet: {
-        addition: "+ simpMessagingTemplate.convertAndSend('/topic/room', msg)",
-        comment: "// Low-latency STOMP broker routing",
-      },
-    },
-    {
-      id: "inventory-management",
-      title: "Inventory Management & Warehousing",
-      slug: "inventory-management-warehousing",
-      description:
-        "Multi-facility warehouse inventory tracking with automated reorder levels, batch SKU scanning, supplier order generation, and real-time ledger audits.",
-      image: "/images/projects/inventory-management.svg",
-      prNumber: "#42",
-      status: "Merged",
-      stars: 61,
-      forks: 34,
-      language: "Java",
-      languageColor: "#b07219",
-      tags: ["Java", "Spring Boot", "Docker", "PostgreSQL"],
-      category: "Java",
-      githubUrl: "https://github.com/alexmorgan-dev/inventory-management-system",
-      liveUrl: "https://inventory.alexmorgan.dev",
-      snippet: "+ adjustStockLevel(sku, warehouseId, quantityDelta)",
-      codeSnippet: {
-        addition: "+ adjustStockLevel(sku, warehouseId, quantityDelta)",
-        comment: "// Optimistic locking prevents race conditions",
-      },
-    },
-    {
-      id: "ecommerce-app",
-      title: "E-commerce Cloud Store",
-      slug: "ecommerce-cloud-store",
-      description:
-        "Full-stack storefront with Stripe checkout integration, product catalog filtering, real-time inventory checks, and transactional customer invoice delivery.",
+        "Multi-tenant OTA platform where properties are listed, searched and booked, with a full admin panel to run and customise the customer-facing site.",
       image: "/images/projects/ecommerce-app.svg",
-      prNumber: "#99",
-      status: "Open",
-      stars: 49,
-      forks: 28,
-      language: "TypeScript",
-      languageColor: "#3178c6",
-      tags: ["React", "Spring Boot", "Stripe", "Tailwind CSS"],
-      category: "Full Stack",
-      githubUrl: "https://github.com/alexmorgan-dev/ecommerce-cloud-store",
-      liveUrl: "https://store.alexmorgan.dev",
-      snippet: "+ stripe.checkout.sessions.create({ line_items, mode: 'payment' })",
-      codeSnippet: {
-        addition: "+ stripe.checkout.sessions.create({ line_items, mode: 'payment' })",
-        comment: "// Webhook idempotency validation enabled",
-      },
-    },
-    {
-      id: "excel-importer",
-      title: "Excel Import Tool & ETL Parser",
-      slug: "excel-import-tool-etl",
-      description:
-        "Streaming Excel/CSV chunk processing pipeline handling 500,000+ row files with memory-bounded Apache POI SXSSF streaming and database bulk upserts.",
-      image: "/images/projects/excel-importer.svg",
-      prNumber: "#56",
-      status: "Merged",
-      stars: 27,
-      forks: 9,
+      isPlaceholderImage: true,
+      status: "Company project",
       language: "Java",
       languageColor: "#b07219",
-      tags: ["Apache POI", "Spring Batch", "MySQL", "Virtual Threads"],
-      category: "Spring Boot",
-      githubUrl: "https://github.com/alexmorgan-dev/excel-import-etl-parser",
-      liveUrl: "https://etl.alexmorgan.dev",
-      snippet: "+ SXSSFWorkbook workbook = new SXSSFWorkbook(100);",
-      codeSnippet: {
-        addition: "+ SXSSFWorkbook workbook = new SXSSFWorkbook(100);",
-        comment: "// Flushes row buffer to disk to prevent OOM",
-      },
+      tags: ["Java", "Spring", "React", "Tailwind CSS", "MySQL", "Jenkins", "Docker", "Nginx"],
+      category: "SaaS",
+      categories: ["Full Stack", "SaaS"],
+      isPrivateRepo: true,
+      liveUrl: "https://spicymango.in/",
+      domain: "spicymango.in",
+      keyModules:
+        "Admin panel with customisation, property & room management, rate plans, booking engine, customer/enquiry handling, coupons & promotions, dynamic search engine.",
+      metrics: [],
+    },
+    {
+      id: "xpertbiz",
+      title: "XpertBiz",
+      slug: "xpertbiz",
+      description:
+        "Multi-tenant CRM covering sales, HR, purchasing and project work in one platform.",
+      image: "/images/projects/crm-dashboard.svg",
+      isPlaceholderImage: true,
+      status: "Company project",
+      language: "Java",
+      languageColor: "#b07219",
+      tags: ["Java", "Spring", "React", "Tailwind CSS", "MySQL", "Jenkins", "Docker", "Nginx"],
+      category: "SaaS",
+      categories: ["Full Stack", "SaaS"],
+      isPrivateRepo: true,
+      liveUrl: "https://mtechnosoft.xpertbizsolutions.com/",
+      domain: "mtechnosoft.xpertbizsolutions.com",
+      keyModules:
+        "Leads & customers, sales (invoices, payments, items), HRM (employee management, leave, attendance, payroll), purchase orders & expenses, project tasks & reminders.",
+      metrics: [],
+    },
+    {
+      id: "knowlexanext",
+      title: "KnowlexaNext",
+      slug: "knowlexanext",
+      description:
+        "Multi-tenant ERP for running educational institutes end to end.",
+      image: "/images/projects/school-management.svg",
+      isPlaceholderImage: true,
+      status: "Company project",
+      language: "Java",
+      languageColor: "#b07219",
+      tags: ["Java", "Spring", "React", "Tailwind CSS", "MySQL", "Jenkins", "Docker", "Nginx"],
+      category: "SaaS",
+      categories: ["Full Stack", "SaaS"],
+      isPrivateRepo: true,
+      liveUrl: "http://ithapeinstitutes.knowlexanext.com",
+      domain: "ithapeinstitutes.knowlexanext.com",
+      keyModules:
+        "Institute & faculty management, programs & courses, student management, admissions & fee collection, exams & results, attendance, inventory allocation.",
+      metrics: [],
+    },
+    {
+      id: "bulktradehub",
+      title: "BulkTradeHub",
+      slug: "bulktradehub",
+      description:
+        "B2B marketplace connecting retail shop owners, manufacturers, consumers and salesmen, where salesmen can buy products in bulk and resell them to earn income.",
+      image: "/images/projects/inventory-management.svg",
+      isPlaceholderImage: true,
+      status: "Personal project",
+      language: "Java",
+      languageColor: "#b07219",
+      tags: ["HTML", "CSS", "Bootstrap", "JavaScript", "Thymeleaf", "Spring", "MySQL"],
+      category: "E-commerce",
+      categories: ["Full Stack", "E-commerce"],
+      githubUrl: "https://github.com/theteritesh/BulkTradeHub",
+      keyModules:
+        "Role-based dashboards, public storefront, localStorage guest cart merging upon login, GTIN-based product validation, bulk listing and ordering workflow.",
+      metrics: [],
+    },
+    {
+      id: "computer-sales-services",
+      title: "Online Computer Sales and Services",
+      slug: "computer-sales-services",
+      description:
+        "E-commerce web app for selling computers and booking computer services, with order management and related modules.",
+      image: "/images/projects/excel-importer.svg",
+      isPlaceholderImage: true,
+      status: "Personal project",
+      language: "Java",
+      languageColor: "#b07219",
+      tags: ["Java", "JSP", "Servlet", "HTML", "CSS", "Bootstrap", "JavaScript", "MySQL"],
+      category: "E-commerce",
+      categories: ["Full Stack", "E-commerce"],
+      githubUrl: "https://github.com/theteritesh/Online-Computer-Sells-and-Services",
+      keyModules:
+        "Computer product sales catalog, online service booking system, user authentication, customer shopping cart, and order management.",
+      metrics: [],
+    },
+    {
+      id: "hospital-management",
+      title: "Hospital Management System",
+      slug: "hospital-management",
+      description:
+        "Manages hospital activities such as patient records, doctor records and appointment scheduling, with a responsive interface for admins and patients.",
+      image: "/images/projects/realtime-chat.svg",
+      isPlaceholderImage: true,
+      status: "Personal project",
+      language: "Java",
+      languageColor: "#b07219",
+      tags: ["JSP", "Servlets", "Java", "HTML", "CSS", "Bootstrap", "MySQL", "Apache Tomcat", "JDBC"],
+      category: "Java",
+      categories: ["Full Stack", "Java"],
+      githubUrl: "https://github.com/theteritesh/Hospital-Management-System",
+      keyModules:
+        "Patient & doctor record CRUD, patient appointment booking, doctor schedules, secure role-based login (admin/doctor/patient), responsive Bootstrap interface.",
+      metrics: [],
     },
   ],
 
   github: {
-    username: "alexmorgan-dev",
+    username: "theteritesh",
     totalContributions: 1248,
     yearRange: "2024 - 2025",
     currentStreak: 42,
@@ -804,34 +818,34 @@ export const portfolioData: PortfolioData = {
     ],
     pinnedRepos: [
       {
-        name: "spring-boot-starter-distributed-cache",
+        name: "BulkTradeHub",
         description:
-          "Lightweight Spring Boot 3 auto-configuration module providing two-layer L1 caffeine / L2 Redis caching with invalidation pub/sub.",
+          "B2B marketplace connecting retail shop owners, manufacturers, consumers and salesmen with GTIN validation and bulk purchasing workflows.",
         language: "Java",
         languageColor: "#b07219",
-        stars: 184,
-        forks: 42,
-        url: "https://github.com/alexmorgan-dev/spring-boot-starter-distributed-cache",
+        stars: 0,
+        forks: 0,
+        url: "https://github.com/theteritesh/BulkTradeHub",
       },
       {
-        name: "react-virtual-tree-explorer",
+        name: "Online-Computer-Sells-and-Services",
         description:
-          "High-performance virtualized file tree component capable of rendering 100,000+ nested directories at 60fps.",
-        language: "TypeScript",
-        languageColor: "#3178c6",
-        stars: 247,
-        forks: 38,
-        url: "https://github.com/alexmorgan-dev/react-virtual-tree-explorer",
-      },
-      {
-        name: "kafka-event-stream-gateway",
-        description:
-          "Resilient Kafka consumer group with dynamic dead-letter queuing, backpressure management, and circuit-breaker telemetry.",
+          "E-commerce web application for selling computers and booking IT services with order management and authentication.",
         language: "Java",
         languageColor: "#b07219",
-        stars: 156,
-        forks: 29,
-        url: "https://github.com/alexmorgan-dev/kafka-event-stream-gateway",
+        stars: 0,
+        forks: 0,
+        url: "https://github.com/theteritesh/Online-Computer-Sells-and-Services",
+      },
+      {
+        name: "Hospital-Management-System",
+        description:
+          "Web-based hospital management application managing patient records, doctor records, and appointment scheduling.",
+        language: "Java",
+        languageColor: "#b07219",
+        stars: 0,
+        forks: 0,
+        url: "https://github.com/theteritesh/Hospital-Management-System",
       },
     ],
     weeks: (() => {
@@ -895,35 +909,35 @@ export const portfolioData: PortfolioData = {
     {
       id: "edu-mca",
       degree: "Master of Computer Applications (MCA)",
-      institution: "Pune University • Faculty of Science & Technology",
-      years: "2022 — 2024",
-      badge: "Academic Credential",
+      institution: "SIMCA, Pune • Savitribai Phule Pune University",
+      years: "2023 — 2025",
+      badge: "Postgraduate Degree",
       type: "academic",
       description:
-        "Rigorous 2-year graduate program curriculum covering distributed operating systems, compiler design principles, complex relational algorithms, enterprise J2EE architectures, and data structures.",
+        "Sinhgad Institute of Management and Computer Application (SIMCA), Pune. Master's program covering distributed enterprise systems, advanced data structures & algorithms, database internals, and modern cloud architectures.",
       highlights: [
-        "Graduated First Class with Honors",
-        "Cumulative GPA: 3.9 / 4.0",
-        "Advanced Computing & Systems Specialization",
+        "CGPA: 7.53 / 10 • First Class",
+        "Result Declared: 25-JUN-2025",
+        "Enterprise Distributed Systems & Full Stack Engineering",
       ],
-      verificationLabel: "Degree Hash: #MCA-9821-AM",
+      verificationLabel: "Result Date: 25-JUN-2025 • SPPU",
       icon: "school",
     },
     {
       id: "edu-bba",
-      degree: "BBA (Computer Application)",
-      institution: "Savitribai Phule Pune University",
-      years: "2019 — 2022",
+      degree: "Bachelor of Business Administration (Computer Application) — BBA (CA)",
+      institution: "CMCS, Nashik • Savitribai Phule Pune University",
+      years: "2020 — 2023",
       badge: "Undergraduate Degree",
       type: "academic",
       description:
-        "Comprehensive 3-year bachelor program establishing deep foundations in modern software development life cycles, business information systems, object-oriented programming (Java & C++), database normalization, and web technologies.",
+        "Commerce, Management & Computer Science (CMCS) College, Nashik. Three-year undergraduate program establishing foundational excellence in software engineering methodologies, object-oriented programming with Java, relational database systems, and web technologies.",
       highlights: [
-        "Distinction in Core Java & Database Systems",
-        "Led University Student Developer Forum",
-        "Business Process Modeling & Relational ACID Design",
+        "CGPA: 7.34 / 10 • Grade A",
+        "Result Declared: 28-JUL-2023",
+        "Core Java, Relational Databases & Web Technologies",
       ],
-      verificationLabel: "Degree Hash: #BBA-7104-SP",
+      verificationLabel: "Result Date: 28-JUL-2023 • SPPU",
       icon: "workspace_premium",
     },
     {
@@ -935,14 +949,15 @@ export const portfolioData: PortfolioData = {
       verified: true,
       type: "certification",
       description:
-        "Demonstrated mastery in cloud fluency, core AWS architectural principles, security compliance models, billing structures, IAM policy orchestration, and compute VPC isolation.",
+        "Official Amazon Web Services certification validating cloud fluency, AWS core architectural principles, IAM security compliance, serverless, and multi-stage container deployments.",
       highlights: [
-        "AWS Validation ID: CLOUD-8109312X",
-        "Active & Verified Status via Credly",
-        "Multi-stage Docker & Amazon ECS deployment",
+        "Validation ID: 5e991f2ebae9449b986e36756fd3a436",
+        "Issue Date: July 25, 2025 • Expiry: July 25, 2028",
+        "Verified via AWS CertMetrics Portal",
       ],
-      verificationLabel: "Verify on AWS Credly",
-      verificationLink: "https://www.credly.com/users/alexmorgan-dev",
+      verificationLabel: "AWS CertMetrics: 5e991f2e...",
+      verificationLink:
+        "https://cp.certmetrics.com/amazon/en/public/verify/credential/5e991f2ebae9449b986e36756fd3a436",
       icon: "verified",
     },
   ],
@@ -1002,18 +1017,20 @@ export const portfolioData: PortfolioData = {
   ],
 
   contact: {
-    email: "theteritesh@gmail.com",
-    phone: "+91 98765 43210",
+    email: "theteritesh2@gmail.com",
+    phone: "+91 9067467472",
+    whatsapp: "https://wa.me/919067467472",
+    whatsappUser: "+91 9067467472",
     location: "Pune, Maharashtra, India (Remote Ready)",
     timezone: "IST (UTC+5:30)",
     github: "https://github.com/theteritesh",
     githubUser: "theteritesh",
-    linkedin: "https://linkedin.com/in/ritesh-thete",
-    linkedinUser: "ritesh-thete",
+    linkedin: "https://www.linkedin.com/in/ritesh-thete-4b2b56228/",
+    linkedinUser: "ritesh-thete-4b2b56228",
     twitter: "https://twitter.com/theteritesh",
     twitterUser: "@theteritesh",
-    instagram: "https://instagram.com/theteritesh",
-    instagramUser: "@theteritesh",
+    instagram: "https://instagram.com/_ritesh.thete_",
+    instagramUser: "_ritesh.thete_",
     mapImage: "/images/map-san-francisco.svg",
   },
 

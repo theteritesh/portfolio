@@ -22,6 +22,7 @@ import {
   SiLinux,
   SiKubernetes,
   SiNginx,
+  SiJenkins,
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa6";
 import { TbCode } from "react-icons/tb";
@@ -66,6 +67,8 @@ const renderSkillIcon = (key: string) => {
       return <SiKubernetes className="w-3.5 h-3.5 text-[#326ce5] shrink-0" />;
     case "SiNginx":
       return <SiNginx className="w-3.5 h-3.5 text-[#009639] shrink-0" />;
+    case "SiJenkins":
+      return <SiJenkins className="w-3.5 h-3.5 text-[#d33833] shrink-0" />;
     default:
       return <TbCode className="w-3.5 h-3.5 text-primary shrink-0" />;
   }

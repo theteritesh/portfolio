@@ -20,6 +20,7 @@ export interface GitHubDataResult {
   activity: GitHubActivityData;
   lastUpdated: string;
   isLive: boolean;
+  repoStats?: Record<string, { stars: number; forks: number }>;
 }
 
 interface GraphQLRepoNode {
@@ -202,6 +203,7 @@ function getFallbackData(username: string): GitHubDataResult {
     },
     lastUpdated: formatStableDate(lastDay),
     isLive: false,
+    repoStats: {},
   };
 }
 
@@ -389,6 +391,16 @@ export async function getGitHubData(): Promise<GitHubDataResult> {
       flatDays.length > 0 ? flatDays[flatDays.length - 1].date : "2026-10-18";
     const lastUpdated = formatStableDate(latestDateStr);
 
+    const repoStats: Record<string, { stars: number; forks: number }> = {};
+    for (const repo of user.topRepositories?.nodes || []) {
+      if (repo && repo.name) {
+        repoStats[repo.name.toLowerCase()] = {
+          stars: repo.stargazerCount || 0,
+          forks: repo.forkCount || 0,
+        };
+      }
+    }
+
     return {
       username: user.login || username,
       userUrl: user.url || `https://github.com/${username}`,
@@ -409,6 +421,7 @@ export async function getGitHubData(): Promise<GitHubDataResult> {
       },
       lastUpdated,
       isLive: true,
+      repoStats,
     };
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Network error";

@@ -3,51 +3,75 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { portfolioData } from "@/data/portfolio";
+import { portfolioData, ProjectItem } from "@/data/portfolio";
 
-type FilterTab = "All" | "Java" | "React" | "Spring Boot" | "Full Stack";
+type FilterTab = "All" | "Full Stack" | "SaaS" | "E-commerce" | "Java";
 
-export default function Projects() {
+interface ProjectsProps {
+  repoStats?: Record<string, { stars: number; forks: number }>;
+}
+
+function ProjectCardMedia({ project }: { project: ProjectItem }) {
+  const [hasError, setHasError] = useState(false);
+  const altText = project.isPlaceholderImage
+    ? `Illustrative preview of ${project.title}`
+    : project.title;
+
+  return (
+    <div className="relative w-full aspect-video bg-surface-container-lowest overflow-hidden border-b border-outline-variant">
+      {!hasError ? (
+        <Image
+          src={project.image}
+          alt={altText}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+          onError={() => setHasError(true)}
+        />
+      ) : (
+        <div className="w-full h-full flex flex-col items-center justify-center gap-1.5 bg-surface-container-low text-outline p-4 font-mono text-center">
+          <span className="material-symbols-outlined text-[30px] text-outline-variant">
+            image_not_supported
+          </span>
+          <span className="text-[12px] text-on-surface-variant font-medium">
+            {project.title}
+          </span>
+          <span className="text-[10px] text-outline">Preview pending</span>
+        </div>
+      )}
+
+      {/* Subtle vignette gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent opacity-80 pointer-events-none" />
+
+      {/* Unobtrusive corner caption label */}
+      {project.isPlaceholderImage && !hasError && (
+        <div className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/60 font-mono text-[10px] text-on-surface-variant/90 shadow-sm z-10 pointer-events-none select-none">
+          Illustrative preview
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function Projects({ repoStats }: ProjectsProps) {
   const { projects } = portfolioData;
   const shouldReduceMotion = useReducedMotion();
   const [activeFilter, setActiveFilter] = useState<FilterTab>("All");
 
   const filterTabs: FilterTab[] = [
     "All",
-    "Java",
-    "React",
-    "Spring Boot",
     "Full Stack",
+    "SaaS",
+    "E-commerce",
+    "Java",
   ];
 
   const filteredProjects = projects.filter((project) => {
     if (activeFilter === "All") return true;
-    if (activeFilter === "Java") {
-      return (
-        project.category === "Java" ||
-        project.tags.some((t) => t.toLowerCase().includes("java"))
-      );
-    }
-    if (activeFilter === "React") {
-      return (
-        project.category === "React" ||
-        project.tags.some((t) => t.toLowerCase().includes("react"))
-      );
-    }
-    if (activeFilter === "Spring Boot") {
-      return (
-        project.category === "Spring Boot" ||
-        project.tags.some((t) => t.toLowerCase().includes("spring"))
-      );
-    }
-    if (activeFilter === "Full Stack") {
-      return (
-        project.category === "Full Stack" ||
-        project.category === "Java" ||
-        project.tags.length >= 4
-      );
-    }
-    return true;
+    return (
+      project.categories?.includes(activeFilter) ||
+      project.category === activeFilter
+    );
   });
 
   return (
@@ -67,20 +91,19 @@ export default function Projects() {
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider font-mono flex items-center gap-1.5">
               <span className="material-symbols-outlined text-[16px]">
-                call_merge
+                deployed_code
               </span>
-              REPOSITORIES • PULL_REQUESTS
+              PRODUCTION PROJECTS • ARCHITECTURE
             </span>
             <span className="px-2 py-0.5 rounded bg-surface-container border border-outline-variant text-tertiary font-mono text-[11px]">
-              {projects.length} Production Repos
+              {projects.length} Featured Projects
             </span>
           </div>
           <h2 className="font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-on-surface font-bold font-mono">
             Featured Engineering Projects
           </h2>
           <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl">
-            Production-grade systems architected with modular Git branches,
-            isolated Docker containers, and high-performance backend pipelines.
+            Production-grade multi-tenant SaaS platforms, ERP systems, B2B marketplaces, and enterprise backend services built with Java, Spring, React, MySQL, and Nginx.
           </p>
         </motion.div>
 
@@ -91,41 +114,17 @@ export default function Projects() {
             const count =
               tab === "All"
                 ? projects.length
-                : projects.filter((p) => {
-                    if (tab === "Java") {
-                      return (
-                        p.category === "Java" ||
-                        p.tags.some((t) => t.toLowerCase().includes("java"))
-                      );
-                    }
-                    if (tab === "React") {
-                      return (
-                        p.category === "React" ||
-                        p.tags.some((t) => t.toLowerCase().includes("react"))
-                      );
-                    }
-                    if (tab === "Spring Boot") {
-                      return (
-                        p.category === "Spring Boot" ||
-                        p.tags.some((t) => t.toLowerCase().includes("spring"))
-                      );
-                    }
-                    if (tab === "Full Stack") {
-                      return (
-                        p.category === "Full Stack" ||
-                        p.category === "Java" ||
-                        p.tags.length >= 4
-                      );
-                    }
-                    return true;
-                  }).length;
+                : projects.filter(
+                    (p) =>
+                      p.categories?.includes(tab) || p.category === tab
+                  ).length;
 
             return (
               <button
                 key={tab}
                 type="button"
                 onClick={() => setActiveFilter(tab)}
-                className={`relative px-3 py-1.5 rounded-md transition-colors whitespace-nowrap z-10 flex items-center gap-1.5 ${
+                className={`relative px-3 py-1.5 rounded-md transition-colors whitespace-nowrap z-10 flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                   isSelected
                     ? "text-primary font-semibold"
                     : "text-on-surface-variant hover:text-on-surface"
@@ -157,7 +156,15 @@ export default function Projects() {
       >
         <AnimatePresence mode="popLayout">
           {filteredProjects.map((project, index) => {
-            const isMerged = project.status === "Merged";
+            // Check real GitHub stats if fetched from the existing data layer
+            const repoName = project.githubUrl
+              ? project.githubUrl.split("/").pop()?.toLowerCase()
+              : null;
+            const liveRepo = repoName && repoStats ? repoStats[repoName] : null;
+            const hasRealStats = Boolean(
+              liveRepo && (liveRepo.stars > 0 || liveRepo.forks > 0)
+            );
+
             return (
               <motion.article
                 key={project.id}
@@ -185,48 +192,50 @@ export default function Projects() {
                 className="group rounded-lg bg-surface-container border border-outline-variant shadow-md flex flex-col justify-between overflow-hidden hover:border-primary hover:shadow-[0_8px_24px_rgba(35,134,54,0.25)] transition-colors"
               >
                 {/* Screenshot Image Container with Zoom effect */}
-                <div className="relative w-full h-44 sm:h-48 bg-surface-container-lowest overflow-hidden border-b border-outline-variant">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
-                  />
-                  {/* Subtle vignette gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent opacity-80 pointer-events-none" />
+                <div className="relative">
+                  <ProjectCardMedia project={project} />
 
                   {/* Badges floating on image */}
-                  <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+                  <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-2 pointer-events-none z-10">
                     <span
-                      className={`px-2 py-0.5 rounded-full font-label-sm text-[11px] font-semibold flex items-center gap-1 shadow-sm font-mono ${
-                        isMerged
-                          ? "bg-secondary-container/90 text-on-secondary-container border border-secondary/40"
-                          : "bg-primary-container/90 text-on-primary-container border border-primary/40"
+                      className={`px-2 py-0.5 rounded-full font-label-sm text-[11px] font-semibold flex items-center gap-1 shadow-sm font-mono backdrop-blur-sm ${
+                        project.status === "Company project"
+                          ? "bg-secondary-container/95 text-on-secondary-container border border-secondary/40"
+                          : "bg-primary-container/95 text-on-primary-container border border-primary/40"
                       }`}
                     >
                       <span className="material-symbols-outlined text-[13px]">
-                        {isMerged ? "merge" : "call_merge"}
+                        {project.status === "Company project"
+                          ? "apartment"
+                          : "person"}
                       </span>
-                      <span>
-                        {project.status} {project.prNumber}
-                      </span>
+                      <span>{project.status}</span>
                     </span>
 
-                    <div className="flex items-center gap-2 px-2 py-0.5 rounded-full bg-surface-container-lowest/85 border border-outline-variant font-label-sm text-[11px] text-on-surface font-mono shadow-sm">
-                      <span className="flex items-center gap-0.5">
-                        <span className="material-symbols-outlined text-[13px] text-tertiary">
-                          star
+                    {/* Real Domain if available, or real live GitHub stars/forks if fetched */}
+                    {project.domain ? (
+                      <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/80 font-label-sm text-[11px] text-tertiary font-mono shadow-sm max-w-[55%]">
+                        <span className="material-symbols-outlined text-[12px] shrink-0">
+                          public
                         </span>
-                        {project.stars}
-                      </span>
-                      <span className="flex items-center gap-0.5">
-                        <span className="material-symbols-outlined text-[13px] text-outline">
-                          fork_right
+                        <span className="truncate">{project.domain}</span>
+                      </div>
+                    ) : hasRealStats && liveRepo ? (
+                      <div className="flex items-center gap-2 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/80 font-label-sm text-[11px] text-on-surface font-mono shadow-sm">
+                        <span className="flex items-center gap-0.5">
+                          <span className="material-symbols-outlined text-[13px] text-tertiary">
+                            star
+                          </span>
+                          {liveRepo.stars}
                         </span>
-                        {project.forks}
-                      </span>
-                    </div>
+                        <span className="flex items-center gap-0.5">
+                          <span className="material-symbols-outlined text-[13px] text-outline">
+                            fork_right
+                          </span>
+                          {liveRepo.forks}
+                        </span>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
 
@@ -241,21 +250,49 @@ export default function Projects() {
                     </p>
                   </div>
 
-                  {/* Code Diff or Implementation Snippet */}
-                  {project.codeSnippet && (
-                    <div className="rounded bg-surface-container-lowest border border-outline-variant/60 p-2 font-mono text-[11px] leading-tight flex flex-col gap-0.5">
-                      {project.codeSnippet.addition && (
-                        <span className="text-primary truncate">
-                          {project.codeSnippet.addition}
+                  {/* Key Modules Row (replaces old fake code diff block) */}
+                  {project.keyModules && (
+                    <div className="rounded bg-surface-container-lowest border border-outline-variant/60 p-2.5 font-mono text-[11px] leading-relaxed flex flex-col gap-1">
+                      <div className="text-tertiary font-semibold flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[13px]">
+                          tune
                         </span>
-                      )}
-                      {project.codeSnippet.comment && (
-                        <span className="text-outline truncate">
-                          {project.codeSnippet.comment}
-                        </span>
-                      )}
+                        <span>Key modules:</span>
+                      </div>
+                      <p className="text-on-surface-variant text-[11.5px] leading-normal line-clamp-2">
+                        {project.keyModules}
+                      </p>
                     </div>
                   )}
+
+                  {/* Optional Metrics Row - only renders entries with real value, hidden if empty/TODO */}
+                  {(() => {
+                    const validMetrics = project.metrics?.filter(
+                      (m) =>
+                        m &&
+                        m.value &&
+                        m.value.trim() !== "" &&
+                        !m.value.toUpperCase().includes("TODO")
+                    );
+                    if (!validMetrics || validMetrics.length === 0) return null;
+                    return (
+                      <div className="grid grid-cols-2 gap-2 font-mono">
+                        {validMetrics.map((metric, idx) => (
+                          <div
+                            key={idx}
+                            className="px-2 py-1 rounded bg-surface-container-lowest border border-outline-variant/40 flex flex-col"
+                          >
+                            <span className="text-[10px] text-outline uppercase">
+                              {metric.label}
+                            </span>
+                            <span className="text-[12px] font-semibold text-primary">
+                              {metric.value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })()}
 
                   {/* Tech Stack Tags */}
                   <div className="flex flex-wrap gap-1.5 pt-1">
@@ -280,23 +317,40 @@ export default function Projects() {
                     </span>
 
                     <div className="flex items-center gap-2">
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-2.5 py-1 rounded bg-surface-container-high border border-outline-variant text-on-surface font-label-sm text-[12px] font-mono hover:text-primary hover:border-primary transition-all flex items-center gap-1 active:scale-95"
-                      >
-                        <span className="material-symbols-outlined text-[14px]">
-                          code
+                      {/* GitHub Button if public repo */}
+                      {project.githubUrl ? (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.title} on GitHub`}
+                          className="px-2.5 py-1 rounded bg-surface-container-high border border-outline-variant text-on-surface font-label-sm text-[12px] font-mono hover:text-primary hover:border-primary transition-all flex items-center gap-1 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        >
+                          <span className="material-symbols-outlined text-[14px]">
+                            code
+                          </span>
+                          <span>GitHub</span>
+                        </a>
+                      ) : project.isPrivateRepo ? (
+                        <span
+                          className="px-2.5 py-1 rounded bg-surface-container-lowest border border-outline-variant/50 text-outline font-label-sm text-[11px] font-mono flex items-center gap-1 cursor-default select-none"
+                          title="Proprietary commercial codebase"
+                        >
+                          <span className="material-symbols-outlined text-[13px]">
+                            lock
+                          </span>
+                          <span>Private repository</span>
                         </span>
-                        <span>GitHub</span>
-                      </a>
+                      ) : null}
+
+                      {/* Live Demo Button if live URL exists */}
                       {project.liveUrl && (
                         <a
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-2.5 py-1 rounded bg-primary-container text-on-primary-container font-label-sm text-[12px] font-mono hover:bg-primary-fixed-dim transition-all flex items-center gap-1 shadow-sm active:scale-95 font-semibold"
+                          aria-label={`Visit live demo for ${project.title}`}
+                          className="px-2.5 py-1 rounded bg-primary-container text-on-primary-container font-label-sm text-[12px] font-mono hover:bg-primary-fixed-dim transition-all flex items-center gap-1 shadow-sm active:scale-95 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                         >
                           <span className="material-symbols-outlined text-[14px]">
                             launch

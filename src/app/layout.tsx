@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s | Ritesh Thete",
   },
   description:
-    "Ritesh Thete is a Java Full Stack Developer in Pune specializing in Spring Boot, distributed microservices, React, and Next.js reactive web architectures.",
+    "Ritesh Thete is a Java Full Stack Developer in Pune specializing in multi-tenant SaaS platforms, ERP/CRM architectures, Spring Boot, React, MySQL, Jenkins, Docker, and Nginx.",
   keywords: [
     "Ritesh Thete",
     "Java Full Stack Developer",
@@ -42,9 +42,14 @@ export const metadata: Metadata = {
     "Spring Boot",
     "React",
     "Next.js",
+    "SaaS Multi-Tenant",
+    "CRM",
+    "ERP",
+    "MySQL",
+    "Jenkins",
+    "Docker",
+    "Nginx",
     "Java Developer Pune",
-    "Microservices",
-    "PostgreSQL",
     "AWS Certified",
     "Software Engineer",
   ],
@@ -70,7 +75,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     title: "Ritesh Thete | Java Full Stack Developer, Pune",
     description:
-      "Ritesh Thete is a Java Full Stack Developer in Pune specializing in Spring Boot, distributed microservices, React, and Next.js reactive web architectures.",
+      "Ritesh Thete is a Java Full Stack Developer in Pune specializing in multi-tenant SaaS platforms, ERP/CRM architectures, Spring Boot, React, MySQL, Jenkins, Docker, and Nginx.",
     siteName: "Ritesh Thete Portfolio",
     images: [
       {
@@ -85,7 +90,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ritesh Thete | Java Full Stack Developer, Pune",
     description:
-      "Ritesh Thete is a Java Full Stack Developer in Pune specializing in Spring Boot, distributed microservices, React, and Next.js reactive web architectures.",
+      "Ritesh Thete is a Java Full Stack Developer in Pune specializing in multi-tenant SaaS platforms, ERP/CRM architectures, Spring Boot, React, MySQL, Jenkins, Docker, and Nginx.",
     images: ["/opengraph-image"],
     creator: "@theteritesh",
   },
@@ -124,12 +129,14 @@ export default function RootLayout({
       "React",
       "Next.js",
       "TypeScript",
-      "Microservices",
+      "SaaS Multi-Tenant Systems",
+      "MySQL",
       "PostgreSQL",
       "Docker",
+      "Jenkins",
+      "Nginx",
       "AWS",
       "RESTful APIs",
-      "WebSockets",
       "Git",
     ],
   };

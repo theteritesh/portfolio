@@ -121,12 +121,29 @@ export default function Experience() {
               >
                 {/* Company & Location */}
                 <div className="flex items-center justify-between flex-wrap gap-2 pb-1 border-b border-outline-variant/40">
-                  <span className="font-label-md text-label-md text-tertiary flex items-center gap-1 font-mono font-medium">
-                    <span className="material-symbols-outlined text-[16px]">
-                      business
+                  {item.companyUrl ? (
+                    <a
+                      href={item.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-label-md text-label-md text-tertiary hover:text-primary transition-colors flex items-center gap-1 font-mono font-medium hover:underline group/link"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">
+                        business
+                      </span>
+                      <span>{item.company}</span>
+                      <span className="material-symbols-outlined text-[13px] opacity-70 group-hover/link:opacity-100">
+                        open_in_new
+                      </span>
+                    </a>
+                  ) : (
+                    <span className="font-label-md text-label-md text-tertiary flex items-center gap-1 font-mono font-medium">
+                      <span className="material-symbols-outlined text-[16px]">
+                        business
+                      </span>
+                      {item.company}
                     </span>
-                    {item.company}
-                  </span>
+                  )}
                   <span className="font-label-sm text-label-sm text-outline font-mono flex items-center gap-1">
                     <span className="material-symbols-outlined text-[14px]">
                       location_on

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { portfolioData } from "@/data/portfolio";
-import { SiGithub, SiX, SiInstagram } from "react-icons/si";
+import { SiGithub, SiX, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 
 interface FormData {
@@ -123,7 +123,7 @@ export default function Contact() {
     setIsSubmitting(true);
     setTerminalOutput({
       type: "loading",
-      message: "git push origin contact:alex --progress",
+      message: "git push origin contact:ritesh --progress",
       logs: [
         "Compressing objects: 100% (4/4), done.",
         "Writing objects: 100% (4/4), establishing TLS handshake...",
@@ -144,9 +144,9 @@ export default function Contact() {
         type: "success",
         message: "✔ pushed to origin/main [commit hash 8a4f02]",
         logs: [
-          "To github.com/alexmorgan-dev/contact-stream.git",
+          "To github.com/theteritesh/contact-stream.git",
           "* [new branch]      contact-inbox -> origin/main",
-          "Transmission status: 200 OK. Alex will review and respond within 24 hours.",
+          "Transmission status: 200 OK. Ritesh will review and respond within 24 hours.",
         ],
       });
 
@@ -274,7 +274,7 @@ export default function Contact() {
                   htmlFor="from_name"
                   className="font-label-sm text-[12px] text-on-surface flex items-center gap-1 font-mono"
                 >
-                  <span className="text-primary font-bold">alex@visitor:~$</span>
+                  <span className="text-primary font-bold">ritesh@visitor:~$</span>
                   <span>export RECRUITER_NAME=</span>
                 </label>
                 <input
@@ -313,7 +313,7 @@ export default function Contact() {
                   htmlFor="from_email"
                   className="font-label-sm text-[12px] text-on-surface flex items-center gap-1 font-mono"
                 >
-                  <span className="text-primary font-bold">alex@visitor:~$</span>
+                  <span className="text-primary font-bold">ritesh@visitor:~$</span>
                   <span>export RETURN_EMAIL=</span>
                 </label>
                 <input
@@ -354,7 +354,7 @@ export default function Contact() {
                   htmlFor="subject"
                   className="font-label-sm text-[12px] text-on-surface flex items-center gap-1 font-mono"
                 >
-                  <span className="text-primary font-bold">alex@visitor:~$</span>
+                  <span className="text-primary font-bold">ritesh@visitor:~$</span>
                   <span>export TOPIC_SUBJECT=</span>
                 </label>
                 <input
@@ -395,7 +395,7 @@ export default function Contact() {
                   htmlFor="message"
                   className="font-label-sm text-[12px] text-on-surface flex items-center gap-1 font-mono"
                 >
-                  <span className="text-primary font-bold">alex@visitor:~$</span>
+                  <span className="text-primary font-bold">ritesh@visitor:~$</span>
                   <span>git commit -m &quot;payload&quot;</span>
                 </label>
                 <textarea
@@ -446,7 +446,7 @@ export default function Contact() {
                     <span className="material-symbols-outlined text-[18px]">
                       send
                     </span>
-                    <span>git push origin contact:alex</span>
+                    <span>git push origin contact:ritesh</span>
                   </>
                 )}
               </button>
@@ -603,6 +603,20 @@ export default function Contact() {
                     <SiInstagram className="w-4 h-4 text-[#e4405f]" />
                     <span>Instagram</span>
                   </motion.a>
+
+                  {contact.whatsapp && (
+                    <motion.a
+                      href={contact.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={shouldReduceMotion ? undefined : { y: -3 }}
+                      whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+                      className="min-h-[44px] px-3.5 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-[#25d366] hover:border-[#25d366] transition-all flex items-center gap-2 font-mono text-[12px] shadow-sm"
+                    >
+                      <SiWhatsapp className="w-4 h-4 text-[#25d366]" />
+                      <span>WhatsApp</span>
+                    </motion.a>
+                  )}
                 </div>
               </div>
             </div>
@@ -616,19 +630,19 @@ export default function Contact() {
                   </span>
                   <span>Interactive Map Location</span>
                 </span>
-                <span className="text-tertiary text-[11px]">37.7749° N, 122.4194° W</span>
+                <span className="text-tertiary text-[11px]">18.5204° N, 73.8567° E</span>
               </div>
               <div className="relative w-full h-36 rounded-md overflow-hidden border border-outline-variant shadow-inner group">
                 <Image
                   src={contact.mapImage}
-                  alt="San Francisco Map"
+                  alt="Pune, India Location"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-surface-container-lowest/30 pointer-events-none" />
                 <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-surface-container-high/90 border border-outline-variant text-[10px] font-mono text-primary flex items-center gap-1 shadow-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
-                  <span>San Francisco, CA</span>
+                  <span>Pune, MH, India</span>
                 </div>
               </div>
             </div>

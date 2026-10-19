@@ -306,10 +306,10 @@ export default function Hero({ stats, experienceYears = 1 }: HeroProps = {}) {
                 href="#projects"
                 className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2.5 rounded bg-primary-container hover:bg-[#2ea043] border border-white/10 text-on-primary-container font-label-md text-[13px] sm:text-label-md font-semibold shadow-md active:scale-95 transition-all font-mono"
               >
-                <span className="material-symbols-outlined text-[17px]">merge</span>
+                <span className="material-symbols-outlined text-[17px]">deployed_code</span>
                 <span>View Projects</span>
                 <span className="hidden sm:inline px-1.5 py-0.5 rounded bg-black/25 text-[11px] font-label-sm">
-                  6 PRs
+                  {portfolioData.projects.length} Projects
                 </span>
               </Link>
 

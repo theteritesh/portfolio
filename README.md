@@ -27,7 +27,7 @@ A modern, high-performance developer portfolio styled like an interactive Git re
 ### 1. Clone & Install Dependencies
 
 ```bash
-git clone https://github.com/your-username/portfolio.git
+git clone https://github.com/theteritesh/portfolio.git
 cd portfolio
 npm install
 ```
@@ -47,7 +47,7 @@ NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
 
 # GitHub GraphQL API (Server-side only — NEVER commit or prefix with NEXT_PUBLIC_)
 GITHUB_TOKEN=ghp_your_token_here
-GITHUB_USERNAME=your_github_username
+GITHUB_USERNAME=theteritesh
 ```
 
 #### How to Create your GitHub Token (Classic, No Scopes)
@@ -154,7 +154,7 @@ portfolio/
 │   │   ├── About.tsx            # README.md tabbed layout with credentials
 │   │   ├── Skills.tsx           # Grouped backend/frontend/db/cloud folders
 │   │   ├── Experience.tsx       # Scroll-animated Git commit timeline
-│   │   ├── Projects.tsx         # GitHub repo/PR cards with animated filter tabs
+│   │   ├── Projects.tsx         # Engineering project showcase cards with category filter tabs
 │   │   ├── GitHubActivity.tsx   # 52-week contribution heatmap & interactive graph
 │   │   ├── Education.tsx        # MCA, BBA, and AWS certification cards
 │   │   ├── Testimonials.tsx     # GitHub review comment cards with code diffs
@@ -172,4 +172,4 @@ portfolio/
 
 ## 📄 License
 
-MIT License • Built with ❤️ and commits by [Ritesh Thete](https://github.com/your-username).
+MIT License • Built with ❤️ and commits by [Ritesh Thete](https://github.com/theteritesh).

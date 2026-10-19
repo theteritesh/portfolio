@@ -121,14 +121,14 @@ ${about.bioParagraph}
             <div className="relative w-5 h-5 rounded-full overflow-hidden shrink-0 ring-1 ring-outline-variant">
               <Image
                 src={personal.avatarUrl}
-                alt="Alex"
+                alt={personal.name}
                 width={20}
                 height={20}
                 className="w-full h-full object-cover"
               />
             </div>
             <span className="text-on-surface font-semibold font-mono text-[13px] shrink-0">
-              alexmorgan
+              {personal.handle.replace("@", "")}
             </span>
             <span className="text-outline truncate text-[12px] sm:text-[13px]">
               {about.latestCommit.message}
@@ -163,16 +163,7 @@ ${about.bioParagraph}
 
           {/* Narrative Bio */}
           <p className="font-body-lg text-[15px] sm:text-body-lg text-on-surface-variant leading-relaxed">
-            Full Stack Software Developer holding a{" "}
-            <strong className="text-on-surface font-semibold">
-              Master of Computer Applications (MCA)
-            </strong>{" "}
-            degree with deep domain expertise in distributed enterprise architectures
-            using <strong className="text-on-surface font-semibold">Java 17/21</strong>,{" "}
-            <strong className="text-on-surface font-semibold">Spring Boot</strong>, and
-            reactive modern frontends with{" "}
-            <strong className="text-on-surface font-semibold">React</strong> &amp;{" "}
-            <strong className="text-on-surface font-semibold">TypeScript</strong>.
+            {about.bioParagraph}
           </p>
 
           {/* Markdown GitHub Blockquote */}
@@ -246,7 +237,9 @@ ${about.bioParagraph}
             </div>
 
             <div className="p-2 sm:px-3 sm:py-1.5 rounded bg-surface-container border border-outline-variant font-code-block text-[12px] text-on-surface-variant font-mono flex items-center gap-2 flex-wrap">
-              <span className="text-primary font-bold">alex.morgan:~$</span>
+              <span className="text-primary font-bold">
+                {portfolioData.terminal.user}:~$
+              </span>
               <span className="text-on-surface">{about.currentlyLearning.command}</span>
               <span className="text-tertiary hidden md:inline">
                 {about.currentlyLearning.output}
