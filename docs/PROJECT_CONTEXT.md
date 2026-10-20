@@ -215,7 +215,7 @@ Reference template is in [`.env.example`](file:///e:/My_Project/portfolio/.env.e
 - [x] Dark/light theme toggle.
 
 ### Remaining Review / Roadmap
-1. **Reviews / Testimonials (`#testimonials`)**: Currently contains simulated pull-request reviews. Awaiting user's decision to either hide this section or provide real quotes.
+1. **Reviews / Testimonials (`#testimonials`)**: Hidden from UI, navigation, and footer per user direction. Component and data model retained for easy reactivation when real client or peer reviews become available.
 2. **Google Search Console**: Submit `https://theteritesh.vercel.app/sitemap.xml` for indexing.
 
 ---

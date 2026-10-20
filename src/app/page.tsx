@@ -23,17 +23,17 @@ const GitHubActivity = dynamic(() => import("@/components/GitHubActivity"), {
   ),
 });
 
-const Testimonials = dynamic(() => import("@/components/Testimonials"), {
-  ssr: true,
-  loading: () => (
-    <div className="w-full max-w-[1280px] mx-auto min-h-[300px] flex items-center justify-center font-mono text-[13px] text-outline p-8">
-      <div className="flex items-center gap-2">
-        <span className="w-2.5 h-2.5 rounded-full bg-tertiary animate-pulse" />
-        <span>Loading review comments...</span>
-      </div>
-    </div>
-  ),
-});
+// const Testimonials = dynamic(() => import("@/components/Testimonials"), {
+//   ssr: true,
+//   loading: () => (
+//     <div className="w-full max-w-[1280px] mx-auto min-h-[300px] flex items-center justify-center font-mono text-[13px] text-outline p-8">
+//       <div className="flex items-center gap-2">
+//         <span className="w-2.5 h-2.5 rounded-full bg-tertiary animate-pulse" />
+//         <span>Loading review comments...</span>
+//       </div>
+//     </div>
+//   ),
+// });
 
 export default async function Home() {
   const githubData = await getGitHubData();
@@ -54,7 +54,7 @@ export default async function Home() {
           isLive={githubData.isLive}
         />
         <Education />
-        <Testimonials />
+        {/* <Testimonials /> hidden until real client recommendations are ready */}
         <Contact />
       </main>
       <Footer />

@@ -463,12 +463,6 @@ export const portfolioData: PortfolioData = {
       icon: "school",
     },
     {
-      id: "testimonials",
-      label: "Reviews",
-      href: "#testimonials",
-      icon: "rate_review",
-    },
-    {
       id: "contact",
       label: "Contact",
       href: "#contact",
@@ -1086,7 +1080,6 @@ export const portfolioData: PortfolioData = {
       { label: "Projects", href: "#projects" },
       { label: "GitHub", href: "#github-activity" },
       { label: "Education", href: "#education" },
-      { label: "Testimonials", href: "#testimonials" },
       { label: "Contact", href: "#contact" },
     ],
   },

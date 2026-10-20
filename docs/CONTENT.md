@@ -216,7 +216,7 @@
 
 ## 7. Remaining Demonstration Placeholders
 
-1. **Testimonials**: 3 pull-request-styled reviews currently use representative peer quotes pending client-provided peer testimonials.
+1. **Testimonials**: Hidden from UI, navigation, and footer per user instruction until real recommendations are provided. Data schema preserved for future activation.
 
 ---
 
