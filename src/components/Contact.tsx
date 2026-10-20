@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { portfolioData } from "@/data/portfolio";
-import { SiGithub, SiX, SiInstagram, SiWhatsapp } from "react-icons/si";
+import { SiGithub, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 
 interface FormData {
@@ -555,16 +555,16 @@ export default function Contact() {
                 <span className="font-label-sm text-[11px] text-outline font-mono">
                   Developer Profiles &amp; Social Links
                 </span>
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   <motion.a
                     href={contact.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={shouldReduceMotion ? undefined : { y: -3 }}
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-                    className="min-h-[44px] px-3.5 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-primary hover:border-primary transition-all flex items-center gap-2 font-mono text-[12px] shadow-sm"
+                    className="min-h-[42px] px-2 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-primary hover:border-primary transition-all flex items-center justify-center gap-1.5 font-mono text-[12px] shadow-sm"
                   >
-                    <SiGithub className="w-4 h-4 text-primary" />
+                    <SiGithub className="w-4 h-4 text-primary shrink-0" />
                     <span>GitHub</span>
                   </motion.a>
 
@@ -574,22 +574,10 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     whileHover={shouldReduceMotion ? undefined : { y: -3 }}
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-                    className="min-h-[44px] px-3.5 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-tertiary hover:border-tertiary transition-all flex items-center gap-2 font-mono text-[12px] shadow-sm"
+                    className="min-h-[42px] px-2 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-tertiary hover:border-tertiary transition-all flex items-center justify-center gap-1.5 font-mono text-[12px] shadow-sm"
                   >
-                    <FaLinkedin className="w-4 h-4 text-[#0a66c2]" />
+                    <FaLinkedin className="w-4 h-4 text-[#0a66c2] shrink-0" />
                     <span>LinkedIn</span>
-                  </motion.a>
-
-                  <motion.a
-                    href={contact.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={shouldReduceMotion ? undefined : { y: -3 }}
-                    whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-                    className="min-h-[44px] px-3.5 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-on-surface hover:border-outline transition-all flex items-center gap-2 font-mono text-[12px] shadow-sm"
-                  >
-                    <SiX className="w-3.5 h-3.5" />
-                    <span>Twitter</span>
                   </motion.a>
 
                   <motion.a
@@ -598,9 +586,9 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     whileHover={shouldReduceMotion ? undefined : { y: -3 }}
                     whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-                    className="min-h-[44px] px-3.5 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-[#e4405f] hover:border-[#e4405f] transition-all flex items-center gap-2 font-mono text-[12px] shadow-sm"
+                    className="min-h-[42px] px-2 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-[#e4405f] hover:border-[#e4405f] transition-all flex items-center justify-center gap-1.5 font-mono text-[12px] shadow-sm"
                   >
-                    <SiInstagram className="w-4 h-4 text-[#e4405f]" />
+                    <SiInstagram className="w-4 h-4 text-[#e4405f] shrink-0" />
                     <span>Instagram</span>
                   </motion.a>
 
@@ -611,9 +599,9 @@ export default function Contact() {
                       rel="noopener noreferrer"
                       whileHover={shouldReduceMotion ? undefined : { y: -3 }}
                       whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-                      className="min-h-[44px] px-3.5 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-[#25d366] hover:border-[#25d366] transition-all flex items-center gap-2 font-mono text-[12px] shadow-sm"
+                      className="min-h-[42px] px-2 py-2 rounded-md bg-surface-container border border-outline-variant text-on-surface hover:text-[#25d366] hover:border-[#25d366] transition-all flex items-center justify-center gap-1.5 font-mono text-[12px] shadow-sm"
                     >
-                      <SiWhatsapp className="w-4 h-4 text-[#25d366]" />
+                      <SiWhatsapp className="w-4 h-4 text-[#25d366] shrink-0" />
                       <span>WhatsApp</span>
                     </motion.a>
                   )}

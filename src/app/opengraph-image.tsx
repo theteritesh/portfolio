@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { portfolioData } from "@/data/portfolio";
 
-export const alt = "Ritesh Thete | Java Full Stack Developer, Pune";
+export const alt = "Ritesh Thete | Software Developer, Pune";
 export const size = {
   width: 1200,
   height: 630,

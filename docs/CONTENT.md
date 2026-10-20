@@ -9,7 +9,8 @@
 ## 1. Verified Identity & Career Details
 
 - **Full Name**: Ritesh Thete
-- **Professional Title**: Java Full Stack Developer
+- **Professional Title**: Software Developer
+- **Current Employment Role**: Java Full Stack Developer (at Mahendra Technosoft)
 - **Location**: Pune, Maharashtra, India (Remote Ready / Hybrid)
 - **Timezone**: IST (UTC+5:30)
 - **Current Employer**: Mahendra Technosoft
@@ -85,11 +86,10 @@
 
 ## 3. Verified Technical Competencies
 
-- **Languages & Frameworks**: Java 17/21, Spring Boot 3, Spring Data JPA, Spring MVC, Spring Security, Hibernate, React 19, Next.js, TypeScript, JavaScript (ESNext).
-- **Databases & Caching**: PostgreSQL, MySQL, Redis.
-- **Architectures & Protocols**: Distributed Microservices, RESTful APIs, OpenAPI / Swagger, WebSocket (STOMP), Event Streaming (Kafka basics).
-- **DevOps & Infrastructure**: Docker, Docker Compose, AWS ECS, Linux Server Administration, Nginx, GitHub Actions CI/CD.
-- **Testing & Tooling**: JUnit 5, Mockito, AssertJ, Postman, Git, Maven, npm/Turbopack.
+- **Backend Ecosystem**: Java 21, Spring Boot 3, Spring Security & JWT, Spring Data JPA, Hibernate, Multi-Tenant Architecture, REST APIs, WebSockets (STOMP), WebRTC, Spring AI, JSP / Servlets / JDBC, Maven.
+- **Frontend Systems**: React 19, TypeScript, Next.js, Tailwind CSS, Redux Toolkit, JavaScript (ES6+), Bootstrap, Thymeleaf, HTML5 & CSS3, Axios.
+- **Databases & Caching**: MySQL, PostgreSQL, MongoDB, Redis Caching, HikariCP Connection Pooling, Query Optimization & Indexing, ACID Transactions.
+- **DevOps & Infrastructure**: Docker, Docker Compose, Jenkins, Nginx, AWS Cloud (ECS, EC2, S3, RDS, IAM - AWS Certified), GitHub Actions, Linux Server Administration, Postman / Swagger (OpenAPI), Git & Branching Workflows, Shell Scripting (Bash).
 
 ---
 
@@ -217,4 +217,18 @@
 ## 7. Remaining Demonstration Placeholders
 
 1. **Testimonials**: 3 pull-request-styled reviews currently use representative peer quotes pending client-provided peer testimonials.
+
+---
+
+## 8. Verified Contact & Footer Channels
+
+- **Primary Email**: `theteritesh2@gmail.com`
+- **Phone & WhatsApp**: `+91 9067467472` (`https://wa.me/919067467472`)
+- **Workstation Base**: Pune, Maharashtra, India (Remote Ready / Hybrid)
+- **Coordinates**: `18.5204° N, 73.8567° E` (IST, UTC+5:30)
+- **GitHub**: `https://github.com/theteritesh` (`theteritesh`)
+- **LinkedIn**: `https://www.linkedin.com/in/ritesh-thete-4b2b56228/`
+- **Instagram**: `https://instagram.com/_ritesh.thete_` (`_ritesh.thete_`)
+- **Twitter / X**: Removed per user instruction
+- **Footer Git Commit / Contribution Stats**: Linked to verified GitHub total contributions (`1,248 contributions`), HEAD commit `@e9a4f21`.
 

@@ -7,7 +7,7 @@
 
 ## 1. Project Purpose & Vision
 
-This application is the personal developer portfolio for **Ritesh Thete**, a **Java Full Stack Developer** based in Pune, Maharashtra, India.
+This application is the personal developer portfolio for **Ritesh Thete**, a **Software Developer** (working as Java Full Stack Developer at Mahendra Technosoft) based in Pune, Maharashtra, India.
 
 - **Theme & Aesthetic**: Engineered with an authentic Git & GitHub developer aesthetic (commit timelines, pull request statuses, terminal sandboxes, branch selectors, telemetry indicators, contribution graphs).
 - **Dark-Default with Theme Switching**: Defaults to a sleek GitHub dark matte theme (`#0c141a`) with full support for light mode via `next-themes`.

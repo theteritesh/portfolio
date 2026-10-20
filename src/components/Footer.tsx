@@ -3,7 +3,7 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { portfolioData } from "@/data/portfolio";
-import { SiGithub, SiX, SiInstagram, SiWhatsapp } from "react-icons/si";
+import { SiGithub, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 
 export default function Footer() {
@@ -27,7 +27,7 @@ export default function Footer() {
             </span>
           </div>
           <p className="font-body-sm text-[13px] text-on-surface-variant leading-relaxed">
-            Full Stack Software Developer specializing in Java, Spring Boot,
+            Software Developer specializing in Java, Spring Boot,
             distributed microservices, and modern reactive React/TypeScript
             frontends.
           </p>
@@ -86,18 +86,6 @@ export default function Footer() {
             </motion.a>
 
             <motion.a
-              href={contact.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter Profile"
-              whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.1 }}
-              whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-              className="w-10 h-10 rounded-md bg-surface-container border border-outline-variant flex items-center justify-center text-on-surface hover:text-on-surface hover:border-outline transition-colors shadow-sm"
-            >
-              <SiX className="w-3.5 h-3.5" />
-            </motion.a>
-
-            <motion.a
               href={contact.instagram}
               target="_blank"
               rel="noopener noreferrer"
@@ -146,7 +134,7 @@ export default function Footer() {
               <span className="material-symbols-outlined text-[14px]">
                 history
               </span>
-              <span>{footer.commitCount}</span>
+              <span>{portfolioData.github.totalContributions.toLocaleString()} contributions</span>
             </div>
             <span className="text-outline-variant hidden sm:inline">|</span>
             <div className="flex items-center gap-1.5">

@@ -30,13 +30,15 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Ritesh Thete | Java Full Stack Developer, Pune",
+    default: "Ritesh Thete | Software Developer, Pune",
     template: "%s | Ritesh Thete",
   },
   description:
-    "Ritesh Thete is a Java Full Stack Developer in Pune specializing in multi-tenant SaaS platforms, ERP/CRM architectures, Spring Boot, React, MySQL, Jenkins, Docker, and Nginx.",
+    "Ritesh Thete is a Software Developer in Pune specializing in full-stack web applications, Java, Spring Boot, React, and cloud architectures.",
   keywords: [
     "Ritesh Thete",
+    "Software Developer",
+    "Software Engineer",
     "Java Full Stack Developer",
     "Pune Developer",
     "Spring Boot",
@@ -51,7 +53,6 @@ export const metadata: Metadata = {
     "Nginx",
     "Java Developer Pune",
     "AWS Certified",
-    "Software Engineer",
   ],
   authors: [{ name: "Ritesh Thete", url: siteUrl }],
   creator: "Ritesh Thete",
@@ -73,24 +74,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    title: "Ritesh Thete | Java Full Stack Developer, Pune",
+    title: "Ritesh Thete | Software Developer, Pune",
     description:
-      "Ritesh Thete is a Java Full Stack Developer in Pune specializing in multi-tenant SaaS platforms, ERP/CRM architectures, Spring Boot, React, MySQL, Jenkins, Docker, and Nginx.",
+      "Ritesh Thete is a Software Developer in Pune specializing in full-stack web applications, Java, Spring Boot, React, and cloud architectures.",
     siteName: "Ritesh Thete Portfolio",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Ritesh Thete | Java Full Stack Developer, Pune",
+        alt: "Ritesh Thete | Software Developer, Pune",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ritesh Thete | Java Full Stack Developer, Pune",
+    title: "Ritesh Thete | Software Developer, Pune",
     description:
-      "Ritesh Thete is a Java Full Stack Developer in Pune specializing in multi-tenant SaaS platforms, ERP/CRM architectures, Spring Boot, React, MySQL, Jenkins, Docker, and Nginx.",
+      "Ritesh Thete is a Software Developer in Pune specializing in full-stack web applications, Java, Spring Boot, React, and cloud architectures.",
     images: ["/opengraph-image"],
     creator: "@theteritesh",
   },
@@ -111,7 +112,8 @@ export default function RootLayout({
     sameAs: [
       portfolioData.contact.github,
       portfolioData.contact.linkedin,
-      portfolioData.contact.twitter,
+      portfolioData.contact.instagram,
+      portfolioData.contact.whatsapp,
     ].filter(Boolean),
     address: {
       "@type": "PostalAddress",

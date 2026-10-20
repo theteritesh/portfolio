@@ -23,8 +23,32 @@ import {
   SiKubernetes,
   SiNginx,
   SiJenkins,
+  SiSpringsecurity,
+  SiJsonwebtokens,
+  SiWebrtc,
+  SiApachemaven,
+  SiJavascript,
+  SiBootstrap,
+  SiThymeleaf,
+  SiHtml5,
+  SiCss,
+  SiAxios,
+  SiMongodb,
+  SiPostman,
+  SiSwagger,
+  SiGnubash,
 } from "react-icons/si";
-import { FaAws } from "react-icons/fa6";
+import {
+  FaAws,
+  FaGitAlt,
+  FaServer,
+  FaLayerGroup,
+  FaNetworkWired,
+  FaRobot,
+  FaDatabase,
+  FaBolt,
+  FaLock,
+} from "react-icons/fa6";
 import { TbCode } from "react-icons/tb";
 
 const renderSkillIcon = (key: string) => {
@@ -35,16 +59,36 @@ const renderSkillIcon = (key: string) => {
       return <SiSpringboot className="w-3.5 h-3.5 text-[#6db33f] shrink-0" />;
     case "SiHibernate":
       return <SiHibernate className="w-3.5 h-3.5 text-[#59666c] shrink-0" />;
+    case "SiSpringsecurity":
+      return <SiSpringsecurity className="w-3.5 h-3.5 text-[#6db33f] shrink-0" />;
+    case "SiJsonwebtokens":
+      return <SiJsonwebtokens className="w-3.5 h-3.5 text-[#d63aff] shrink-0" />;
+    case "SiApachemaven":
+      return <SiApachemaven className="w-3.5 h-3.5 text-[#c71a36] shrink-0" />;
+    case "SiWebrtc":
+      return <SiWebrtc className="w-3.5 h-3.5 text-on-surface shrink-0" />;
     case "SiApachekafka":
       return <SiApachekafka className="w-3.5 h-3.5 text-primary shrink-0" />;
     case "SiReact":
       return <SiReact className="w-3.5 h-3.5 text-[#61dafb] shrink-0" />;
     case "SiTypescript":
       return <SiTypescript className="w-3.5 h-3.5 text-[#3178c6] shrink-0" />;
+    case "SiJavascript":
+      return <SiJavascript className="w-3.5 h-3.5 text-[#f7df1e] shrink-0" />;
     case "SiNextdotjs":
       return <SiNextdotjs className="w-3.5 h-3.5 text-on-surface shrink-0" />;
     case "SiTailwindcss":
       return <SiTailwindcss className="w-3.5 h-3.5 text-[#38bdf8] shrink-0" />;
+    case "SiBootstrap":
+      return <SiBootstrap className="w-3.5 h-3.5 text-[#7952b3] shrink-0" />;
+    case "SiThymeleaf":
+      return <SiThymeleaf className="w-3.5 h-3.5 text-[#005f0e] shrink-0" />;
+    case "SiHtml5":
+      return <SiHtml5 className="w-3.5 h-3.5 text-[#e34f26] shrink-0" />;
+    case "SiCss":
+      return <SiCss className="w-3.5 h-3.5 text-[#1572b6] shrink-0" />;
+    case "SiAxios":
+      return <SiAxios className="w-3.5 h-3.5 text-[#5a29e4] shrink-0" />;
     case "SiVite":
       return <SiVite className="w-3.5 h-3.5 text-[#646cff] shrink-0" />;
     case "SiRedux":
@@ -53,6 +97,8 @@ const renderSkillIcon = (key: string) => {
       return <SiPostgresql className="w-3.5 h-3.5 text-[#336791] shrink-0" />;
     case "SiMysql":
       return <SiMysql className="w-3.5 h-3.5 text-[#00758f] shrink-0" />;
+    case "SiMongodb":
+      return <SiMongodb className="w-3.5 h-3.5 text-[#47a248] shrink-0" />;
     case "SiRedis":
       return <SiRedis className="w-3.5 h-3.5 text-[#dc382d] shrink-0" />;
     case "SiDocker":
@@ -69,6 +115,28 @@ const renderSkillIcon = (key: string) => {
       return <SiNginx className="w-3.5 h-3.5 text-[#009639] shrink-0" />;
     case "SiJenkins":
       return <SiJenkins className="w-3.5 h-3.5 text-[#d33833] shrink-0" />;
+    case "SiPostman":
+      return <SiPostman className="w-3.5 h-3.5 text-[#ff6c37] shrink-0" />;
+    case "SiSwagger":
+      return <SiSwagger className="w-3.5 h-3.5 text-[#85ea2d] shrink-0" />;
+    case "SiGnubash":
+      return <SiGnubash className="w-3.5 h-3.5 text-[#4eaa25] shrink-0" />;
+    case "FaGitAlt":
+      return <FaGitAlt className="w-3.5 h-3.5 text-[#f05032] shrink-0" />;
+    case "FaServer":
+      return <FaServer className="w-3.5 h-3.5 text-[#b07219] shrink-0" />;
+    case "FaLayerGroup":
+      return <FaLayerGroup className="w-3.5 h-3.5 text-primary shrink-0" />;
+    case "FaNetworkWired":
+      return <FaNetworkWired className="w-3.5 h-3.5 text-[#2088ff] shrink-0" />;
+    case "FaRobot":
+      return <FaRobot className="w-3.5 h-3.5 text-[#2ea043] shrink-0" />;
+    case "FaDatabase":
+      return <FaDatabase className="w-3.5 h-3.5 text-secondary shrink-0" />;
+    case "FaBolt":
+      return <FaBolt className="w-3.5 h-3.5 text-[#e36209] shrink-0" />;
+    case "FaLock":
+      return <FaLock className="w-3.5 h-3.5 text-[#a371f7] shrink-0" />;
     default:
       return <TbCode className="w-3.5 h-3.5 text-primary shrink-0" />;
   }
@@ -150,7 +218,7 @@ export default function Skills() {
 
       <div className="grid grid-cols-12 gap-gutter">
         {/* Left Column: Workspace Explorer Sidebar (Desktop) */}
-        <div className="col-span-12 lg:col-span-4 p-space-md rounded-lg bg-surface-container-low border border-outline-variant shadow-md flex flex-col gap-space-sm h-fit">
+        <div className="col-span-12 lg:col-span-4 p-space-md rounded-lg bg-surface-container-low border border-outline-variant shadow-md flex flex-col gap-space-sm h-full">
           <div className="flex items-center justify-between pb-2 border-b border-outline-variant">
             <span className="font-label-sm text-label-sm text-on-surface uppercase font-bold tracking-wider flex items-center gap-1.5 font-mono">
               <span className="material-symbols-outlined text-[16px] text-tertiary">
@@ -194,7 +262,7 @@ export default function Skills() {
                     </span>
                     <span className="font-semibold">{cat.folderName}</span>
                     <span className="ml-auto font-label-sm text-[11px] text-outline">
-                      {cat.fileCount} files
+                      {cat.files.length} files
                     </span>
                   </button>
 
@@ -213,6 +281,17 @@ export default function Skills() {
               );
             })}
           </div>
+
+          {/* Explorer Status Footer */}
+          <div className="pt-3 border-t border-outline-variant/50 flex items-center justify-between text-[11px] font-mono text-outline mt-auto">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#6db33f] animate-pulse" />
+              <span>git:(main)</span>
+            </span>
+            <span>
+              {skills.reduce((acc, cat) => acc + cat.files.length, 0)} files tracked
+            </span>
+          </div>
         </div>
 
         {/* Right Column: Detailed Tech Cards & Progress Bars */}
@@ -230,7 +309,7 @@ export default function Skills() {
                   delay: shouldReduceMotion ? 0 : index * 0.08,
                   ease: "easeOut",
                 }}
-                className="p-4 sm:p-space-md rounded-lg bg-surface-container border border-outline-variant shadow-md flex flex-col justify-between group hover:border-outline hover:bg-surface-container-high transition-all"
+                className="p-4 sm:p-space-md rounded-lg bg-surface-container border border-outline-variant shadow-md flex flex-col group hover:border-outline hover:bg-surface-container-high transition-all"
               >
                 {/* Card Header & Description */}
                 <div className="flex flex-col gap-2">
@@ -243,7 +322,7 @@ export default function Skills() {
                       </span>
                       {category.title}
                     </span>
-                    <span className="font-label-sm text-[11px] text-outline font-mono px-1.5 py-0.5 rounded bg-surface-container-lowest border border-outline-variant">
+                    <span className="font-label-sm text-[11px] text-outline font-mono px-1.5 py-0.5 rounded bg-surface-container-lowest border border-outline-variant shrink-0">
                       {category.badge}
                     </span>
                   </div>
@@ -253,7 +332,7 @@ export default function Skills() {
                 </div>
 
                 {/* Progress Bars & Skill Chips with react-icons */}
-                <div className="flex flex-col gap-3 pt-4 border-t border-outline-variant/40 mt-3">
+                <div className="flex flex-col gap-3 pt-3 border-t border-outline-variant/40 mt-3">
                   {/* Competency percentage bars */}
                   <div className="flex flex-col gap-2">
                     {category.competencies.map((comp) => (

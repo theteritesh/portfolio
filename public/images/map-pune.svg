@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" width="500" height="240">
+  <defs>
+    <linearGradient id="pune-map-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c141a" />
+      <stop offset="100%" stop-color="#151d22" />
+    </linearGradient>
+    <pattern id="pune-map-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#232b31" stroke-width="0.8" />
+    </pattern>
+    <radialGradient id="pune-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7bdb80" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#7bdb80" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base & Tech Grid -->
+  <rect width="500" height="240" fill="url(#pune-map-bg)" rx="6" />
+  <rect width="500" height="240" fill="url(#pune-map-grid)" rx="6" />
+
+  <!-- Mula & Mutha River Basin (Confluence at Sangam) -->
+  <!-- Mula River (from northwest through Pimpri-Chinchwad / Aundh to Sangam) -->
+  <path d="M 0 50 Q 80 40, 160 70 T 260 115" fill="none" stroke="#0a2a38" stroke-width="8" stroke-linecap="round" />
+  <path d="M 0 50 Q 80 40, 160 70 T 260 115" fill="none" stroke="#13526d" stroke-width="3" stroke-linecap="round" />
+  
+  <!-- Mutha River (from southwest through Kothrud / Deccan to Sangam) -->
+  <path d="M 40 240 Q 120 200, 190 160 T 260 115" fill="none" stroke="#0a2a38" stroke-width="7" stroke-linecap="round" />
+  <path d="M 40 240 Q 120 200, 190 160 T 260 115" fill="none" stroke="#13526d" stroke-width="2.5" stroke-linecap="round" />
+  
+  <!-- Mula-Mutha Combined River (flowing east through Bund Garden / Kharadi) -->
+  <path d="M 260 115 Q 350 110, 420 130 T 500 120" fill="none" stroke="#0a2a38" stroke-width="9" stroke-linecap="round" />
+  <path d="M 260 115 Q 350 110, 420 130 T 500 120" fill="none" stroke="#13526d" stroke-width="3.5" stroke-linecap="round" />
+
+  <!-- Major Pune Tech Arteries & Express Corridors -->
+  <!-- Mumbai-Pune Expressway & NH48 (Bypass connecting Hinjawadi, Baner, Wakad) -->
+  <path d="M 0 20 Q 90 70, 140 130 T 210 240" fill="none" stroke="#3f4a3d" stroke-width="2.5" stroke-dasharray="6,3" />
+  <!-- Senapati Bapat Road / Shivaji Nagar / Pune Station Arterial -->
+  <path d="M 170 80 L 260 115 L 340 145 L 420 180 L 500 200" fill="none" stroke="#3f4a3d" stroke-width="2" />
+  <!-- Pune Metro Corridor (Line 1 & 2 Transit representation) -->
+  <path d="M 110 30 L 190 90 L 270 125 L 360 160 L 440 190" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4,4" />
+  <!-- Pune Ring Road representation -->
+  <path d="M 60 220 Q 240 235, 430 190" fill="none" stroke="#232b31" stroke-width="1.8" />
+
+  <!-- Pulse Location Pin for Pune Workstation Base -->
+  <circle cx="260" cy="115" r="36" fill="url(#pune-glow)" />
+  <circle cx="260" cy="115" r="22" fill="#7bdb80" fill-opacity="0.15" />
+  <circle cx="260" cy="115" r="12" fill="#7bdb80" fill-opacity="0.3" />
+  <circle cx="260" cy="115" r="5" fill="#7bdb80" stroke="#0c141a" stroke-width="2" />
+
+  <!-- Location Label Card -->
+  <rect x="245" y="45" width="185" height="36" rx="4" fill="#192126" stroke="#3f4a3d" stroke-width="1" />
+  <circle cx="260" cy="63" r="4" fill="#7bdb80" />
+  <text x="272" y="61" fill="#dbe3ec" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="600">Pune, Maharashtra</text>
+  <text x="272" y="73" fill="#899485" font-family="Inter, sans-serif" font-size="9">18.5204° N, 73.8567° E • IST</text>
+
+  <!-- Pointer indicator from Card to Pin -->
+  <line x1="260" y1="81" x2="260" y2="108" stroke="#7bdb80" stroke-width="1" stroke-dasharray="2,2" />
+
+  <!-- Technical Watermarks -->
+  <text x="20" y="222" fill="#899485" font-family="JetBrains Mono, monospace" font-size="9">DEV-GIS // PUNE-METRO-TECH-HUB-MH</text>
+  <text x="360" y="222" fill="#7bdb80" font-family="JetBrains Mono, monospace" font-size="9">REMOTE READY • HYBRID</text>
+</svg>
