@@ -200,21 +200,23 @@ Reference template is in [`.env.example`](file:///e:/My_Project/portfolio/.env.e
 ## 9. Current Project Status & Roadmap
 
 ### What is Finished & Verified
-- [x] Full Git/GitHub-styled responsive design implemented across all 10 sections.
-- [x] Hero section highlights professional full-stack Java experience at Mahendra Technosoft.
+- [x] Full Git/GitHub-styled responsive design implemented across all sections.
+- [x] Hero section highlights Software Developer title with Java Full Stack experience at Mahendra Technosoft.
 - [x] Responsive 3-card stats row (`EXPERIENCE`, `REPOSITORIES`, `CONTRIBUTIONS`).
-- [x] Typewriter animation with 3-phase state machine and leak-free cleanups.
+- [x] Typewriter animation with real accomplishments and commands.
+- [x] Skills directory with interactive categories and synced Workspace Explorer.
+- [x] Real projects loaded: Spicy Mango, XpertBiz, KnowlexaNext, BulkTradeHub, Online Computer Sales & Services, Hospital Management System.
+- [x] Pune, Maharashtra location map and coordinates with single-line social channels (no Twitter).
+- [x] Real GitHub total contributions count (1,248) connected to footer.
 - [x] Dynamic GitHub Activity heatmap with live GraphQL integration and fallback support.
 - [x] Working EmailJS contact form with feedback alerts.
-- [x] Complete SEO setup (Metadata API, Open Graph Image, Sitemap, Robots, JSON-LD).
+- [x] Complete SEO setup (Metadata API, Open Graph Image, Sitemap, Robots, JSON-LD) pointing to `https://theteritesh.vercel.app`.
+- [x] Live Vercel deployment connected to GitHub repository and active at `https://theteritesh.vercel.app`.
 - [x] Dark/light theme toggle.
 
-### Known Work / Next Steps
-1. **Real Content Replacement**: Replace demo project URLs and screenshots in `src/data/portfolio.ts` with Ritesh's live production projects when ready.
-2. **Resume PDF**: Replace placeholder `public/resume.pdf` with Ritesh's finalized resume document.
-3. **Avatar Photograph**: Replace placeholder profile photograph in `portfolioData.personal.avatarUrl` with Ritesh's official headshot.
-4. **Vercel Deployment**: Connect the repository to Vercel, set production environment variables, and verify custom domain configuration.
-5. **Google Search Console**: Submit `sitemap.xml` after domain deployment.
+### Remaining Review / Roadmap
+1. **Reviews / Testimonials (`#testimonials`)**: Currently contains simulated pull-request reviews. Awaiting user's decision to either hide this section or provide real quotes.
+2. **Google Search Console**: Submit `https://theteritesh.vercel.app/sitemap.xml` for indexing.
 
 ---
 
