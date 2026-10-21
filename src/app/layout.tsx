@@ -105,6 +105,13 @@ export const metadata: Metadata = {
       "Ritesh Thete is a Software Developer in Pune with 1+ years experience building production web apps with Java, Spring Boot, React, MySQL, Docker, and AWS cloud.",
     images: ["/opengraph-image"],
   },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? {
+        verification: {
+          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+        },
+      }
+    : {}),
 };
 
 export default function RootLayout({
